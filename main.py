@@ -1,8 +1,6 @@
 import time
 from typing import Optional
 
-from fastapi import FastAPI
-
 from core.processor import StartProcessOpcForConnectToPLC
 from core import models
 
