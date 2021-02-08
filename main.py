@@ -10,7 +10,7 @@ models.Base.metadata.create_all(bind=models.engine)
 list_data = [
     {"name": "p1101", "start": 2, "type": "real"},
     {"name": "p1201", "start": 102, "type": "real"},
-    {"name": "p1202", "start": 202, "type": "real"},
+    # {"name": "p1202", "start": 202, "type": "real"},
     # {"name": "p1301", "start": 302, "type": "real"},
     # {"name": "p1302", "start": 402, "type": "real"},
     # {"name": "p1401", "start": 502, "type": "real"},
@@ -21,7 +21,7 @@ list_data = [
 
 
 def main():
-    pr = StartProcessOpcForConnectToPLC('192.168.32.128', 0, 2, 3001, 0, 230,values_list=list_data)
+    pr = StartProcessOpcForConnectToPLC('192.168.32.128', 0, 2, 3001, 0, 130,values_list=list_data)
     pr.start()
     while True:
         print(pr.is_alive(), 'process')
