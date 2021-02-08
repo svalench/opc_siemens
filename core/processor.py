@@ -1,5 +1,6 @@
 import os
 import struct
+import threading
 import time
 from multiprocessing import Process
 
@@ -126,6 +127,10 @@ class StartProcessOpcForConnectToPLC(Process):
             '''INSERT INTO mvlab_temp_''' + tablename + ''' (value) VALUES (''' + str(value) + ''');''')
         self._conn.commit()
 
+    def _thread_for_write_data(self, d):
+        value = self.__parse_bytearray(d)
+        self.__write_to_db(tablename=d['name'], value=value)
+
     def run(self):
         self.__create_table_if_not_exist()  # создание таблиц если их нет
         while True:
@@ -134,12 +139,15 @@ class StartProcessOpcForConnectToPLC(Process):
                 cprint.cprint.warn("Потеря соединения")
                 self.__reconect_to_plc()
             else:
+                threads = list()
                 for d in self.values_list:
                     if d['name'] not in self.bind:
                         self.bind[d['name']] = BindError(self.bytearray_data,d)
                     self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
-                    value = self.__parse_bytearray(d)
-                    self.__write_to_db(tablename=d['name'], value=value)
+                    x = threading.Thread(target=self._thread_for_write_data, args=(d,))
+                    threads.append(x)
+                    x.start()
+
                 cprint.cprint.info("Данные пришли")
             print("--- %s seconds ---" % (time.time() - start_time))
 
