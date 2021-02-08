@@ -42,6 +42,7 @@ class StartProcessOpcForConnectToPLC(Process):
         self.offset_DB = offset_db
         self.values_list = values_list
 
+        self.bind = {}
         self.error_read_data = False
         self.last_error = ''
         self.bytearray_data = bytearray()
