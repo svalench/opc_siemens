@@ -21,7 +21,7 @@ list_data = [
 
 
 def main():
-    pr = StartProcessOpcForConnectToPLC('192.168.32.128', 0, 2, 220, 0, 2300,values_list=list_data)
+    pr = StartProcessOpcForConnectToPLC('192.168.32.128', 0, 2, 3001, 0, 230,values_list=list_data)
     pr.start()
     while True:
         print(pr.is_alive(), 'process')
