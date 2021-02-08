@@ -136,7 +136,7 @@ class StartProcessOpcForConnectToPLC(Process):
             else:
                 for d in self.values_list:
                     if d['name'] not in self.bind:
-                        self.bind = BindError(self.bytearray_data,d)
+                        self.bind[d['name']] = BindError(self.bytearray_data,d)
                     self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
                     value = self.__parse_bytearray(d)
                     self.__write_to_db(tablename=d['name'], value=value)
