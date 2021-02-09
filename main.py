@@ -1,3 +1,4 @@
+import multiprocessing
 import time
 from typing import Optional
 
@@ -18,21 +19,29 @@ list_data = [
     # {"name": "p1502", "start": 802, "type": "real"},
 ]
 
+list_data1 = [
+    {"name": "iso1", "start": 0, "type": "double"},
+    {"name": "pol1", "start": 36, "type": "double"},
+    {"name": "pol2", "start": 40, "type": "double"}
+]
 
 list_connections = [
     {
         "name":"connect1",
         "ip":'192.168.32.128',
+        #"ip":'185.6.25.155',
         "rack":0,
         "slot":2,
         'DB':3001,
+        #'DB':81,
         "start":0,
         "offset":330,
+        #"offset":44,
         "value_list": list_data
     }
 ]
 
-
+statuses_connection = {}
 
 def main():
     pr = {}
@@ -45,12 +54,12 @@ def main():
                                                                     connection['start'],
                                                                     connection['offset'],
                                                                     values_list=connection['value_list'],
-                                                                    name=connection['name']
+                                                                    name_connect=connection['name']
                                                                 )
         pr[connection['name']].start()
     while True:
         for p in pr:
-            print(pr[p].is_alive(), 'process')
+            print(pr[p].is_alive(), 'process', p)
         time.sleep(1)
 
 

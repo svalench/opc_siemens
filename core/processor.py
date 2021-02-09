@@ -149,8 +149,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     x = threading.Thread(target=self._thread_for_write_data, args=(d,))
                     threads.append(x)
                     x.start()
-
-                cprint.cprint.info("Данные пришли")
+                #cprint.cprint.info("Данные пришли")
             print("--- %s seconds ---" % (time.time() - start_time))
 
 
