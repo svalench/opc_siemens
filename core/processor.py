@@ -3,7 +3,7 @@ import struct
 import threading
 import time
 from multiprocessing import Process
-
+import multiprocessing as mp
 import cprint
 import snap7
 
@@ -15,7 +15,7 @@ from settings import createConnection
 class StartProcessOpcForConnectToPLC(Process):
 
     def __init__(self, address: str, rack: int, slot: int, db: int, start_address_db: int, offset_db: int,
-                 values_list: list = None, port=102, name_connect: str = ""):
+                 values_list: list = None, port=102, name_connect: str = "", status=[],count=0):
         """Класс процесса для подключения к ПЛК по адресу address, с портом port (по умолчанию 102) и получения заданных
         значений из блока данных db в промежутке с start_address_db по start_address_db+offset_db
         (offset_db - количество забираемых byte из блока). После получения данных разбирает bytearray по
@@ -36,6 +36,8 @@ class StartProcessOpcForConnectToPLC(Process):
             values_list = []
         self.name_connect = name_connect
         self.address = address
+        self.status = status
+        self.count = count
         self.rack = rack
         self.slot = slot
         self.port = port
@@ -43,7 +45,6 @@ class StartProcessOpcForConnectToPLC(Process):
         self.start_address_DB = start_address_db
         self.offset_DB = offset_db
         self.values_list = values_list
-
         self.bind = {}
         self.error_read_data = False
         self.last_error = ''
@@ -140,20 +141,19 @@ class StartProcessOpcForConnectToPLC(Process):
             if (not self.__get_db_data()):
                 cprint.cprint.warn("Потеря соединения")
                 self.__reconect_to_plc()
+                self.status[self.count] = 0
             else:
                 threads = list()
                 for d in self.values_list:
                     if d['name'] not in self.bind:
-                        self.bind[d['name']] = BindError(self.bytearray_data,d)
+                        self.bind[d['name']] = BindError(self.bytearray_data, d)
                     self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
                     x = threading.Thread(target=self._thread_for_write_data, args=(d,))
                     threads.append(x)
                     x.start()
-                #cprint.cprint.info("Данные пришли")
+                    self.status[self.count] = 1
+                # cprint.cprint.info("Данные пришли")
             print("--- %s seconds ---" % (time.time() - start_time))
-
-
-
 
     def disassemble_float(self, data) -> float:  # метод для преобразования данных в real
         val = struct.unpack('>f', data)

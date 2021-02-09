@@ -5,6 +5,7 @@ from typing import Optional
 from core.processor import StartProcessOpcForConnectToPLC
 from core import models
 
+import multiprocessing as mp
 models.Base.metadata.create_all(bind=models.engine)
 
 list_data = [
@@ -45,6 +46,8 @@ statuses_connection = {}
 
 def main():
     pr = {}
+    arr = mp.Array('i', [0 for i in list_connections])
+    count = 0
     for connection in list_connections:
         pr[connection['name']] = StartProcessOpcForConnectToPLC(
                                                                     connection['ip'],
@@ -54,12 +57,17 @@ def main():
                                                                     connection['start'],
                                                                     connection['offset'],
                                                                     values_list=connection['value_list'],
-                                                                    name_connect=connection['name']
+                                                                    name_connect=connection['name'],
+                                                                    status = arr,
+                                                                    count  = count
                                                                 )
+        count+=1
         pr[connection['name']].start()
     while True:
         for p in pr:
             print(pr[p].is_alive(), 'process', p)
+        for a in arr:
+            print(a)
         time.sleep(1)
 
 
