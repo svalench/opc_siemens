@@ -10,8 +10,8 @@ models.Base.metadata.create_all(bind=models.engine)
 list_data = [
     {"name": "p1101", "start": 2, "type": "real"},
     {"name": "p1201", "start": 102, "type": "real"},
-    {"name": "p1202", "start": 202, "type": "real"},
-    {"name": "p1301", "start": 302, "type": "real"},
+    # {"name": "p1202", "start": 202, "type": "real"},
+    # {"name": "p1301", "start": 302, "type": "real"},
     # {"name": "p1302", "start": 402, "type": "real"},
     # {"name": "p1401", "start": 502, "type": "real"},
     # {"name": "p1402", "start": 602, "type": "real"},
@@ -35,7 +35,7 @@ list_connections = [
         'DB':3001,
         #'DB':81,
         "start":0,
-        "offset":330,
+        "offset":130,
         #"offset":44,
         "value_list": list_data
     }
