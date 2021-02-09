@@ -6,7 +6,6 @@ from core import models
 
 models.Base.metadata.create_all(bind=models.engine)
 
-
 list_data = [
     {"name": "p1101", "start": 2, "type": "real"},
     {"name": "p1201", "start": 102, "type": "real"},
@@ -20,11 +19,37 @@ list_data = [
 ]
 
 
+list_connections = [
+    {
+        "name":"connect1",
+        "ip":'192.168.32.128',
+        "rack":0,
+        "slot":2,
+        'DB':3001,
+        "start":0,
+        "offset":330,
+        "value_list": list_data
+    }
+]
+
+
+
 def main():
-    pr = StartProcessOpcForConnectToPLC('192.168.32.128', 0, 2, 3001, 0, 330,values_list=list_data)
-    pr.start()
+    pr = {}
+    for connection in list_connections:
+        pr[connection['name']] = StartProcessOpcForConnectToPLC(
+                                                                    connection['ip'],
+                                                                    connection['rack'],
+                                                                    connection['slot'],
+                                                                    connection['DB'],
+                                                                    connection['start'],
+                                                                    connection['offset'],
+                                                                    values_list=connection['value_list']
+                                                                )
+        pr[connection['name']].start()
     while True:
-        print(pr.is_alive(), 'process')
+        for p in pr:
+            print(pr[p].is_alive(), 'process')
         time.sleep(1)
 
 
