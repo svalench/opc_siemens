@@ -37,15 +37,15 @@ list_data1 = [
 list_connections = [
     {
         "name":"connect1",
-        #"ip":'192.168.32.128',
-        "ip":'185.6.25.155',
+        "ip":'192.168.32.128',
+        #"ip":'185.6.25.155',
         "rack":0,
         "slot":2,
-        #'DB':3001,
-        'DB':81,
+        'DB':3001,
+        #'DB':81,
         "start":0,
-        #"offset":180,
-        "offset":44,
+        "offset":180,
+        #"offset":44,
         "value_list": list_data1
     }
 ]
