@@ -35,7 +35,7 @@ list_connections = [
         'DB':3001,
         #'DB':81,
         "start":0,
-        "offset":130,
+        "offset":180,
         #"offset":44,
         "value_list": list_data
     }
