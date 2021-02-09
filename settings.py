@@ -8,8 +8,6 @@ SECRET = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RTdsff'
 TOKEN = 'tokenstart3dje34dfjd'
 SOCKET_PORT = 8086
 
-connections = []
-all_thread = []
 # подключение к базе данных
 DB = {
     'driver': 'postgres',
