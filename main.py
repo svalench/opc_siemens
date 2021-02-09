@@ -44,7 +44,8 @@ def main():
                                                                     connection['DB'],
                                                                     connection['start'],
                                                                     connection['offset'],
-                                                                    values_list=connection['value_list']
+                                                                    values_list=connection['value_list'],
+                                                                    name=connection['name']
                                                                 )
         pr[connection['name']].start()
     while True:
