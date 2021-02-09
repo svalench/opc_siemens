@@ -15,7 +15,7 @@ from settings import createConnection
 class StartProcessOpcForConnectToPLC(Process):
 
     def __init__(self, address: str, rack: int, slot: int, db: int, start_address_db: int, offset_db: int,
-                 values_list: list = None, port=102):
+                 values_list: list = None, port=102, name_connect: str = ""):
         """Класс процесса для подключения к ПЛК по адресу address, с портом port (по умолчанию 102) и получения заданных
         значений из блока данных db в промежутке с start_address_db по start_address_db+offset_db
         (offset_db - количество забираемых byte из блока). После получения данных разбирает bytearray по
@@ -29,11 +29,12 @@ class StartProcessOpcForConnectToPLC(Process):
         :param offset_db: количество читаемых байт в ДБ
         :param values_list: список значений которые нужно разобрать из bytearray в числовые
         :param port: номер порта (по умолчанию 102)
+        :param name_connect: префикс названия таблиц для подключения
 
         """
         if values_list is None:
             values_list = []
-
+        self.name_connect = name_connect
         self.address = address
         self.rack = rack
         self.slot = slot
@@ -93,6 +94,7 @@ class StartProcessOpcForConnectToPLC(Process):
                 vsql = 'BIGINT'
             if (q['type'] == 'bool'):
                 vsql = 'int'
+            q['name'] = self.name_connect + '''_''' + q['name']
             self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_temp_''' + q['name'] + ''' \
                                                                     (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
                                                                     value ''' + vsql + ''')''')
