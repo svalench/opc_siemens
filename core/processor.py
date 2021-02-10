@@ -171,7 +171,7 @@ class StartProcessOpcForConnectToPLC(Process):
         return val[0]
 
     def disassemble_int(self, data) -> int:  # метод для преобразования данных в int
-        return int.from_bytes(data, "big")
+        return int.from_bytes(data, "big", signed=True)
 
     def from_bytearray_to_bit(self, bit, start) -> int:
         value = int.from_bytes(self.bytearray_data[int(start):int(start) + 1], byteorder='little', signed=True)
