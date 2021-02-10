@@ -4,7 +4,8 @@ import threading
 
 from cprint import cprint
 
-from data import list_connections, statuses_connection
+from core.teldafax_dashboard_data import PlcRemoteUse
+from data import list_connections, statuses_connection, PLC_init
 from settings import SOCKET_PORT
 
 
@@ -34,18 +35,35 @@ def listen_server_mvlab():
             cprint.warn('Connected by %s' % str(addr))
             while True:
                 try:
-                    cprint.info('WIhlte cycle socket server')
                     data = conn.recv(1024)
+                    print(data)
                     if not data:
                         break
-                    data = {}
-                    count = 0
-                    for i in list_connections:
-                        data[i['name']] = [statuses_connection[count], i['name'], i['ip']]
-                        count += 1
-                    data = json.dumps(data).encode('utf-8')
-                    cprint.warn('sended  %s' % data)
-                    conn.send(data)
+                    data = json.loads(data)
+                    print(data)
+                    if "dash_teldafax" in data:
+                        try:
+                            data = PlcRemoteUse(PLC_init["address"], PLC_init["rack"], PLC_init["slot"], PLC_init["port"])
+                            data1 = data.get_dashboard_teldafax_value_power()
+                            print(data1)
+                            data2 = data.get_status_machine()
+                            data = {"data1":data1,"data2":data2}
+                            print(data)
+                            data = json.dumps(data).encode('utf-8')
+                            cprint.warn('sended  %s' % data)
+                            conn.send(data)
+                        except:
+                            conn.send(json.dumps({"error":"no connection"}).encode('utf-8'))
+                    else:
+                        data = {}
+                        count = 0
+                        for i in list_connections:
+                            data[i['name']] = [statuses_connection[count], i['name'], i['ip']]
+                            count += 1
+                        print(data)
+                        data = json.dumps(data).encode('utf-8')
+                        cprint.warn('sended  %s' % data)
+                        conn.send(data)
                     # conn.sendall()
                 except:
                     conn.close()
