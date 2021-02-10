@@ -80,6 +80,8 @@ class BindError:
                 self.__accident_start_time == 0 and
                 self.__accident_temp == 0 and
                 self.__last_update < datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)):
+            _conn = createConnection()
+            _c = self._conn.cursor()
             self._try_to_connect_db()
             start_update = datetime.datetime.now() - datetime.timedelta(days=7)
             end_update = datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)
@@ -92,15 +94,15 @@ class BindError:
                 tablename) + " r WHERE  r.now_time>b.tt and r.now_time<=(b.tt+('" + str(self.__interval) + " minutes'::interval))) as value \
         from mvlab_temp_" + str(tablename) + " a LEFT JOIN temp b ON a.now_time>b.tt and a.now_time<=(b.tt+('" + str(
                 self.__interval) + " minutes'::interval)) WHERE a.value IS NOT NULL GROUP BY tt ORDER BY tt asc;"
-            self._c.execute(sql)
-            self._conn.commit()
-            self._c.execute(
+            _c.execute(sql)
+            _conn.commit()
+            _c.execute(
                 '''DELETE FROM mvlab_temp_''' + tablename + ''' WHERE
                                                  "now_time" >= %s AND 
                                                  "now_time" < %s  ;''', [start_update, end_update])
-            self._conn.commit()
+            _conn.commit()
             self.__last_update = datetime.datetime.now()
-            self._conn.close()
+            _conn.close()
 
     def __transfer_accident_data(self, tablename):
         """Функция следит за данными если время пришло усредняет их или если произошла авария """
