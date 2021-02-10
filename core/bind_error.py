@@ -34,6 +34,7 @@ class BindError:
         self.deleay = 1
         self.dleay_upd = self.deleay*2
         self.__interval = 1
+        self.transfer_start = False
 
 
     def transform_data_to_bit(self, offset, bit, data):
@@ -65,7 +66,7 @@ class BindError:
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
             self.__transfer_accident_data(self.c['name'])
         else:
-            if (self.__accident_end_time == 0 and
+            if (self.__accident_end_time == 0 and not self.transfer_start and
                     self.__accident_start_time == 0 and
                     self.__accident_temp == 0 and
                     self.__last_update < datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)):
