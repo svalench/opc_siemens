@@ -55,7 +55,10 @@ class StartProcessOpcForConnectToPLC(Process):
 
         self.client = snap7.client.Client()
         self.client.set_connection_type(3)
-        self.client.connect(self.address, self.rack, self.slot, tcpport=self.port)
+        try:
+            self.client.connect(self.address, self.rack, self.slot, tcpport=self.port)
+        except:
+            cprint.cprint.err("NotConnect to PLC")
         super(StartProcessOpcForConnectToPLC, self).__init__()
 
     def __get_db_data(self) -> bool:  # получение данных в байт формате
@@ -70,7 +73,7 @@ class StartProcessOpcForConnectToPLC(Process):
             self.error_read_data = True
             return False
 
-    def __reconect_to_plc(self):
+    def __reconect_to_plc(self) -> bool:
         """пере подключение к плк в случае ошибки валидации данных"""
         cprint.cprint.warn("Переподключаюсь к ПЛК %s" % self.address)
         self.client.destroy()
@@ -84,7 +87,8 @@ class StartProcessOpcForConnectToPLC(Process):
             time.sleep(3)
             return False
 
-    def __create_table_if_not_exist(self):
+    def __create_table_if_not_exist(self) -> None:
+        """фнкция создания таблиц в БД"""
         cprint.cprint.info("Создаем таблицы")
         for q in self.values_list:
             if (q['type'] == 'int'):
@@ -104,7 +108,8 @@ class StartProcessOpcForConnectToPLC(Process):
                                                                                 value ''' + vsql + ''')''')
             self._conn.commit()
 
-    def __parse_bytearray(self, data: object) -> bool:
+    def __parse_bytearray(self, data: object) -> any:
+        """разбор полученных данных с ПЛК"""
         type = data['type']
         start = data['start']
         if (type == 'int'):
@@ -126,6 +131,7 @@ class StartProcessOpcForConnectToPLC(Process):
         return result
 
     def __write_to_db(self, tablename, value):
+        """Запись распаршеных данных в БД"""
         self._c.execute(
             '''INSERT INTO mvlab_temp_''' + tablename + ''' (value) VALUES (''' + str(value) + ''');''')
         self._conn.commit()
@@ -153,7 +159,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     x.start()
                     self.status[self.count] = 1
                 # cprint.cprint.info("Данные пришли")
-            print("--- %s seconds ---" % (time.time() - start_time))
+            cprint.cprint.info("--- %s seconds ---" % (time.time() - start_time))
 
     def disassemble_float(self, data) -> float:  # метод для преобразования данных в real
         val = struct.unpack('>f', data)
