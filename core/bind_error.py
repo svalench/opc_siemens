@@ -1,4 +1,5 @@
 import datetime
+import threading
 
 from cprint import cprint
 
@@ -64,7 +65,9 @@ class BindError:
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
             self.__transfer_accident_data(self.c['name'])
         else:
-            self.__transfer_data(self.c['name'])
+            #self.__transfer_data(self.c['name'])
+            x = threading.Thread(target=self.__transfer_data, args=(self.c['name'],))
+            x.start()
 
     def __transfer_data(self, tablename) -> None:
         """Проверяет сколько времени прошло с мометна последеней записи если вышло за рамки __last_update  то перезаписываем в основню таблицу"""
