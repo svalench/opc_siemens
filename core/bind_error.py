@@ -82,7 +82,7 @@ class BindError:
                 self.__last_update < datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)):
             _conn = createConnection()
             _c = self._conn.cursor()
-            self._try_to_connect_db()
+            #self._try_to_connect_db()
             start_update = datetime.datetime.now() - datetime.timedelta(days=7)
             end_update = datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)
             start_update = start_update.strftime(f)
