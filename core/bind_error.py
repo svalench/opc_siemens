@@ -73,6 +73,7 @@ class BindError:
                 #self.__transfer_data(self.c['name'])
                 x = threading.Thread(target=self.__transfer_data, args=(self.c['name'],))
                 x.start()
+                self.transfer_start = True
 
     def __transfer_data(self, tablename) -> None:
         """Проверяет сколько времени прошло с мометна последеней записи если вышло за рамки __last_update  то перезаписываем в основню таблицу"""
@@ -104,6 +105,7 @@ class BindError:
             _conn.commit()
             self.__last_update = datetime.datetime.now()
             _conn.close()
+            self.transfer_start = False
 
     def __transfer_accident_data(self, tablename):
         """Функция следит за данными если время пришло усредняет их или если произошла авария """
