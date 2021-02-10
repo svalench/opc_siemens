@@ -21,6 +21,7 @@ def main():
     count = 0
     for connection in list_connections:
         try:
+            time.sleep(3)
             pr[connection['name']] = StartProcessOpcForConnectToPLC(
                 connection['ip'],
                 connection['rack'],
