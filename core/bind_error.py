@@ -141,4 +141,4 @@ class BindError:
             self._conn = createConnection()
             self._c = self._conn.cursor()
         except:
-            cprint.err('error connection to DB for ' + str(self.kwargs['args'][0]['name']), interrupt=False)
+            cprint.err('error connection to DB for ', interrupt=False)
