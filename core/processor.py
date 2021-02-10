@@ -158,7 +158,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     x = threading.Thread(target=self._thread_for_write_data, args=(d,))
                     threads.append(x)
                     while threading.active_count() > 150:
-                        time.sleep(0.2)
+                        time.sleep(0.01)
                     x.start()
                     self.status[self.count] = 1
                 # cprint.cprint.info("Данные пришли")
