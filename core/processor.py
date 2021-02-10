@@ -157,7 +157,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
                     x = threading.Thread(target=self._thread_for_write_data, args=(d,))
                     threads.append(x)
-                    while threading.active_count() > 650:
+                    while threading.active_count() > 950:
                         time.sleep(0.01)
                     x.start()
                     self.status[self.count] = 1
