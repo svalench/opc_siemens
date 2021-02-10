@@ -135,7 +135,6 @@ class StartProcessOpcForConnectToPLC(Process):
         """Запись распаршеных данных в БД"""
         self._c.execute(
             '''INSERT INTO mvlab_temp_''' + tablename + ''' (value) VALUES (''' + str(value) + ''');''')
-        self._conn.commit()
 
     def _thread_for_write_data(self, d):
         value = self.__parse_bytearray(d)
@@ -160,7 +159,10 @@ class StartProcessOpcForConnectToPLC(Process):
                     while threading.active_count() > 950:
                         time.sleep(0.01)
                     x.start()
-                    self.status[self.count] = 1
+                for thread in threads:
+                    thread.join()
+                self._conn.commit()
+                self.status[self.count] = 1
                 # cprint.cprint.info("Данные пришли")
             cprint.cprint.info("--- %s seconds ---" % (time.time() - start_time))
 
