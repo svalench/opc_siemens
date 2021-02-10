@@ -1,15 +1,15 @@
 import multiprocessing as mp
 
 list_data = [
-    {"name": "p1101", "start": 2, "type": "real"},
-    {"name": "p1201", "start": 102, "type": "real"},
-    # {"name": "p1202", "start": 202, "type": "real"},
-    # {"name": "p1301", "start": 302, "type": "real"},
-    # {"name": "p1302", "start": 402, "type": "real"},
-    # {"name": "p1401", "start": 502, "type": "real"},
-    # {"name": "p1402", "start": 602, "type": "real"},
-    # {"name": "p1501", "start": 702, "type": "real"},
-    # {"name": "p1502", "start": 802, "type": "real"},
+    {"name": "p1101", "start": 0, "type": "int"},
+    {"name": "p1201", "start": 2, "type": "int"},
+    {"name": "p1202", "start": 4, "type": "int"},
+    {"name": "p1301", "start": 6, "type": "int"},
+    {"name": "p1302", "start": 8, "type": "int"},
+    {"name": "p1401", "start": 10, "type": "int"},
+    {"name": "p1402", "start": 12, "type": "int"},
+    {"name": "p1501", "start": 14, "type": "int"},
+    {"name": "p1502", "start": 16, "type": "int"},
 ]
 
 list_data1 = [
@@ -25,10 +25,10 @@ list_connections = [
         #"ip":'185.6.25.155',
         "rack": 0,
         "slot": 2,
-        'DB': 3001,
+        'DB': 500,
         #'DB':81,
         "start": 0,
-        "offset": 180,
+        "offset": 168,
         #"offset":44,
         "value_list": list_data
     }
