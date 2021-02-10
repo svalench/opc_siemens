@@ -65,11 +65,15 @@ class BindError:
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
             self.__transfer_accident_data(self.c['name'])
         else:
-            cprint.warn("------- START Transfer data from Temp table -------")
-            asyncio.run(self.__transfer_data(self.c['name']))
-            ##x = threading.Thread(target=self.__transfer_data, args=(self.c['name'],))
-            #x.start()
-            cprint.err("--------------------- END Transfer data from Temp table ---------------------")
+            if (self.__accident_end_time == 0 and
+                    self.__accident_start_time == 0 and
+                    self.__accident_temp == 0 and
+                    self.__last_update < datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)):
+                cprint.warn("------- START Transfer data from Temp table -------")
+                asyncio.run(self.__transfer_data(self.c['name']))
+                ##x = threading.Thread(target=self.__transfer_data, args=(self.c['name'],))
+                #x.start()
+                cprint.err("--------------------- END Transfer data from Temp table ---------------------")
 
     async def __transfer_data(self, tablename) -> None:
         """Проверяет сколько времени прошло с мометна последеней записи если вышло за рамки __last_update  то перезаписываем в основню таблицу"""
