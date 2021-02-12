@@ -143,6 +143,9 @@ class StartProcessOpcForConnectToPLC(Process):
         if divide:
             self._c.execute(
                 '''INSERT INTO mvlab_temp_''' + tablename + ''' (value) VALUES (''' + str(value) + ''');''')
+        else:
+            self._c.execute(
+                '''INSERT INTO mvlab_''' + tablename + ''' (value) VALUES (''' + str(value) + ''');''')
 
     def _thread_for_write_data(self, d):
         value = self.__parse_bytearray(d)
