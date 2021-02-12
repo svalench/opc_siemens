@@ -116,7 +116,8 @@ class StartProcessOpcForConnectToPLC(Process):
             offset = 2
             end = int(start) + int(offset)
             result = self.disassemble_int(self.bytearray_data[int(start):int(end)])
-            result = result/10
+            if data['divide']:
+                result = result/10
         elif (type == 'real'):
             offset = 4
             end = int(start) + int(offset)
