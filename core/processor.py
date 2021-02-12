@@ -159,8 +159,8 @@ class StartProcessOpcForConnectToPLC(Process):
             else:
                 threads = list()
                 for d in self.values_list:
-                    if d['name'] not in self.bind:
-                        time.sleep(0.01)
+                    if d['name'] not in self.bind and d['divide']:
+                        time.sleep(1)
                         self.bind[d['name']] = BindError(self.bytearray_data, d)
                     if d['divide']:
                         self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
