@@ -100,15 +100,21 @@ class StartProcessOpcForConnectToPLC(Process):
             if (q['table'] == 'bool'):
                 vsql = 'int'
             q['name'] = self.name_connect + '''_''' + q['name']
-            self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_temp_''' + q['name'] + ''' \
-                                                                    (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
-                                                                    value ''' + vsql + ''')''')
-            self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_''' + q['name'] + ''' \
-                                                                                (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
-                                                                                value ''' + vsql + ''')''')
-            self._conn.commit()
+            if q['divide']:
+                self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_temp_''' + q['name'] + ''' \
+                                                                        (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                                                                        value ''' + vsql + ''')''')
+                self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_''' + q['name'] + ''' \
+                                                                                    (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                                                                                    value ''' + vsql + ''')''')
+                self._conn.commit()
+            else:
+                self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_''' + q['name'] + ''' \
+                                (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                                value ''' + vsql + ''')''')
+                self._conn.commit()
 
-    def __parse_bytearray(self, data: object) -> any:
+    def __parse_bytearray(self, data: dict) -> any:
         """разбор полученных данных с ПЛК"""
         type = data['type']
         start = data['start']
@@ -132,14 +138,15 @@ class StartProcessOpcForConnectToPLC(Process):
             result = False
         return result
 
-    def __write_to_db(self, tablename, value):
+    def __write_to_db(self, tablename, value,divide):
         """Запись распаршеных данных в БД"""
-        self._c.execute(
-            '''INSERT INTO mvlab_temp_''' + tablename + ''' (value) VALUES (''' + str(value) + ''');''')
+        if divide:
+            self._c.execute(
+                '''INSERT INTO mvlab_temp_''' + tablename + ''' (value) VALUES (''' + str(value) + ''');''')
 
     def _thread_for_write_data(self, d):
         value = self.__parse_bytearray(d)
-        self.__write_to_db(tablename=d['name'], value=value)
+        self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
 
     def run(self):
         self.__create_table_if_not_exist()  # создание таблиц если их нет
@@ -155,7 +162,8 @@ class StartProcessOpcForConnectToPLC(Process):
                     if d['name'] not in self.bind:
                         time.sleep(0.01)
                         self.bind[d['name']] = BindError(self.bytearray_data, d)
-                    self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
+                    if d['divide']:
+                        self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
                     x = threading.Thread(target=self._thread_for_write_data, args=(d,))
                     threads.append(x)
                     while threading.active_count() > 250:
