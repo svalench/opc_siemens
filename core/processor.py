@@ -91,13 +91,13 @@ class StartProcessOpcForConnectToPLC(Process):
         """фнкция создания таблиц в БД"""
         cprint.cprint.info("Создаем таблицы")
         for q in self.values_list:
-            if (q['type'] == 'int'):
+            if (q['table'] == 'int'):
                 vsql = 'INT'
-            if (q['type'] == 'real'):
+            if (q['table'] == 'real'):
                 vsql = 'REAL'
-            if (q['type'] == 'double'):
+            if (q['table'] == 'double'):
                 vsql = 'BIGINT'
-            if (q['type'] == 'bool'):
+            if (q['table'] == 'bool'):
                 vsql = 'int'
             q['name'] = self.name_connect + '''_''' + q['name']
             self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_temp_''' + q['name'] + ''' \
