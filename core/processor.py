@@ -14,7 +14,7 @@ from settings import createConnection
 class StartProcessOpcForConnectToPLC(Process):
 
     def __init__(self, address: str, rack: int, slot: int, db: int, start_address_db: int, offset_db: int,
-                 values_list: list = None, port=102, name_connect: str = "", status=[],count=0):
+                 values_list: list = None, port=102, name_connect: str = "", status=[], count=0):
         """Класс процесса для подключения к ПЛК по адресу address, с портом port (по умолчанию 102) и получения заданных
         значений из блока данных db в промежутке с start_address_db по start_address_db+offset_db
         (offset_db - количество забираемых byte из блока). После получения данных разбирает bytearray по
@@ -122,7 +122,7 @@ class StartProcessOpcForConnectToPLC(Process):
             end = int(start) + int(offset)
             result = self.disassemble_int(self.bytearray_data[int(start):int(end)])
             if data['divide']:
-                result = result/10
+                result = result / 10
         elif (type == 'real'):
             offset = 4
             end = int(start) + int(offset)
@@ -137,7 +137,7 @@ class StartProcessOpcForConnectToPLC(Process):
             result = False
         return result
 
-    def __write_to_db(self, tablename, value,divide):
+    def __write_to_db(self, tablename, value, divide):
         """Запись распаршеных данных в БД"""
         if divide:
             self._c.execute(
