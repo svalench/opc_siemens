@@ -168,7 +168,7 @@ statuses_connection = mp.Array('i', [0 for i in list_connections])
 
 PLC_init = {
     "address": "192.168.32.128",
-    "rack": "0",
-    "slot": "2",
+    "rack": 0,
+    "slot": 2,
     "port": 102
 }
