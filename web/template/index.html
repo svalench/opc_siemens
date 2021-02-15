@@ -5,7 +5,20 @@
 </head>
 <body>
 This is start page
+{%for d in data%}
+<div>{{d.name}} - {{d.ip}} - {{d.status_connection}}</div>
+
+{%endfor%}
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	setInterval(reload,5000);
+	function reload(){
+		location.reload()
+	}
+
+
+
+</script>
 </body>
 </html>
