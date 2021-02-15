@@ -15,7 +15,7 @@ def start_socket():
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         host = '0.0.0.0'
         port = SOCKET_PORT
-        conn.settimeout(0.01)
+        conn.settimeout(1)
         conn.connect((host, port))
         conn.close()
         cprint.info("Socket isset")
@@ -39,8 +39,14 @@ def listen_server_mvlab():
                     print(data)
                     if not data:
                         break
-                    data = json.loads(data)
-                    print(data)
+                    try:
+                        data = json.loads(data)
+                        print(data)
+                    except:
+                        cprint.err("string not json")
+                        data = json.dumps("{'error':'string not json'}").encode('utf-8')
+                        conn.send(data)
+
                     if "dash_teldafax" in data:
                         try:
                             data = PlcRemoteUse(PLC_init["address"], PLC_init["rack"], PLC_init["slot"], PLC_init["port"])
@@ -52,8 +58,10 @@ def listen_server_mvlab():
                             data = json.dumps(data).encode('utf-8')
                             cprint.warn('sended  %s' % data)
                             conn.send(data)
+
                         except:
                             conn.send(json.dumps({"error":"no connection"}).encode('utf-8'))
+
                     else:
                         data = {}
                         count = 0
@@ -64,6 +72,7 @@ def listen_server_mvlab():
                         data = json.dumps(data).encode('utf-8')
                         cprint.warn('sended  %s' % data)
                         conn.send(data)
+
                     # conn.sendall()
                 except:
                     conn.close()
