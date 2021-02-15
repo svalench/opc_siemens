@@ -13,7 +13,7 @@ def start_socket():
     cprint.err('run socket ')
     try:
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        host = '128.65.54.166'
+        host = '0.0.0.0'
         port = SOCKET_PORT
         conn.settimeout(0.01)
         conn.connect((host, port))
@@ -27,9 +27,9 @@ def start_socket():
 
 def listen_server_mvlab():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind(('localhost', SOCKET_PORT))
+        s.bind(('0.0.0.0', SOCKET_PORT))
         s.listen()
-        cprint.warn('Listen localhost:%s' % SOCKET_PORT)
+        cprint.warn('Listen 0.0.0.0:%s' % SOCKET_PORT)
         conn, addr = s.accept()
         with conn:
             cprint.warn('Connected by %s' % str(addr))

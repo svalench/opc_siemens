@@ -155,7 +155,7 @@ class StartProcessOpcForConnectToPLC(Process):
         while True:
             start_time = time.time()
             if (not self.__get_db_data()):
-                cprint.cprint.warn("Потеря соединения")
+                # cprint.cprint.warn("Потеря соединения")
                 self.__reconect_to_plc()
                 self.status[self.count] = 0
             else:
@@ -176,7 +176,7 @@ class StartProcessOpcForConnectToPLC(Process):
                 self._conn.commit()
                 self.status[self.count] = 1
                 # cprint.cprint.info("Данные пришли")
-            cprint.cprint.info("--- %s seconds ---" % (time.time() - start_time))
+            # cprint.cprint.info("--- %s seconds ---" % (time.time() - start_time))
 
     def disassemble_float(self, data) -> float:  # метод для преобразования данных в real
         val = struct.unpack('>f', data)
