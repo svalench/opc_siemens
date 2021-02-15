@@ -4,11 +4,40 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
-This is start page
-{%for d in data%}
-<div>{{d.name}} - {{d.ip}} - {{d.status_connection}}</div>
 
+<div class="container">
+<div class="accordion" id="accordionExample">
+    {%for d in data%}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo{{ loop.index }}">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ loop.index }}" aria-expanded="true" aria-controls="collapse_{{ loop.index }}">
+        {{d.name}}
+      </button>
+    </h2>
+    <div id="collapse_{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="headingTwo{{ loop.index }}" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        {{d.ip}} - {{d.status_connection}}
+
+            <ul class="list-group">
+            {% for v in d.value_list%}
+                  <li class="list-group-item">name - {{v.name}}, start in db = {{v.start}}, type = {{v.type}}, divide={{v.divide}}</li>
+                {%endfor%}
+            </ul>
+      </div>
+    </div>
+  </div>
 {%endfor%}
+
+</div>
+</div>
+
+
+
+
+
+
+
+
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 <script>

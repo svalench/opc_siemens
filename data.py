@@ -70,6 +70,14 @@ list_data = [
     {"name": "moment_v502", "start": 128, "type": "int", 'table': 'real', "itarable": False, 'divide':True},
     {"name": "moment_v503", "start": 130, "type": "int", 'table': 'real', "itarable": False, 'divide':True},
 
+    {"name": "flow_fi1501", "start": 150, "type": "int", 'table': 'real', "itarable": False, 'divide':True},
+    {"name": "flow_fi1601", "start": 152, "type": "int", 'table': 'real', "itarable": False, 'divide':True},
+    {"name": "flow_fi1701", "start": 154, "type": "int", 'table': 'real', "itarable": False, 'divide':True},
+    {"name": "flow_fi1801", "start": 156, "type": "int", 'table': 'real', "itarable": False, 'divide':True},
+    {"name": "flow_fi1901", "start": 158, "type": "int", 'table': 'real', "itarable": False, 'divide':True},
+
+
+
     # Мощности машин
     {"name": "power1", "start": 160, "type": "int", 'table': 'real', "itarable": False, 'divide':True},
     {"name": "power2", "start": 162, "type": "int", 'table': 'real', "itarable": False, 'divide':True},
