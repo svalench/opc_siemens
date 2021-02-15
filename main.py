@@ -79,6 +79,6 @@ def restart_process_if_not_alive(p):
 
 
 if __name__ == '__main__':
-    proc = Process(target=run_flask)
+    proc = Process(target=run_flask, args=(statuses_connection,))
     proc.start()
     main()
