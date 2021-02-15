@@ -145,14 +145,14 @@ class PlcRemoteUse():
         except:
             return False
 
-    def get_dashboard_teldafax_value_power(self, db=300, start=0, offset=84):
+    def get_dashboard_teldafax_value_power(self, db=500, start=0, offset=84):
         try:
             data_read = self.client.db_read(db, start, offset)
-            power1 = self.transform_data_to_value(60, 4, data_read, 'real')
-            power2 = self.transform_data_to_value(64, 4, data_read, 'real')
-            power3 = self.transform_data_to_value(68, 4, data_read, 'real')
-            power4 = self.transform_data_to_value(72, 4, data_read, 'real')
-            sum_power = self.transform_data_to_value(80, 4, data_read, 'real')
+            power1 = self.transform_data_to_value(160, 2, data_read, 'int')/10
+            power2 = self.transform_data_to_value(162, 2, data_read, 'int')/10
+            power3 = self.transform_data_to_value(164, 2, data_read, 'int')/10
+            power4 = self.transform_data_to_value(166, 2, data_read, 'int')/10
+            sum_power = power1 + power2 + power3 + power4
             powers = {"power1": power1, 'power2': power2, 'power3': power3, 'power4': power4, 'sum_power': sum_power}
             return powers
         except:
