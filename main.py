@@ -5,11 +5,9 @@ from typing import Optional
 from cprint import cprint
 
 from core.processor import StartProcessOpcForConnectToPLC
-from core import models
+
 from core.socket_server import start_socket
 from data import list_connections, statuses_connection
-
-models.Base.metadata.create_all(bind=models.engine)
 
 
 pr = {}
