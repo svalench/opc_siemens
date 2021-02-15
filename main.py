@@ -1,14 +1,14 @@
 
 import time
+from multiprocessing import Process
 from typing import Optional
 
 from cprint import cprint
-
 from core.processor import StartProcessOpcForConnectToPLC
 
 from core.socket_server import start_socket
 from data import list_connections, statuses_connection
-
+from web.app import run_flask
 
 pr = {}
 data_for_restart = {}
@@ -79,4 +79,6 @@ def restart_process_if_not_alive(p):
 
 
 if __name__ == '__main__':
+    proc = Process(target=run_flask)
+    proc.start()
     main()
