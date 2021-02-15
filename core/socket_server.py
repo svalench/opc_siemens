@@ -13,7 +13,7 @@ def start_socket():
     cprint.err('run socket ')
     try:
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        host = '0.0.0.0'
+        host = '128.65.54.166'
         port = SOCKET_PORT
         conn.settimeout(0.01)
         conn.connect((host, port))
