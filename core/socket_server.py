@@ -1,6 +1,7 @@
 import json
 import socket
 import threading
+import time
 
 from cprint import cprint
 
@@ -61,6 +62,7 @@ def listen_server_mvlab():
 
                         except:
                             conn.send(json.dumps({"error":"no connection"}).encode('utf-8'))
+                            time.sleep(0.2)
 
                     else:
                         data = {}
@@ -76,4 +78,5 @@ def listen_server_mvlab():
                     # conn.sendall()
                 except:
                     conn.close()
+    time.sleep(0.2)
     start_socket()
