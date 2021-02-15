@@ -8,7 +8,6 @@ import cprint
 import snap7
 
 from core.bind_error import BindError
-from modules.module_siemens import PlcRemoteUse
 from settings import createConnection
 
 
