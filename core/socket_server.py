@@ -51,9 +51,9 @@ def listen_server_mvlab():
                     if "dash_teldafax" in data:
                         try:
                             data = PlcRemoteUse(PLC_init["address"], PLC_init["rack"], PLC_init["slot"], PLC_init["port"])
-                            data1 = data.get_dashboard_teldafax_value_power()
-                            print(data1)
-                            #data1 = {}
+                            #data1 = data.get_dashboard_teldafax_value_power()
+                            #print(data1)
+                            data1 = {}
                             #data2 = data.get_status_machine()
                             data2 = {}
                             data = {"data1":data1,"data2":data2}
