@@ -165,8 +165,8 @@ class PlcRemoteUse():
             data_read = self.client.db_read(db, start, offset)
             pump_p301_status = 3 & int.from_bytes(data_read[114:1], byteorder='little', signed=True)
             valve_B1101_status = int.from_bytes(data_read[108:1], byteorder='little', signed=True)
-            print(data_read[108:1], "valve B1101")
-            print(data_read[110:1], "valve B1601")
+            print(data_read[108:109], "valve B1101")
+            print(data_read[110:111], "valve B1601")
             valve_B1601_status = int.from_bytes(data_read[110:1], byteorder='little', signed=True)
 
             compres_V501_status = int.from_bytes(data_read[0:1], byteorder='little', signed=True)
