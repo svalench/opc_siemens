@@ -61,6 +61,7 @@ def listen_server_mvlab():
                             data = json.dumps(data).encode('utf-8')
                             cprint.warn('sended  %s' % data)
                             conn.send(data)
+                            time.sleep(0.2)
 
                         except:
                             conn.send(json.dumps({"error":"no connection"}).encode('utf-8'))
@@ -76,6 +77,7 @@ def listen_server_mvlab():
                         data = json.dumps(data).encode('utf-8')
                         cprint.warn('sended  %s' % data)
                         conn.send(data)
+                        time.sleep(0.2)
 
                     # conn.sendall()
                 except:
