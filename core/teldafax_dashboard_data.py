@@ -154,6 +154,7 @@ class PlcRemoteUse():
             power4 = self.transform_data_to_value(166, 2, data_read, 'int')/10
             sum_power = power1 + power2 + power3 + power4
             powers = {"power1": power1, 'power2': power2, 'power3': power3, 'power4': power4, 'sum_power': sum_power}
+            print(powers)
             return powers
         except:
             return {"error":"Нет связи с плк"}
