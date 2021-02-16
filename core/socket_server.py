@@ -31,56 +31,59 @@ def listen_server_mvlab():
         s.bind(('0.0.0.0', SOCKET_PORT))
         s.listen()
         cprint.warn('Listen 0.0.0.0:%s' % SOCKET_PORT)
-        conn, addr = s.accept()
-        with conn:
-            cprint.warn('Connected by %s' % str(addr))
-            while True:
-                try:
-                    data = conn.recv(1024)
-                    print(data)
-                    if not data:
-                        break
-                    try:
-                        data = json.loads(data)
-                        print(data)
-                    except:
-                        cprint.err("string not json")
-                        data = json.dumps("{'error':'string not json'}").encode('utf-8')
-                        conn.send(data)
-
-                    if "dash_teldafax" in data:
+        while True:
+            try:
+                conn, addr = s.accept()
+                with conn:
+                    cprint.warn('Connected by %s' % str(addr))
+                    while True:
                         try:
-                            data = PlcRemoteUse(PLC_init["address"], PLC_init["rack"], PLC_init["slot"], PLC_init["port"])
-                            data1 = data.get_dashboard_teldafax_value_power()
-                            print(data1)
-                            #data1 = {}
-                            data2 = data.get_status_machine()
-                            #data2 = {}
-                            data = {"data1":data1,"data2":data2}
+                            data = conn.recv(1024)
                             print(data)
-                            data = json.dumps(data).encode('utf-8')
-                            cprint.warn('sended  %s' % data)
-                            conn.send(data)
-                            time.sleep(0.2)
+                            if not data:
+                                break
+                            try:
+                                data = json.loads(data)
+                                print(data)
+                            except:
+                                cprint.err("string not json")
+                                data = json.dumps("{'error':'string not json'}").encode('utf-8')
+                                conn.send(data)
 
+                            if "dash_teldafax" in data:
+                                try:
+                                    data = PlcRemoteUse(PLC_init["address"], PLC_init["rack"], PLC_init["slot"], PLC_init["port"])
+                                    data1 = data.get_dashboard_teldafax_value_power()
+                                    print(data1)
+                                    #data1 = {}
+                                    data2 = data.get_status_machine()
+                                    #data2 = {}
+                                    data = {"data1":data1,"data2":data2}
+                                    print(data)
+                                    data = json.dumps(data).encode('utf-8')
+                                    cprint.warn('sended  %s' % data)
+                                    conn.send(data)
+                                    time.sleep(0.2)
+
+                                except:
+                                    conn.send(json.dumps({"error":"no connection"}).encode('utf-8'))
+                                    time.sleep(0.2)
+                            else:
+                                data = {}
+                                count = 0
+                                for i in list_connections:
+                                    data[i['name']] = [statuses_connection[count], i['name'], i['ip']]
+                                    count += 1
+                                print(data)
+                                data = json.dumps(data).encode('utf-8')
+                                cprint.warn('sended  %s' % data)
+                                conn.send(data)
+                                time.sleep(0.2)
+
+                            # conn.sendall()
                         except:
-                            conn.send(json.dumps({"error":"no connection"}).encode('utf-8'))
-                            time.sleep(0.2)
-
-                    else:
-                        data = {}
-                        count = 0
-                        for i in list_connections:
-                            data[i['name']] = [statuses_connection[count], i['name'], i['ip']]
-                            count += 1
-                        print(data)
-                        data = json.dumps(data).encode('utf-8')
-                        cprint.warn('sended  %s' % data)
-                        conn.send(data)
-                        time.sleep(0.2)
-
-                    # conn.sendall()
-                except:
-                    conn.close()
+                            conn.close()
+            finally:
+                conn.close()
     time.sleep(0.2)
     start_socket()
