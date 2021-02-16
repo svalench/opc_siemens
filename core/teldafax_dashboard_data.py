@@ -163,28 +163,26 @@ class PlcRemoteUse():
             work_status = self.get_value(64, 4, 2, 'int')
             time.sleep(0.01)
             data_read = self.client.db_read(db, start, offset)
-            pump_p301_status = 3 & int.from_bytes(data_read[114:1], byteorder='little', signed=True)
-            valve_B1101_status = int.from_bytes(data_read[108:1], byteorder='little', signed=True)
-            print(data_read[108:109], "valve B1101")
-            print(data_read[110:111], "valve B1601")
-            valve_B1601_status = int.from_bytes(data_read[110:1], byteorder='little', signed=True)
+            pump_p301_status = 3 & int.from_bytes(data_read[114:115], byteorder='little', signed=True)
+            valve_B1101_status = int.from_bytes(data_read[108:109], byteorder='little', signed=True)
+            valve_B1601_status = int.from_bytes(data_read[110:111], byteorder='little', signed=True)
 
             compres_V501_status = int.from_bytes(data_read[0:1], byteorder='little', signed=True)
             print(data_read[0:1], "compressor 1")
             print(data_read[16:1], "compressor 2")
-            compres_V502_status = int.from_bytes(data_read[16:1], byteorder='little', signed=True)
-            compres_V503_status = int.from_bytes(data_read[32:1], byteorder='little', signed=True)
+            compres_V502_status = int.from_bytes(data_read[16:17], byteorder='little', signed=True)
+            compres_V503_status = int.from_bytes(data_read[32:33], byteorder='little', signed=True)
 
-            generator_D601_status1 = 7 & int.from_bytes(data_read[116:1], byteorder='little', signed=True)
-            generator_D601_status2 = 24 & int.from_bytes(data_read[116:1], byteorder='little', signed=True)
-            generator_D602_status1 = 7 & int.from_bytes(data_read[122:1], byteorder='little', signed=True)
-            generator_D602_status2 = 24 & int.from_bytes(data_read[122:1], byteorder='little', signed=True)
-            generator_D603_status1 = 7 & int.from_bytes(data_read[128:1], byteorder='little', signed=True)
-            generator_D603_status2 = 24 & int.from_bytes(data_read[128:1], byteorder='little', signed=True)
-            generator_D604_status1 = 7 & int.from_bytes(data_read[134:1], byteorder='little', signed=True)
-            generator_D604_status2 = 24 & int.from_bytes(data_read[134:1], byteorder='little', signed=True)
+            generator_D601_status1 = 7 & int.from_bytes(data_read[116:117], byteorder='little', signed=True)
+            generator_D601_status2 = 24 & int.from_bytes(data_read[116:117], byteorder='little', signed=True)
+            generator_D602_status1 = 7 & int.from_bytes(data_read[122:123], byteorder='little', signed=True)
+            generator_D602_status2 = 24 & int.from_bytes(data_read[122:123], byteorder='little', signed=True)
+            generator_D603_status1 = 7 & int.from_bytes(data_read[128:129], byteorder='little', signed=True)
+            generator_D603_status2 = 24 & int.from_bytes(data_read[128:129], byteorder='little', signed=True)
+            generator_D604_status1 = 7 & int.from_bytes(data_read[134:135], byteorder='little', signed=True)
+            generator_D604_status2 = 24 & int.from_bytes(data_read[134:135], byteorder='little', signed=True)
 
-            fakel_A604 = int.from_bytes(data_read[140:1], byteorder='little', signed=True) #😀
+            fakel_A604 = int.from_bytes(data_read[140:141], byteorder='little', signed=True) #😀
             statuses = {
                 'work_status': work_status,
                 'pump_p301_status': pump_p301_status,
