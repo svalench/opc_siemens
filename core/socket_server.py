@@ -78,12 +78,12 @@ def listen_server_mvlab():
                                 data = json.dumps(data).encode('utf-8')
                                 cprint.warn('sended  %s' % data)
                                 conn.send(data)
-                                time.sleep(0.2)
+                                #time.sleep(0.2)
 
                             # conn.sendall()
                         except:
                             conn.close()
             finally:
                 conn.close()
-    time.sleep(0.2)
+    #time.sleep(0.2)
     start_socket()
