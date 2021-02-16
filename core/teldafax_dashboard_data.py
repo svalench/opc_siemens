@@ -148,7 +148,7 @@ class PlcRemoteUse():
     def get_dashboard_teldafax_value_power(self, db=500, start=0, offset=84):
         try:
             data_read = self.client.db_read(db, start, offset)
-            power1 = self.transform_data_to_value(160, 2, data_read, 'int')/10
+            power1 = int(self.transform_data_to_value(160, 2, data_read, 'int'))/10
             power2 = self.transform_data_to_value(162, 2, data_read, 'int')/10
             power3 = self.transform_data_to_value(164, 2, data_read, 'int')/10
             power4 = self.transform_data_to_value(166, 2, data_read, 'int')/10
