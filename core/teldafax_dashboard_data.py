@@ -154,7 +154,6 @@ class PlcRemoteUse():
             power4 = self.transform_data_to_value(166, 2, data_read, 'int')/10
             sum_power = power1 + power2 + power3 + power4
             powers = {"power1": power1, 'power2': power2, 'power3': power3, 'power4': power4, 'sum_power': sum_power}
-            print(powers)
             return powers
         except:
             return {"error":"Нет связи с плк"}
@@ -166,9 +165,12 @@ class PlcRemoteUse():
             data_read = self.client.db_read(db, start, offset)
             pump_p301_status = 3 & int.from_bytes(data_read[114:1], byteorder='little', signed=True)
             valve_B1101_status = int.from_bytes(data_read[108:1], byteorder='little', signed=True)
+            print(int.from_bytes(data_read[108:1], byteorder='little', signed=True), "valve B1101")
             valve_B1601_status = int.from_bytes(data_read[110:1], byteorder='little', signed=True)
 
             compres_V501_status = int.from_bytes(data_read[0:1], byteorder='little', signed=True)
+            print(int.from_bytes(data_read[0:1], byteorder='little', signed=True), "compressor 1")
+            print(int.from_bytes(data_read[16:1], byteorder='little', signed=True), "compressor 2")
             compres_V502_status = int.from_bytes(data_read[16:1], byteorder='little', signed=True)
             compres_V503_status = int.from_bytes(data_read[32:1], byteorder='little', signed=True)
 
