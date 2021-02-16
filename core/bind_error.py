@@ -33,7 +33,7 @@ class BindError:
         self.__last_update = datetime.datetime.now()
         self.deleay = 1
         self.dleay_upd = self.deleay*2
-        self.__interval = 1
+        self.__interval = 10
         self.transfer_start = False
 
 
