@@ -172,9 +172,6 @@ class StartProcessOpcForConnectToPLC(Process):
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
 
     def check_bit_in_int(self, value, bit):
-        bits = bin(value)
-        print(bits, value)
-        time.sleep(2)
         bits = bits.replace("0b", "")
         bits = bits[::-1]
         try:
@@ -185,10 +182,10 @@ class StartProcessOpcForConnectToPLC(Process):
 
     def add_to_alarm_new(self, d):
         for a in d['alarms']:
-            cprint.cprint.warn("create %s"%a['text'])
             status = self.check_bit_in_int(self.values[d['name']], int(a['bit']))
-            cprint.cprint.err("create %s" % status)
+
             if status == 1:
+                cprint.cprint.err("create %s" % status)
                 if a['type'] == "alarm":
                     tablename = "alarms"
                 else:
