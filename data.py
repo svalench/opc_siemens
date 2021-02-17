@@ -214,8 +214,86 @@ text_alarm = [
     {"name": "Авария - сработка верхнего предела изменения скорости", "type": "alarm"},
 ]
 
-struct_alarm_word = [
+struct_alarm_word_all1 = [
+    {"name": "ОГРАНИЧИТЕЛЬ ПЕРЕНАПРЯЖЕНИЙ", "type": "alarm"},
+    {"name": "F3 Частотный преобразователь, предохранитель", "type": "alarm"},
+    {"name": "F12 2-х фазная розетка, предохранитель", "type": "alarm"},
+    {"name": "F14 3-х фазная розетка, предохранитель", "type": "alarm"},
+    {"name": "F4 (A0604) Факел, предохранитель", "type": "alarm"},
+    {"name": "1. предохранитель насоса (Р301)", "type": "alarm"},
+    {"name": "2. предохранитель насоса (Р302)", "type": "alarm"},
+    {"name": "F1 Автомат вентилятора", "type": "alarm"},
+    {"name": "F2 газовый вентилятор, предохранитель", "type": "alarm"},
+    {"name": "F7 газоизмерит. станция, предохранитель", "type": "alarm"},
+    {"name": "Вентилятор щитовой, предохранитель", "type": "alarm"},
+    {"name": "F10 Обогреватель щитовой, предохраниель", "type": "alarm"},
+    {"name": "Уровень конденсата Конденсатный колодец K1101 (LZAH) НОРМАЛЬНЫЙ УРОВЕНЬ", "type": "alarm"},
+    {"name": "Конденсатный колодец K1101 (LZAH) ВЫСОКИЙ УРОВЕНЬ", "type": "alarm"},
+    {"name": "Защита компрессора", "type": "alarm"},
+    {"name": "F11 Обогреватель , предохраниель", "type": "alarm"},
+]
 
+struct_alarm_word_all2 = [
+    {"name": "V1 аварийный выключатель", "type": "alarm"},
+    {"name": "V2 аварийный выключатель", "type": "alarm"},
+    {"name": "KV1 аварийная остановка", "type": "alarm"},
+    {"name": "KV2 аварийная остановка", "type": "alarm"},
+    {"name": "KV3 аварийная остановка", "type": "alarm"},
+    {"name": "KV4 аварийная остановка", "type": "alarm"},
+    {"name": "RF Задымление", "type": "alarm"},
+    {"name": "F18 газосигнализатор, предохранитель", "type": "alarm"},
+    {"name": "Тревога! Утечка газа, 40 %", "type": "alarm"},
+    {"name": "Тревога! Утечка газа, 20 %", "type": "alarm"},
+    {"name": "3. предохранитель датчика вибрации", "type": "alarm"},
+    {"name": "4. предохранитель датчика вибрации", "type": "alarm"},
+    {"name": "5. предохранитель датчика вибрации", "type": "alarm"},
+    {"name": "6. предохранитель датчика вибрации", "type": "alarm"},
+    {"name": "газосигнализатор, ошибка", "type": "alarm"},
+    {"name": "F31, F32, 1., 2. предохранитель датчика вибрации", "type": "alarm"},
+]
+
+struct_alarm_word_all3 = [
+    {"name": "RD Диагностич. модуль", "type": "alarm"},
+    {"name": "F35 Автомат контр. напр.", "type": "alarm"},
+    {"name": "F13 Автомат освещения", "type": "alarm"},
+    {"name": "F15 Автомат", "type": "alarm"},
+    {"name": "Q1 Выключатель", "type": "alarm"},
+    {"name": "24VDC Powersupply", "type": "alarm"},
+    {"name": "F3 Частотный преобразователь, предохранитель", "type": "alarm"},
+    {"name": "F3 Частотный преобразователь, предохранитель", "type": "alarm"},
+]
+
+alarm_all_world = [
+    {
+        "name":"alarm_all1",
+        "start":5856,
+        'type':'int',
+        'table':'int',
+        "itarable": False,
+        'divide': False,
+        'if_change': True,
+        'alarms': [{"bit": s, "text": str(a['name']),"type":a['type']} for s, a in enumerate(struct_alarm_word_all1)]
+    },
+    {
+        "name":"alarm_all2",
+        "start":5858,
+        'type':'int',
+        'table':'int',
+        "itarable": False,
+        'divide': False,
+        'if_change': True,
+        'alarms': [{"bit": s, "text": str(a['name']),"type":a['type']} for s, a in enumerate(struct_alarm_word_all2)]
+    },
+    {
+        "name":"alarm_all3",
+        "start":5860,
+        'type':'int',
+        'table':'int',
+        "itarable": False,
+        'divide': False,
+        'if_change': True,
+        'alarms': [{"bit": s, "text": str(a['name']),"type":a['type']} for s, a in enumerate(struct_alarm_word_all3)]
+    },
 ]
 
 alarm_world = [
@@ -252,7 +330,7 @@ list_connections = [
         "slot": 2,
         'DB': 3001,
         "start": 0,
-        "offset": 5660,
+        "offset": 5862,
         "value_list": list_data_not_speed_s300
     },
     {
