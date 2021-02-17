@@ -6,12 +6,13 @@ import time
 from cprint import cprint
 
 from core.teldafax_dashboard_data import PlcRemoteUse
-from data import list_connections, statuses_connection, PLC_init
+from data import list_connections, statuses_connection, PLC_init, result_query
 from settings import SOCKET_PORT
 
 
 def start_socket():
     cprint.err('run socket ')
+    get_data_from_plc()
     try:
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         host = '0.0.0.0'
@@ -24,6 +25,24 @@ def start_socket():
         print("run socket server")
         my_thread = threading.Thread(target=listen_server_mvlab)
         my_thread.start()
+
+
+def get_data_from_plc():
+    while True:
+        time.sleep(2)
+        try:
+            data = PlcRemoteUse(PLC_init["address"], PLC_init["rack"], PLC_init["slot"], PLC_init["port"])
+            data1 = data.get_dashboard_teldafax_value_power()
+            data2 = data.get_status_machine()
+            data = {"data1": data1, "data2": data2}
+            globals()['result_query'] = data
+            data = json.dumps(data).encode('utf-8')
+            cprint.warn('sended  %s' % data)
+            # return data
+        except:
+            globals()['result_query'] = {"error": "no connection"}
+            # return json.dumps({"error": "no connection"}).encode('utf-8')
+
 
 
 def listen_server_mvlab():
@@ -51,23 +70,25 @@ def listen_server_mvlab():
                                 conn.send(data)
 
                             if "dash_teldafax" in data:
-                                try:
-                                    data = PlcRemoteUse(PLC_init["address"], PLC_init["rack"], PLC_init["slot"], PLC_init["port"])
-                                    data1 = data.get_dashboard_teldafax_value_power()
-                                    print(data1)
-                                    #data1 = {}
-                                    data2 = data.get_status_machine()
-                                    #data2 = {}
-                                    data = {"data1":data1,"data2":data2}
-                                    print(data)
-                                    data = json.dumps(data).encode('utf-8')
-                                    cprint.warn('sended  %s' % data)
-                                    conn.send(data)
-                                    time.sleep(0.2)
-
-                                except:
-                                    conn.send(json.dumps({"error":"no connection"}).encode('utf-8'))
-                                    time.sleep(0.2)
+                                # try:
+                                #     data = PlcRemoteUse(PLC_init["address"], PLC_init["rack"], PLC_init["slot"], PLC_init["port"])
+                                #     data1 = data.get_dashboard_teldafax_value_power()
+                                #     print(data1)
+                                #     #data1 = {}
+                                #     data2 = data.get_status_machine()
+                                #     #data2 = {}
+                                #     data = {"data1":data1,"data2":data2}
+                                #     print(data)
+                                #     data = json.dumps(data).encode('utf-8')
+                                #     cprint.warn('sended  %s' % data)
+                                #     conn.send(data)
+                                #     time.sleep(0.2)
+                                # except:
+                                #     conn.send(json.dumps({"error":"no connection"}).encode('utf-8'))
+                                #     time.sleep(0.2)
+                                data = json.dumps(result_query).encode('utf-8')
+                                cprint.warn('sended  %s' % data)
+                                conn.send(data)
                             else:
                                 data = {}
                                 count = 0

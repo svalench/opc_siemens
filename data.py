@@ -172,3 +172,5 @@ PLC_init = {
     "slot": 2,
     "port": 102
 }
+
+result_query = {}
