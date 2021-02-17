@@ -183,6 +183,7 @@ class StartProcessOpcForConnectToPLC(Process):
 
     def add_to_alarm_new(self, d):
         for a in d['alarms']:
+            cprint.cprint.warn("create %s"%a['text'])
             status = self.check_bit_in_int(self.values[d['name']], a['bit'])
             if status == 1:
                 if a['type'] == "alarm":
