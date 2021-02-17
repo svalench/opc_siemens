@@ -48,7 +48,7 @@ class StartProcessOpcForConnectToPLC(Process):
         self.error_read_data = False
         self.last_error = ''
         self.bytearray_data = bytearray()
-
+        self.values = {}
         self._conn = createConnection()
         self._c = self._conn.cursor()
 
@@ -148,7 +148,13 @@ class StartProcessOpcForConnectToPLC(Process):
 
     def _thread_for_write_data(self, d):
         value = self.__parse_bytearray(d)
-        self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
+        if not d['name'] in self.values:
+            self.values[d['name']] = value
+
+        if 'if_change' in d and not d['if_change'] and self.values[d['name']]!=value:
+            self.values[d['name']] = value
+            self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
+
 
     def run(self):
         self.__create_table_if_not_exist()  # создание таблиц если их нет
