@@ -307,7 +307,7 @@ alarm_world = [
      'alarms': [{"bit": s, "text": str(a['name']) + " - " + str(i['name']),"type":a['type']} for s, a in enumerate(text_alarm)]
      } for k, i in enumerate(list_data) if i['itarable']]
 
-list_data_not_speed_s300 = list_data_not_speed_s300_low_limits_warn + list_data_not_speed_s300_hight_limits_warn + list_data_not_speed_s300_low_limits_error + list_data_not_speed_s300_hight_limits_error + alarm_world
+list_data_not_speed_s300 = list_data_not_speed_s300_low_limits_warn + list_data_not_speed_s300_hight_limits_warn + list_data_not_speed_s300_low_limits_error + list_data_not_speed_s300_hight_limits_error + alarm_world + alarm_all_world
 
 list_connections = [
     {
