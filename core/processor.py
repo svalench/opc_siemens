@@ -159,6 +159,8 @@ class StartProcessOpcForConnectToPLC(Process):
             cprint.cprint.info("create last value in %s " % d['name'])
             self.values[d['name']] = value
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
+            if 'alarms' in d:
+                self.add_to_alarm_new(d)
 
         if 'if_change' in d and d['if_change'] and self.values[d['name']] != value:
             self.values[d['name']] = value
