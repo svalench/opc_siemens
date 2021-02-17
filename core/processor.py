@@ -89,6 +89,13 @@ class StartProcessOpcForConnectToPLC(Process):
     def __create_table_if_not_exist(self) -> None:
         """фнкция создания таблиц в БД"""
         cprint.cprint.info("Создаем таблицы")
+        self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_alarms \
+        (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+        text_alarm TEXT, status int, type_alarm VARCHAR(100), object_alarm TEXT)''')
+        self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_warnings \
+                (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                text_alarm TEXT, status int, type_alarm VARCHAR(100), object_alarm TEXT)''')
+        self._conn.commit()
         for q in self.values_list:
             if (q['table'] == 'int'):
                 vsql = 'INT'
@@ -148,17 +155,42 @@ class StartProcessOpcForConnectToPLC(Process):
 
     def _thread_for_write_data(self, d):
         value = self.__parse_bytearray(d)
-        if 'if_change' in d and  d['if_change'] and not d['name'] in self.values:
-            cprint.cprint.info("create last value in %s "%d['name'])
+        if 'if_change' in d and d['if_change'] and not d['name'] in self.values:
+            cprint.cprint.info("create last value in %s " % d['name'])
             self.values[d['name']] = value
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
 
-        if 'if_change' in d and d['if_change'] and self.values[d['name']]!=value:
+        if 'if_change' in d and d['if_change'] and self.values[d['name']] != value:
             self.values[d['name']] = value
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
+            if 'alarms' in d:
+                self.add_to_alarm_new(d)
+
         if 'if_change' in d and not d['if_change']:
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
 
+    def check_bit_in_int(self, value, bit):
+        bits = bin(value)
+        bits = bits.replace("0b", "")
+        bits = bits[::-1]
+        try:
+            status = bits[bit]
+        except:
+            status = 0
+        return status
+
+    def add_to_alarm_new(self, d):
+        for a in d['alarms']:
+            status = self.check_bit_in_int(self.values[d['name']], a['bit'])
+            if status == 1:
+                if a['type'] == "alarm":
+                    tablename = "alarms"
+                else:
+                    tablename = "warnings"
+                self._c.execute(
+                    '''INSERT INTO mvlab_''' + tablename +\
+                    ''' (text_alarm, status,type_alarm,object_alarm) VALUES ('{0}','{1}','{2}','{3}');'''.format(
+                        str(a['text']), 1,a['type'],d['name']))
 
     def run(self):
         self.__create_table_if_not_exist()  # создание таблиц если их нет
