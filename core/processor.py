@@ -192,7 +192,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     tablename = "warnings"
                 self._c.execute(
                     '''INSERT INTO mvlab_''' + tablename + \
-                    ''' (text_alarm, status,type_alarm,object_alarm) VALUES ('''+str(a['text'])+''','''+str(1)+''','''+str(a['type'])+''','''+str(d['name'])+''');''')
+                    ''' (text_alarm, status,type_alarm,object_alarm) VALUES ("'''+str(a['text'])+'''","'''+str(1)+'''","'''+str(a['type'])+'''","'''+str(d['name'])+'''");''')
 
                 cprint.cprint.err('''INSERT INTO mvlab_''' + tablename + \
                     ''' (text_alarm, status,type_alarm,object_alarm) VALUES ('''+str(a['text'])+''','''+str(1)+''','''+str(a['type'])+''','''+str(d['name'])+''');''')
