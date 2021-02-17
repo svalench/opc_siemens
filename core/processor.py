@@ -148,7 +148,8 @@ class StartProcessOpcForConnectToPLC(Process):
 
     def _thread_for_write_data(self, d):
         value = self.__parse_bytearray(d)
-        if not d['name'] in self.values:
+        if 'if_change' in d and not d['if_change'] and not d['name'] in self.values:
+            cprint.cprint.info("create last value in %s "%d['name'])
             self.values[d['name']] = value
 
         if 'if_change' in d and not d['if_change'] and self.values[d['name']]!=value:
