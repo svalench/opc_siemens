@@ -172,6 +172,7 @@ class StartProcessOpcForConnectToPLC(Process):
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
 
     def check_bit_in_int(self, value, bit):
+        bits = bin(value)
         bits = bits.replace("0b", "")
         bits = bits[::-1]
         try:
