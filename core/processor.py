@@ -174,6 +174,7 @@ class StartProcessOpcForConnectToPLC(Process):
     def check_bit_in_int(self, value, bit):
         bits = bin(value)
         print(bits, value)
+        time.sleep(2)
         bits = bits.replace("0b", "")
         bits = bits[::-1]
         try:
