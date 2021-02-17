@@ -192,11 +192,10 @@ class StartProcessOpcForConnectToPLC(Process):
                     tablename = "warnings"
                 self._c.execute(
                     '''INSERT INTO mvlab_''' + tablename + \
-                    ''' (text_alarm, status,type_alarm,object_alarm) VALUES ({0},{1},{2},{3});'''.format(
-                        str(a['text']), 1, a['type'], d['name']))
+                    ''' (text_alarm, status,type_alarm,object_alarm) VALUES ('''+str(a['text'])+''','''+str(1)+''','''+str(a['type'])+''','''+str(d['name'])+''');''')
+
                 cprint.cprint.err('''INSERT INTO mvlab_''' + tablename + \
-                    ''' (text_alarm, status,type_alarm,object_alarm) VALUES ({0},{1},{2},{3});'''.format(
-                        str(a['text']), 1, a['type'], d['name']))
+                    ''' (text_alarm, status,type_alarm,object_alarm) VALUES ('''+str(a['text'])+''','''+str(1)+''','''+str(a['type'])+''','''+str(d['name'])+''');''')
 
     def run(self):
         self.__create_table_if_not_exist()  # создание таблиц если их нет
