@@ -191,7 +191,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     tablename = "warnings"
                 self._c.execute(
                     '''INSERT INTO mvlab_''' + tablename +\
-                    ''' (text_alarm, status,type_alarm,object_alarm) VALUES ('{0}','{1}','{2}','{3}');'''.format(
+                    ''' (text_alarm, status,type_alarm,object_alarm) VALUES ({0},{1},{2},{3});'''.format(
                         str(a['text']), 1,a['type'],d['name']))
 
     def run(self):
