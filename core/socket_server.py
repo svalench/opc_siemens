@@ -12,7 +12,8 @@ from settings import SOCKET_PORT
 
 def start_socket():
     cprint.err('run socket ')
-    get_data_from_plc()
+    get_dat_from_plc_thread = threading.Thread(target=get_data_from_plc)
+    get_dat_from_plc_thread.start()
     try:
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         host = '0.0.0.0'
