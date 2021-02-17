@@ -151,6 +151,7 @@ class StartProcessOpcForConnectToPLC(Process):
         if 'if_change' in d and  d['if_change'] and not d['name'] in self.values:
             cprint.cprint.info("create last value in %s "%d['name'])
             self.values[d['name']] = value
+            self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
 
         if 'if_change' in d and d['if_change'] and self.values[d['name']]!=value:
             self.values[d['name']] = value
