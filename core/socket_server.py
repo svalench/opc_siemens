@@ -92,7 +92,7 @@ def listen_server_mvlab():
                             conn.close()
             finally:
                 conn.close()
-                if "test_socket" in data:
-                    return False
+                # if "test_socket" in data:
+                #     return False
     #time.sleep(0.2)
     start_socket()
