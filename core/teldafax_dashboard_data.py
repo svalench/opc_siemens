@@ -152,6 +152,14 @@ class PlcRemoteUse():
             power2 = self.transform_data_to_value(162, 2, data_read, 'int')/10
             power3 = self.transform_data_to_value(164, 2, data_read, 'int')/10
             power4 = self.transform_data_to_value(166, 2, data_read, 'int')/10
+            if power1 >6400:
+                power1 = 0
+            if power2 >6400:
+                power2 = 0
+            if power3 >6400:
+                power3 = 0
+            if power4 >6400:
+                power4 = 0
             sum_power = power1 + power2 + power3 + power4
             powers = {"power1": power1, 'power2': power2, 'power3': power3, 'power4': power4, 'sum_power': sum_power}
             return powers
