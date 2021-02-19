@@ -41,7 +41,7 @@ def get_data_from_plc():
             cprint.warn('sended  %s' % data)
             # return data
         except:
-            globals()['result_query'] = {"error": "no connection"}
+            globals()['result_query'] = [{"error": 0}]
             # return json.dumps({"error": "no connection"}).encode('utf-8')
 
 
@@ -85,8 +85,6 @@ def listen_server_mvlab():
                                 cprint.warn('sended  %s' % data)
                                 conn.send(data)
                         except:
-                            conn.close()
-                        finally:
                             conn.close()
             finally:
                 conn.close()
