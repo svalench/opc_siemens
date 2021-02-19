@@ -74,10 +74,6 @@ def listen_server_mvlab():
                                 data = json.dumps(result_query).encode('utf-8')
                                 cprint.warn('sended  %s' % data)
                                 conn.send(data)
-                            # elif "test_socket" in data:
-                            #     data1 = json.dumps("{'test':True}").encode('utf-8')
-                            #     conn.send(data1)
-                            #     return True
                             else:
                                 data = {}
                                 count = 0
@@ -90,9 +86,8 @@ def listen_server_mvlab():
                                 conn.send(data)
                         except:
                             conn.close()
+                        finally:
+                            conn.close()
             finally:
                 conn.close()
-                # if "test_socket" in data:
-                #     return False
-    #time.sleep(0.2)
     start_socket()
