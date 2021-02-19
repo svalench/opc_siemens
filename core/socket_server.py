@@ -86,6 +86,9 @@ def listen_server_mvlab():
                                 conn.send(data)
                         except:
                             conn.close()
+            except:
+                conn.close()
+                break
             finally:
                 conn.close()
-                start_socket()
+    start_socket()
