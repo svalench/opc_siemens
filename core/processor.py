@@ -129,7 +129,7 @@ class StartProcessOpcForConnectToPLC(Process):
             end = int(start) + int(offset)
             result = self.disassemble_int(self.bytearray_data[int(start):int(end)])
             if data['divide']:
-                if result >65000:
+                if result > 65000:
                     result = 0
                 else:
                     result = result / 10
@@ -189,26 +189,28 @@ class StartProcessOpcForConnectToPLC(Process):
             status = self.check_bit_in_int(self.values[d['name']], int(a['bit']))
 
             if status == "1":
-                cprint.cprint.err("create %s" % status)
                 if a['type'] == "alarm":
                     tablename = "alarms"
                 else:
                     tablename = "warnings"
-                cprint.cprint.err('''INSERT INTO mvlab_''' + tablename + \
-                                  ''' (text_alarm, status,type_alarm,object_alarm) VALUES (''' + str(
-                    a['text']) + ''',''' + str(1) + ''',''' + str(a['type']) + ''',''' + str(d['name']) + ''');''')
+
                 self._c.execute(
-                    '''INSERT INTO mvlab_''' + tablename + \
-                    """ (text_alarm, status,type_alarm,object_alarm) VALUES ('"""+str(a['text'])+"""','"""+str(1)+"""','"""+str(a['type'])+"""','"""+str(d['name'])+"""');""")
-
-
+                    """SELECT COUNT(*) FROM mvlab_alarms  WHERE status=1 text_alarm = '""" + str(a['text']) + """' and \
+                     type_alarm='""" + str(a['type']) + """' and  object_alarm='""" + str(d['name']) + """';""")
+                records = self._c.fetchall()
+                if records[0][0]>0:
+                    pass
+                else:
+                    self._c.execute(
+                        '''INSERT INTO mvlab_''' + tablename + \
+                        """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(a['text']) + """','""" + str(
+                            1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
 
     def run(self):
         self.__create_table_if_not_exist()  # создание таблиц если их нет
         while True:
             start_time = time.time()
             if (not self.__get_db_data()):
-                # cprint.cprint.warn("Потеря соединения")
                 self.__reconect_to_plc()
                 self.status[self.count] = 0
             else:
