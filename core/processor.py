@@ -198,13 +198,16 @@ class StartProcessOpcForConnectToPLC(Process):
                     """SELECT COUNT(*) FROM mvlab_alarms  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
                      type_alarm='""" + str(a['type']) + """' and  object_alarm='""" + str(d['name']) + """';""")
                 records = self._c.fetchall()
-                if records[0][0]>0:
-                    pass
-                else:
-                    self._c.execute(
-                        '''INSERT INTO mvlab_''' + tablename + \
-                        """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(a['text']) + """','""" + str(
-                            1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
+                try:
+                    if records[0][0]>0:
+                        pass
+                    else:
+                        self._c.execute(
+                            '''INSERT INTO mvlab_''' + tablename + \
+                            """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(a['text']) + """','""" + str(
+                                1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
+                except:
+                    cprint.cprint.info("error in 202 string proccess.py")
 
     def run(self):
         self.__create_table_if_not_exist()  # создание таблиц если их нет
