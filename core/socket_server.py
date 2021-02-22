@@ -82,6 +82,7 @@ def listen_server_mvlab():
                             cprint.warn('sended  %s' % len(gzip.compress(bytes(data,'utf-8'))))
                             conn.sendall(gzip.compress(bytes(data,'utf-8')))
                             conn.close()
+                            break
                         else:
                             data = {}
                             count = 0
