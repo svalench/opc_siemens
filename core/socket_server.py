@@ -91,7 +91,8 @@ def listen_server_mvlab():
                             data = json.dumps(data).encode('utf-8')
                             cprint.warn('sended  %s' % data)
                             conn.send(data)
-                    except:
+                    except Exception as e:
+                        cprint.info(e)
                         break
             except:
                 s.close()
