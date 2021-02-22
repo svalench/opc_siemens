@@ -2,10 +2,9 @@ import json
 import socket
 import threading
 import time
-import gzip
 
 from cprint import cprint
-from io import StringIO
+
 from core.teldafax_dashboard_data import PlcRemoteUse
 from data import list_connections, statuses_connection, PLC_init, result_query
 from settings import SOCKET_PORT
@@ -76,11 +75,7 @@ def listen_server_mvlab():
                                 cprint.warn('sended  %s' % data)
                                 conn.send(data)
                             elif "get_connections" in data:
-                                data = json.dumps(list_connections).encode('utf-8')
-                                out = StringIO()
-                                with gzip.GzipFile(fileobj=out, mode="w") as f:
-                                    f.write('{"a":1,"b":2}')
-                                data = out.getvalue()
+                                data = json.dumps(list_connections).encode('zlib')
                                 conn.send(data)
                             else:
                                 data = {}
