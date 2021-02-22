@@ -86,9 +86,10 @@ def listen_server_mvlab():
                                 conn.send(data)
                         except:
                             conn.close()
+                            raise ValueError("erorr")
             except:
-                conn.close()
                 break
             finally:
                 conn.close()
+        start_socket()
     start_socket()
