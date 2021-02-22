@@ -74,6 +74,9 @@ def listen_server_mvlab():
                                 data = json.dumps(result_query).encode('utf-8')
                                 cprint.warn('sended  %s' % data)
                                 conn.send(data)
+                            elif "get_connections" in data:
+                                data = json.dumps(list_connections).encode('utf-8')
+                                conn.send(data)
                             else:
                                 data = {}
                                 count = 0
