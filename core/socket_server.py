@@ -47,6 +47,7 @@ def get_data_from_plc():
 
 def listen_server_mvlab():
     while True:
+        cprint.info("Try start socket server")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind(('0.0.0.0', SOCKET_PORT))
             s.listen()
