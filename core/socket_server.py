@@ -38,8 +38,6 @@ def get_data_from_plc():
             data2 = data.get_status_machine()
             data = {"data1": data1, "data2": data2}
             globals()['result_query'] = data
-            data = json.dumps(data).encode('utf-8')
-            cprint.warn('sended  %s' % data)
             # return data
         except:
             globals()['result_query'] = [{"error": 0}]
@@ -48,51 +46,51 @@ def get_data_from_plc():
 
 
 def listen_server_mvlab():
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind(('0.0.0.0', SOCKET_PORT))
-        s.listen()
-        cprint.warn('Listen 0.0.0.0:%s' % SOCKET_PORT)
-        while True:
-            try:
-                conn, addr = s.accept()
-                while True:
-                    try:
-                        data = conn.recv(1024)
-                        print(data)
-                        if not data:
-                            break
+    while True:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind(('0.0.0.0', SOCKET_PORT))
+            s.listen()
+            cprint.warn('Listen 0.0.0.0:%s' % SOCKET_PORT)
+            while True:
+                try:
+                    conn, addr = s.accept()
+                    while True:
                         try:
-                            data = json.loads(data)
+                            data = conn.recv(1024)
                             print(data)
-                        except:
-                            cprint.err("string not json")
-                            data = json.dumps("{'error':'string not json'}").encode('utf-8')
-                            conn.send(data)
+                            if not data:
+                                break
+                            try:
+                                data = json.loads(data)
+                                print(data)
+                            except:
+                                cprint.err("string not json")
+                                data = json.dumps("{'error':'string not json'}").encode('utf-8')
+                                conn.send(data)
 
-                        if "dash_teldafax" in data:
-                            data = json.dumps(result_query).encode('utf-8')
-                            cprint.warn('sended  %s' % data)
-                            conn.send(data)
-                        elif "get_connections" in data:
-                            data = json.dumps(list_connections)
-                            cprint.warn('sended  %s' % len(gzip.compress(bytes(data,'utf-8'))))
-                            conn.send(gzip.compress(bytes(data,'utf-8')))
-                        else:
-                            data = {}
-                            count = 0
-                            for i in list_connections:
-                                data[i['name']] = [statuses_connection[count], i['name'], i['ip']]
-                                count += 1
-                            print(data)
-                            data = json.dumps(data).encode('utf-8')
-                            cprint.warn('sended  %s' % data)
-                            conn.send(data)
-                    except:
-                        conn.close()
-                        raise ValueError("erorr")
-            except:
-                break
-            finally:
-                conn.close()
-        listen_server_mvlab()
-    listen_server_mvlab()
+                            if "dash_teldafax" in data:
+                                data = json.dumps(result_query).encode('utf-8')
+                                cprint.warn('sended  %s' % data)
+                                conn.send(data)
+                            elif "get_connections" in data:
+                                data = json.dumps(list_connections)
+                                cprint.warn('sended  %s' % len(gzip.compress(bytes(data,'utf-8'))))
+                                conn.send(gzip.compress(bytes(data,'utf-8')))
+                            else:
+                                data = {}
+                                count = 0
+                                for i in list_connections:
+                                    data[i['name']] = [statuses_connection[count], i['name'], i['ip']]
+                                    count += 1
+                                print(data)
+                                data = json.dumps(data).encode('utf-8')
+                                cprint.warn('sended  %s' % data)
+                                conn.send(data)
+                        except:
+                            conn.close()
+                            raise ValueError("erorr")
+                except:
+                    break
+                finally:
+                    conn.close()
+        time.sleep(10)
