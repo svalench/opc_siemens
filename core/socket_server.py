@@ -78,9 +78,9 @@ def listen_server_mvlab():
                             cprint.warn('sended  %s' % data)
                             conn.send(data)
                         elif "get_connections" in data:
-                            data = json.dumps(list_connections)
-                            cprint.warn('sended  %s' % len(gzip.compress(bytes(data,'utf-8'))))
-                            conn.sendall(gzip.compress(bytes(data,'utf-8')))
+                            data = json.dumps(list_connections).encode('utf-8')
+                            #cprint.warn('sended  %s' % len(gzip.compress(bytes(data,'utf-8'))))
+                            conn.sendall(data)
                             conn.close()
                         else:
                             data = {}
