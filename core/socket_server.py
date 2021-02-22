@@ -2,7 +2,7 @@ import json
 import socket
 import threading
 import time
-
+import gzip
 from cprint import cprint
 
 from core.teldafax_dashboard_data import PlcRemoteUse
@@ -72,6 +72,7 @@ def listen_server_mvlab():
 
                             if "dash_teldafax" in data:
                                 data = json.dumps(result_query).encode('utf-8')
+                                data = gzip.compress(data)
                                 cprint.warn('sended  %s' % data)
                                 conn.send(data)
                             elif "get_connections" in data:
