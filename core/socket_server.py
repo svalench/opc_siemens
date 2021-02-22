@@ -48,10 +48,13 @@ def get_data_from_plc():
 def listen_server_mvlab():
     while True:
         cprint.info("Try to start xocket server")
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind(('0.0.0.0', SOCKET_PORT))
-        s.listen()
-        cprint.warn('Listen 0.0.0.0:%s' % SOCKET_PORT)
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.bind(('0.0.0.0', SOCKET_PORT))
+            s.listen()
+            cprint.warn('Listen 0.0.0.0:%s' % SOCKET_PORT)
+        except:
+            time.sleep(5)
         while True:
             try:
                 conn, addr = s.accept()
