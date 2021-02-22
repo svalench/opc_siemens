@@ -92,7 +92,6 @@ def listen_server_mvlab():
                             cprint.warn('sended  %s' % data)
                             conn.send(data)
                     except:
-                        conn.close()
                         break
             except:
                 s.close()
