@@ -94,5 +94,5 @@ def listen_server_mvlab():
                 break
             finally:
                 conn.close()
-        start_socket()
-    start_socket()
+        listen_server_mvlab()
+    listen_server_mvlab()
