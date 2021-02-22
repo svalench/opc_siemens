@@ -55,6 +55,7 @@ def listen_server_mvlab():
             cprint.warn('Listen 0.0.0.0:%s' % SOCKET_PORT)
         except:
             time.sleep(5)
+            continue
         while True:
             try:
                 conn, addr = s.accept()
@@ -95,6 +96,5 @@ def listen_server_mvlab():
                         raise ValueError("erorr")
             except:
                 s.close()
-            finally:
-                time.sleep(5)
+                break
 
