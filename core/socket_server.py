@@ -79,7 +79,7 @@ def listen_server_mvlab():
                                 data = json.dumps(list_connections).encode('utf-8')
                                 out = StringIO()
                                 with gzip.GzipFile(fileobj=out, mode="w") as f:
-                                    f.write(data)
+                                    f.write('{"a":1,"b":2}')
                                 data = out.getvalue()
                                 conn.send(data)
                             else:
