@@ -73,14 +73,14 @@ def listen_server_mvlab():
 
                             if "dash_teldafax" in data:
                                 data = json.dumps(result_query).encode('utf-8')
-                                out = StringIO()
-                                with gzip.GzipFile(fileobj=out, mode="w") as f:
-                                    f.write("This is mike number one, isn't this a lot of fun?")
-                                data = out.getvalue()
                                 cprint.warn('sended  %s' % data)
                                 conn.send(data)
                             elif "get_connections" in data:
                                 data = json.dumps(list_connections).encode('utf-8')
+                                out = StringIO()
+                                with gzip.GzipFile(fileobj=out, mode="w") as f:
+                                    f.write(data)
+                                data = out.getvalue()
                                 conn.send(data)
                             else:
                                 data = {}
