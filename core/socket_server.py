@@ -1,3 +1,4 @@
+import gzip
 import json
 import socket
 import threading
@@ -75,8 +76,8 @@ def listen_server_mvlab():
                                 cprint.warn('sended  %s' % data)
                                 conn.send(data)
                             elif "get_connections" in data:
-                                data = json.dumps(list_connections).encode('zlib')
-                                cprint.warn('sended  %s' % data)
+                                data = json.dumps(list_connections)
+                                cprint.warn('sended  %s' % gzip.compress(bytes(data,'utf-8')))
                                 conn.send(data)
                             else:
                                 data = {}
