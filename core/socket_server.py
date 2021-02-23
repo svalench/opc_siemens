@@ -81,13 +81,21 @@ def listen_server_mvlab():
                             ss = []
                             if "connection_name" in data:
                                 ss = list_connections[data["connection_name"]]
+                                ss_len = int(math.ceil((len(ss)/1024) + 1))
+                                conn.send(ss_len.to_bytes(2, 'big'))
+                                for i in range(ss_len):
+                                    start = i*ss_len
+                                    end = (i+1)*ss_len
+                                    conn.send(ss[start:end])
+                                    time.sleep(0.4)
+
                             else:
                                 for d in list_connections:
                                     ss.append({'connection_name':d['name'],"ip":d['ip']})
-                            print(ss)
-                            data = json.dumps(ss).encode('utf-8')
-                            conn.send(data)
-                            time.sleep(0.5)
+                                print(ss)
+                                data = json.dumps(ss).encode('utf-8')
+                                conn.send(data)
+                                time.sleep(0.5)
                         else:
                             data = {}
                             count = 0
