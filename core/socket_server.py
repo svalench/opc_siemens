@@ -82,11 +82,11 @@ def listen_server_mvlab():
                             data = json.dumps(list_connections).encode('utf-8')
                             col_string = math.ceil(len(data)/1024)
                             conn.send(json.dumps({"col_string":col_string}).encode('utf-8'))
-                            for i in range(col_string):
+                            for i in range(col_string+1):
                                 start = i*1024
                                 end = (i+1)*1024
                                 conn.send(data[start:end])
-                            
+
                             conn.close()
                         else:
                             data = {}
