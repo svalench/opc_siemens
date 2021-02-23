@@ -80,7 +80,7 @@ def listen_server_mvlab():
                         elif "get_connections" in data:
                             data = json.dumps(list_connections).encode('utf-8')
                             col_string = math.ceil(len(data) / 1024)
-                            col_string += 1
+                            col_string += 2
                             conn.send(json.dumps({"col_string": col_string}).encode('utf-8'))
                             for i in range(col_string):
                                 start = i * 1024
