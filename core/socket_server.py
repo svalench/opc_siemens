@@ -98,8 +98,10 @@ def listen_server_mvlab():
                                 conn.close()
 
                             else:
+                                count = 0
                                 for d in list_connections:
-                                    ss.append({'connection_name':d['name'],"ip":d['ip']})
+                                    ss.append({'connection_name':d['name'],"ip":d['ip'], 'key':count})
+                                    count += 1
                                 print(ss)
                                 data = json.dumps(ss).encode('utf-8')
                                 conn.send(data)
