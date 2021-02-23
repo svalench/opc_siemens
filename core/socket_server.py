@@ -1,5 +1,6 @@
 import gzip
 import json
+import math
 import socket
 import threading
 import time
@@ -79,8 +80,13 @@ def listen_server_mvlab():
                             conn.send(data)
                         elif "get_connections" in data:
                             data = json.dumps(list_connections).encode('utf-8')
-                            #cprint.warn('sended  %s' % len(gzip.compress(bytes(data,'utf-8'))))
-                            conn.sendall(data)
+                            col_string = math.ceil(len(data)/1024)
+                            conn.send(json.dumps({"col_string":col_string}).encode('utf-8'))
+                            for i in range(col_string):
+                                start = i*1024
+                                end = (i+1)*1024
+                                conn.send(data[start:end])
+                            
                             conn.close()
                         else:
                             data = {}
