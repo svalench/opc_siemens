@@ -78,7 +78,13 @@ def listen_server_mvlab():
                             cprint.warn('sended  %s' % data)
                             conn.send(data)
                         elif "get_connections" in data:
-                            data = json.dumps(list_connections).encode('utf-8')
+                            s = []
+                            if "connection_name" in data:
+                                s = list_connections[data["connection_name"]]
+                            else:
+                                for d in list_connections:
+                                    s.append({'connection_name':d['name'],"ip":d['ip']})
+                            data = json.dumps(s).encode('utf-8')
                             col_string = math.ceil(len(data) / 1024)
                             col_string += 2
                             conn.send(json.dumps({"col_string": col_string}).encode('utf-8'))
@@ -86,7 +92,7 @@ def listen_server_mvlab():
                                 start = i * 1024
                                 end = (i + 1) * 1024
                                 conn.send(data[start:end])
-                                time.sleep(0.4)
+                                time.sleep(0.6)
                                 print(data[start:end])
 
                             conn.close()
