@@ -87,7 +87,7 @@ def listen_server_mvlab():
                             print(ss)
                             data = json.dumps(ss).encode('utf-8')
                             conn.send(data)
-                            time.sleep(0.1)
+                            time.sleep(0.5)
                         else:
                             data = {}
                             count = 0
