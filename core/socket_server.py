@@ -79,9 +79,12 @@ def listen_server_mvlab():
                             conn.send(data)
                         elif "get_connections" in data:
                             s = []
-
-                            for d in list_connections:
-                                s.append({'connection_name':d['name'],"ip":d['ip']})
+                            if "connection_name" in data:
+                                s = list_connections[data["connection_name"]]
+                            else:
+                                for d in list_connections:
+                                    s.append({'connection_name':d['name'],"ip":d['ip']})
+                            print(s)
                             data = json.dumps(s).encode('utf-8')
                             conn.send(data)
 
