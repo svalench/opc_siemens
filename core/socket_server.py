@@ -85,15 +85,7 @@ def listen_server_mvlab():
                                 for d in list_connections:
                                     s.append({'connection_name':d['name'],"ip":d['ip']})
                             data = json.dumps(s).encode('utf-8')
-                            col_string = math.ceil(len(data) / 1024)
-                            col_string += 2
-                            conn.send(json.dumps({"col_string": col_string}).encode('utf-8'))
-                            for i in range(col_string):
-                                start = i * 1024
-                                end = (i + 1) * 1024
-                                conn.send(data[start:end])
-                                time.sleep(0.1)
-                                print(data[start:end])
+                            conn.send(data)
 
                             conn.close()
                         else:
