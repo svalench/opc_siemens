@@ -85,8 +85,8 @@ def listen_server_mvlab():
                                 ss = json.dumps(ss).encode('utf-8')
                                 conn.send(ss_len.to_bytes(2, 'big'))
                                 for i in range(ss_len):
-                                    start = i*ss_len*1024
-                                    end = (i+1)*ss_len*1024
+                                    start = i*1024
+                                    end = (i+1)*1024
 
                                     cprint.info(ss[start:end])
                                     conn.send(ss[start:end])
