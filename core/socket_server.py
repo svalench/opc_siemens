@@ -83,7 +83,7 @@ def listen_server_mvlab():
                                 ss = list_connections[data["connection_name"]]['value_list']
                                 ass = []
                                 for i in ss:
-                                    ass.append({"name":ss['name']})
+                                    ass.append({"name":i['name']})
                                 ss = json.dumps(ass).encode('utf-8')
                                 ss_len = int(math.ceil((len(ss)/1024)))
 
