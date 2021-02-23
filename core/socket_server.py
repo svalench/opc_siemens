@@ -45,7 +45,6 @@ def get_data_from_plc():
             # return json.dumps({"error": "no connection"}).encode('utf-8')
 
 
-
 def listen_server_mvlab():
     while True:
         cprint.info("Try to start xocket server")
@@ -80,11 +79,12 @@ def listen_server_mvlab():
                             conn.send(data)
                         elif "get_connections" in data:
                             data = json.dumps(list_connections).encode('utf-8')
-                            col_string = math.ceil(len(data)/1024)
-                            conn.send(json.dumps({"col_string":col_string}).encode('utf-8'))
-                            for i in range(col_string+1):
-                                start = i*1024
-                                end = (i+1)*1024
+                            col_string = math.ceil(len(data) / 1024)
+                            col_string += 1
+                            conn.send(json.dumps({"col_string": col_string}).encode('utf-8'))
+                            for i in range(col_string):
+                                start = i * 1024
+                                end = (i + 1) * 1024
                                 conn.send(data[start:end])
 
                             conn.close()
@@ -104,4 +104,3 @@ def listen_server_mvlab():
             except:
                 s.close()
                 break
-
