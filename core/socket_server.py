@@ -86,7 +86,7 @@ def listen_server_mvlab():
                                 start = i * 1024
                                 end = (i + 1) * 1024
                                 conn.send(data[start:end])
-                                time.sleep(0.1)
+                                time.sleep(0.4)
                                 print(data[start:end])
 
                             conn.close()
