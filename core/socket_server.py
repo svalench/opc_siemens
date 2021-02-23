@@ -82,7 +82,7 @@ def listen_server_mvlab():
                             if "connection_name" in data:
                                 ss = list_connections[data["connection_name"]]['value_list']
                                 ss = json.dumps(ss).encode('utf-8')
-                                ss_len = int(math.ceil((len(ss)/1024) + 1))
+                                ss_len = int(math.ceil((len(ss)/1024)))
 
                                 conn.send(ss_len.to_bytes(2, 'big'))
                                 for i in range(ss_len):
