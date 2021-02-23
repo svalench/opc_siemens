@@ -88,7 +88,8 @@ def listen_server_mvlab():
                                     end = (i+1)*ss_len
                                     cprint.info(start)
                                     cprint.info(end)
-                                    cprint.info(ss[start:end])
+                                    cprint.info(ss)
+                                    cprint.info(type(ss))
                                     conn.send(ss[start:end])
                                     time.sleep(0.4)
 
