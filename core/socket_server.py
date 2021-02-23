@@ -87,10 +87,8 @@ def listen_server_mvlab():
                                 for i in range(ss_len):
                                     start = i*ss_len
                                     end = (i+1)*ss_len
-                                    cprint.info(start)
-                                    cprint.info(end)
-                                    cprint.info(ss)
-                                    cprint.info(type(ss))
+
+                                    cprint.info(ss[start:end])
                                     conn.send(ss[start:end])
                                     time.sleep(0.4)
 
