@@ -94,7 +94,7 @@ def listen_server_mvlab():
 
                                     cprint.info(ss[start:end])
                                     conn.send(ss[start:end])
-                                    time.sleep(0.1)
+                                    time.sleep(0.2)
                                     conn.close()
 
                             else:
