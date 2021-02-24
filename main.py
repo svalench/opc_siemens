@@ -69,7 +69,7 @@ def add_to_bd_connections():
                     (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
                     json_text TEXT)''')
     _conn.commit()
-    res = json.dumps(data)
+    res = json.dumps(list_connections)
     _c.execute(
         '''INSERT INTO mvlab_connections (json_text) VALUES (''' + str(res) + ''');''')
 
