@@ -97,6 +97,7 @@ def restart_process_if_not_alive(p):
 
 
 if __name__ == '__main__':
+    add_to_bd_connections()
     proc = Process(target=run_flask, args=(statuses_connection,))
     proc.start()
     main()
