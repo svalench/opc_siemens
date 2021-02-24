@@ -72,6 +72,7 @@ def add_to_bd_connections():
     res = json.dumps(list_connections)
     _c.execute(
         """INSERT INTO mvlab_connections (json_text) VALUES ('""" + str(res) + """');""")
+    _conn.commit()
 
 
 def restart_process_if_not_alive(p):
