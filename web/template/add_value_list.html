@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Con</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<h2>Data Value</h2>
+<h4>Add</h4>
+<form method="post" action="/value_list/{{data}}/add_value_list">
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th><input type="text" name="name"></th>
+    </tr>
+    <tr>
+        <th>offset</th>
+        <th><input type="number" name="offset"></th>
+    </tr>
+    <tr>
+        <th>type_value</th>
+        <th>
+            <input type="radio" name="type_value" value="int" checked>int<br>
+            <input type="radio" name="type_value" value="real">real<br>
+            <input type="radio" name="type_value" value="bool">bool<br>
+            <input type="radio" name="type_value" value="double">double
+        </th>
+    </tr>
+    <tr>
+        <th>type_table</th>
+        <th>
+            <input type="radio" name="type_table" value="int" checked>int<br>
+            <input type="radio" name="type_table" value="real">real<br>
+            <input type="radio" name="type_table" value="bool">bool<br>
+            <input type="radio" name="type_table" value="double">double
+        </th>
+    </tr>
+</table>
+<button type="submit">Add value</button>
+</form>
+</body>
+</html>
