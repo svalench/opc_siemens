@@ -65,7 +65,7 @@ def index():
 
 @app.route('/add_con', methods=['GET'])
 def con():
-    return render_template('con.html')
+    return render_template('conn.html')
 
 
 @app.route('/add_con', methods=['POST'])
