@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>start page</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<a href="/value_list/{{data.id}}/add_value_list"><button type="submit">Add value</button></a>
+<div>
+    <h4>Value list: {{data.name}}</h4>
+    <table border="3">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>offset</th>
+            <th>type value</th>
+            <th>type table</th>
+            <th>divide</th>
+            <th>if_change</th>
+            <th>byte_bind</th>
+            <th>bit_bind</th>
+            <th></th>
+        </tr>
+        {% for da in data.data %}
+        <tr>
+            <th>{{da.id}}</th>
+            <th><a href="/value_list/up/{{da.connections_id}}/{{da.id}}">{{da.name}}</a></th>
+            <th>{{da.offset}}</th>
+            <th>{{da.type_value}}</th>
+            <th>{{da.type_table}}</th>
+            <th>{{da.divide}}</th>
+            <th>{{da.if_change}}</th>
+            <th>{{da.byte_bind}}</th>
+            <th>{{da.bit_bind}}</th>
+            <th>
+                <form method="post", action="/value_list/{{data.id}}/del">
+                    <input type=hidden name="id_val" value={{da.id}}>
+                    <button type="submit">DEL</button>
+                </form>
+            </th>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

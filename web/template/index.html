@@ -4,50 +4,46 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
-
-<div class="container">
-<div class="accordion" id="accordionExample">
-    {%for d in data%}
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingTwo{{ loop.index }}">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ loop.index }}" aria-expanded="true" aria-controls="collapse_{{ loop.index }}">
-        {{d.name}}
-      </button>
-    </h2>
-    <div id="collapse_{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="headingTwo{{ loop.index }}" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        {{d.ip}} - {{d.status_connection}}
-
-            <ul class="list-group">
-            {% for v in d.value_list%}
-                  <li class="list-group-item">name - {{v.name}}, start in db = {{v.start}}, type = {{v.type}}, divide={{v.divide}}</li>
-                {%endfor%}
-            </ul>
-      </div>
-    </div>
-  </div>
-{%endfor%}
-
+<a href="/add_con"><button type="submit">Add con</button></a>
+<div>
+    <h4>Connections</h4>
+    <table border="3">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>ip</th>
+            <th>rack</th>
+            <th>slot</th>
+            <th>DB</th>
+            <th>start</th>
+            <th>offset</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for i in data %}
+        <tr>
+            <th>{{i.id}}</th>
+            <th><a href="/updata_con/{{i.id}}">{{i.name}}</a></th>
+            <th>{{i.ip}}</th>
+            <th>{{i.rack}}</th>
+            <th>{{i.slot}}</th>
+            <th>{{i.DB}}</th>
+            <th>{{i.start}}</th>
+            <th>{{i.offset}}</th>
+            <th>
+                <form method="post", action="/del_con">
+                    <input type=hidden name="id" value={{i.id}}>
+                    <button type="submit">DEL</button>
+                </form>
+            </th>
+            <th>
+                <form method="get", action="/value_list/{{i.id}}">
+                    <button type="submit">value list</button>
+                </form>
+            </th>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
-</div>
-
-
-
-
-
-
-
-
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-<script>
-	setInterval(reload,5000);
-	function reload(){
-		location.reload()
-	}
-
-
-
-</script>
 </body>
 </html>
