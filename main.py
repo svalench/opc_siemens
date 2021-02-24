@@ -1,13 +1,16 @@
-
+import json
 import time
 from multiprocessing import Process
 from typing import Optional
 
 from cprint import cprint
+
+import data
 from core.processor import StartProcessOpcForConnectToPLC
 
 from core.socket_server import start_socket
 from data import list_connections, statuses_connection
+from settings import createConnection
 from web.app import run_flask
 
 pr = {}
@@ -54,6 +57,21 @@ def main():
         for a in statuses_connection:
             print(a)
         time.sleep(1)
+
+
+def add_to_bd_connections():
+    try:
+        _conn = createConnection()
+        _c = _conn.cursor()
+    except:
+        cprint.err('error connection to DB for ', interrupt=False)
+    _c.execute('''CREATE TABLE IF NOT EXISTS mvlab_connections \
+                    (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                    json_text TEXT)''')
+    _conn.commit()
+    res = json.dumps(data)
+    _c.execute(
+        '''INSERT INTO mvlab_connections (json_text) VALUES (''' + str(res) + ''');''')
 
 
 def restart_process_if_not_alive(p):
