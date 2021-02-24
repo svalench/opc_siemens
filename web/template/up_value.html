@@ -74,6 +74,38 @@
             {% endif %}
         </th>
     </tr>
+    <tr>
+        <th>divide</th>
+        <th>
+            {% if data.a.divide == True %}
+                <input type="radio" name="divide" value="True" checked>True<br>
+                <input type="radio" name="divide" value="False">False
+            {% else %}
+                <input type="radio" name="divide" value="True">True<br>
+                <input type="radio" name="divide" value="False" checked>False
+            {% endif %}
+        </th>
+    </tr>
+    <tr>
+        <th>if_change</th>
+        <th>
+            {% if data.a.if_change == True %}
+                <input type="radio" name="if_change" value="True" checked>True<br>
+                <input type="radio" name="if_change" value="False">False
+            {% else %}
+                <input type="radio" name="if_change" value="True">True<br>
+                <input type="radio" name="if_change" value="False" checked>False
+            {% endif %}
+        </th>
+    </tr>
+    <tr>
+        <th>byte_bind</th>
+        <th><input type="number" name="byte_bind" value={{data.a.byte_bind}}></th>
+    </tr>
+    <tr>
+        <th>bit_bind</th>
+        <th><input type="number" name="bit_bind" value={{data.a.bit_bind}}></th>
+    </tr>
 </table>
 <button type="submit">Updata value</button>
 </form>
