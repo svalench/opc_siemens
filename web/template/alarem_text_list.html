@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>start page</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<a href="/"><button type="submit">Back to main page</a>
+<a href="/alarm_text/add_alarm_text"><button type="submit">Add alarm text</button></a>
+<div>
+    <h4>Alarm text</h4>
+    <table border="3">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>type</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for i in data %}
+        <tr>
+            <th>{{i.id}}</th>
+            <th><a href="/alarm_text/up/{{i.id}}">{{i.name}}</a></th>
+            <th>{{i.type}}</th>
+            <th>
+                <form method="post", action="/alarm_text/del">
+                    <input type=hidden name="del" value={{i.id}}>
+                    <button type="submit">DEL</button>
+                </form>
+            </th>
+            <th>
+                <form method="get", action="/alarm_text/{{i.id}}/alarm">
+                    <button type="submit">alarm</button>
+                </form>
+            </th>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

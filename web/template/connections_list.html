@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>start page</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<a href="/add_con"><button type="submit">Add con</button></a>
+<div>
+    <h4>Connections</h4>
+    <table border="3">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>ip</th>
+            <th>rack</th>
+            <th>slot</th>
+            <th>DB</th>
+            <th>start</th>
+            <th>offset</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for i in data %}
+        <tr>
+            <th>{{i.id}}</th>
+            <th><a href="/updata_con/{{i.id}}">{{i.name}}</a></th>
+            <th>{{i.ip}}</th>
+            <th>{{i.rack}}</th>
+            <th>{{i.slot}}</th>
+            <th>{{i.DB}}</th>
+            <th>{{i.start}}</th>
+            <th>{{i.offset}}</th>
+            <th>
+                <form method="post", action="/del_con">
+                    <input type=hidden name="id" value={{i.id}}>
+                    <button type="submit">DEL</button>
+                </form>
+            </th>
+            <th>
+                <form method="get", action="/value_list/{{i.id}}">
+                    <button type="submit">value list</button>
+                </form>
+            </th>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

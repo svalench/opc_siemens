@@ -272,7 +272,7 @@ alarm_all_world = [
         "itarable": False,
         'divide': False,
         'if_change': True,
-        'alarms': [{"bit": s, "text": str(a['name']),"type":a['type']} for s, a in enumerate(struct_alarm_word_all1)]
+        'alarms': [{"bit": s, "text": str(a['name']), "type":a['type']} for s, a in enumerate(struct_alarm_word_all1)]
     },
     {
         "name":"alarm_all2",

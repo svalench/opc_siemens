@@ -46,6 +46,23 @@ class ListValue(base):
     if_change = Column(Boolean, default=False)
     byte_bind = Column(Integer, nullable=False)
     bit_bind = Column(Integer, nullable=False)
+    alarms_id = Column(Integer, ForeignKey('alarms.id'))
+
+
+class Alarms(base):
+    __tablename__ = 'alarms'
+
+    id = Column(Integer, primary_key=True)
+    bit = Column(Integer, nullable=False)
+    text_alarm_id = Column(Integer, ForeignKey('text_alarm.id'))
+
+
+class Text_Alarm(base):
+    __tablename__ = 'text_alarm'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    type = Column(String, nullable=False)
 
 
 base.metadata.create_all(engine)
@@ -57,10 +74,67 @@ connections = []
 
 
 @app.route('/')
+def main():
+    return render_template('index.html')
+
+
+@app.route('/alarm_text')
+def alarm_text():
+    session = Session()
+    data = session.query(Text_Alarm).all()
+    return render_template('alarem_text_list.html', data=data)
+
+
+@app.route('/alarm_text/add_alarm_text', methods=['GET'])
+def add_alarm_text_form():
+    return render_template('add_alarm_text.html')
+
+
+@app.route('/alarm_text/add_alarm_text', methods=['POST'])
+def add_alarm_text():
+    name = request.form['name']
+    type = request.form['type']
+    a = Text_Alarm(name=name, type=type)
+    session = Session()
+    session.add(a)
+    session.commit()
+    return redirect(url_for('alarm_text'))
+
+
+@app.route('/alarm_text/del', methods=['POST'])
+def alarm_text_del():
+    id = request.form['del']
+    session = Session()
+    a = session.query(Text_Alarm).get(id)
+    session.delete(a)
+    session.commit()
+    return redirect(url_for('alarm_text'))
+
+
+@app.route('/alarm_text/up/<int:id_alarm_text>', methods=['GET'])
+def up_alarm_text_form(id_alarm_text):
+    session = Session()
+    data = session.query(Text_Alarm).get(id_alarm_text)
+    return render_template('up_alarm_text.html', alarm_text_get=data)
+
+
+@app.route('/alarm_text/up/<int:id_alarm_text>', methods=['POST'])
+def up_alarm_text(id_alarm_text):
+    name = request.form['name']
+    type = request.form['type']
+    session = Session()
+    a = session.query(Text_Alarm).get(id_alarm_text)
+    a.name = name
+    a.type = type
+    session.commit()
+    return redirect(url_for('alarm_text'))
+
+
+@app.route('/connections')
 def index():
     session = Session()
     data = session.query(Connections).all()
-    return render_template('index.html', data=data)
+    return render_template('connections_list.html', data=data)
 
 
 @app.route('/add_con', methods=['GET'])
@@ -119,6 +193,10 @@ def updata_connections():
 def del_connections():
     id = request.form['id']
     session = Session()
+    b = session.query(ListValue).filter_by(connections_id=id)
+    for i in b:
+        session.delete(i)
+        session.commit()
     a = session.query(Connections).get(id)
     session.delete(a)
     session.commit()
@@ -179,7 +257,6 @@ def add_value(id):
 @app.route('/value_list/<int:id>/del', methods=['POST'])
 def del_value(id):
     id1 = request.form['id_val']
-    print('HHHHHHHHHHHHHHH', id1)
     session = Session()
     a = session.query(ListValue).get(id1)
     session.delete(a)
@@ -231,6 +308,19 @@ def up_value_ch(id1, id2):
     a.bit_bind = bit_bind
     session.commit()
     return redirect(url_for('value_list', id=id1))
+
+@app.route('/alarm_text/<int:id_alarm_text>/alarm', methods=['GET'])
+def alarm_list(id_alarm_text):
+    session = Session()
+    a = session.query(Alarms).filter_by(text_alarm_id=id_alarm_text)
+    b = session.query(Text_Alarm).get(id_alarm_text)
+    data = {
+        "id_alarm_text": id_alarm_text,
+        "array_alarms": a,
+        "text": b.name,
+        "type": b.type
+    }
+    return render_template('alarm_list.html', data=data)
 
 
 def run_flask(status):
