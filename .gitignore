@@ -1,5 +1,6 @@
 # Project exclude paths
 /venv/
+**/__pycache__/
 __pycache__/data.cpython-39.pyc
 __pycache__/settings.cpython-39.pyc
 core/__pycache__/__init__.cpython-39.pyc
