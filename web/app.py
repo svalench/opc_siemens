@@ -48,6 +48,12 @@ class ListValue(base):
     bit_bind = Column(Integer, nullable=False)
     alarms_id = Column(Integer, ForeignKey('alarms.id'))
 
+    def get_name_alarm(self):
+        session = Session()
+        a = session.query(Alarms).get(self.id).text_alarm_id
+        a = session.query(Text_Alarm).get(a).name
+        return a
+
 
 class Alarms(base):
     __tablename__ = 'alarms'
@@ -208,10 +214,27 @@ def value_list(id):
     session = Session()
     a = session.query(ListValue).filter_by(connections_id=id)
     b = session.query(Connections).get(id).name
+    # c = a.get_name_alarm()
+    array = []
+    for i in a:
+        c = {
+            "id": i.id,
+            "name": i.name,
+            "offset": i.offset,
+            "type_value": i.type_value,
+            "type_table": i.type_table,
+            "connections_id": i.connections_id,
+            "divide": i.divide,
+            "if_change": i.if_change,
+            "byte_bind": i.byte_bind,
+            "bit_bind": i.bit_bind,
+            "name_alarm": i.get_name_alarm()
+        }
+        array.append(c)
     data = {
-        "data": a,
+        "data": array,
         "id": id,
-        "name": b
+        "name": b,
     }
     return render_template('value_list.html', data=data)
 
@@ -244,6 +267,7 @@ def add_value(id):
         if_change = 0
     byte_bind = request.form['byte_bind']
     bit_bind = request.form['bit_bind']
+    alarm = request.form['alarm']
     a = ListValue(name=name,
                   offset=offset,
                   type_value=type_value,
@@ -252,7 +276,8 @@ def add_value(id):
                   divide=divide,
                   if_change=if_change,
                   byte_bind=byte_bind,
-                  bit_bind=bit_bind
+                  bit_bind=bit_bind,
+                  alarms_id=alarm
                   )
     session = Session()
     session.add(a)

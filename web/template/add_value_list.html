@@ -59,11 +59,17 @@
         <th><input type="number" name="bit_bind"></th>
     </tr>
     <tr>
-        <th>Alarm</th>
+        <th>Alarm bit:</th>
         <th>
+            <select name="alarm">
+                {% for i in data.array %}
+                    <option value={{i.id}}>{{i.bit}}</option>
+                {% endfor %}
+            </select>
         </th>
     </tr>
 </table>
+    <button type="submit">Add value</button>
 </form>
 </body>
 </html>
