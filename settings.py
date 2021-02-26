@@ -6,14 +6,12 @@ USERNAME = 'wert'
 PASSWORD = '123'
 SECRET = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RTdsff'
 TOKEN = 'tokenstart3dje34dfjd'
+SOCKET_PORT = 8084
 
-connections = []
-all_thread = []
 # подключение к базе данных
 DB = {
-    # 'driver': 'postgres',
-    'driver': 'sqlite3',
-    'dbName': 'db1',
+    'driver': 'postgres',
+    'dbName': 'test1',
     'host': 'localhost',
     'port': 5432,
     'user': "lex",

@@ -1,70 +1,104 @@
-import logging
-import threading
-import os.path
 import json
-from cprint import *
-from secoundary_functions.supporting import *
+import time
+from multiprocessing import Process
+from typing import Optional
+
+from cprint import cprint
+
+import data
+from core.processor import StartProcessOpcForConnectToPLC
+
+from core.socket_server import start_socket
+from data import list_connections, statuses_connection
+from settings import createConnection
+from web.app import run_flask
+
+pr = {}
+data_for_restart = {}
 
 
-class Threads:
-    """
-    class for collect threads and connections
-    all_thread  - list for threads
-    connections - list for connections
 
-    """
-
-    def __init__(self):
-        self.all_thread = []
-        self.connections = []
-
-
-# object for collections threads and connections
-th = Threads()
-
-
-# стартовая функция
-def main(plc="all"):
-    sys.setrecursionlimit(2097152)
-    threading.stack_size(64*1024)
-    jsonDataFile = None
-    with open('connections.json') as json_file:
-        data = json.load(json_file)
-        jsonDataFile = data
-    if (plc == "all"):
-        from secoundary_functions.supporting import create_coneection_to_plc
-        # очищаем лист с подлкючениями
-        th.connections.clear()
-        # если нет индекса переподключаем все подключения
-        create_coneection_to_plc(jsonDataFile)
-    else:
-        from secoundary_functions.supporting import start_thread
+def main():
+    count = 0
+    for connection in list_connections:
         try:
-            jsonDataFile['connections'][plc]['data'] = jsonDataFile['Data'][jsonDataFile['connections'][plc]['data']]
-            start_thread(jsonDataFile['connections'][plc], plc)
+            time.sleep(3)
+            pr[connection['name']] = StartProcessOpcForConnectToPLC(
+                connection['ip'],
+                connection['rack'],
+                connection['slot'],
+                connection['DB'],
+                connection['start'],
+                connection['offset'],
+                values_list=connection['value_list'],
+                name_connect=connection['name'],
+                status=statuses_connection,
+                count=count
+            )
+            data_for_restart[connection['name']] = {
+                                                        "ip":connection['ip'],
+                                                        "rack":connection['rack'],
+                                                        "slot":connection['slot'],
+                                                        "DB":connection['DB'],
+                                                        "start":connection['start'],
+                                                        "offset":connection['offset'],
+                                                        'values_list':connection['value_list'],
+                                                        'count':count
+                                                    }
+            count += 1
+            pr[connection['name']].start()
         except:
-            log.warning("Error start thread")
-            cprint.err('Error start thread', interrupt=False)
-        cprint.err('Oops, somthing wrong! reconected to  - ' + th.connections[plc]['name'], interrupt=False)
+            cprint.err('Not start process %s' % connection['name'])
+    start_socket()
+    while True:
+        for p in pr:
+            restart_process_if_not_alive(p)
+            print(pr[p].is_alive(), 'process', p)
+        for a in statuses_connection:
+            print(a)
+        time.sleep(1)
 
 
-if __name__ == "__main__":
-    log = logging.getLogger("main")
-    log.setLevel(logging.INFO)
-    fh = logging.FileHandler("log_info.log")
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh.setFormatter(formatter)
-    log.addHandler(fh)
-    log.info("Program started")
-    check_file = os.path.exists('connections.json')
-    if (not check_file):
-        log.warning("file connections.json not created")
-        to_file = {"connections": [], 'Data': []}
-        try:
-            with open('connections.json', 'w+') as outfile:
-                json.dump(to_file, outfile)
-            log.info("connections.json created")
-        except:
-            log.error("Not created json file")
-    threading.Thread(target=run_flask).start()
+def add_to_bd_connections():
+    try:
+        _conn = createConnection()
+        _c = _conn.cursor()
+    except:
+        cprint.err('error connection to DB for ', interrupt=False)
+    _c.execute('''CREATE TABLE IF NOT EXISTS mvlab_connections \
+                    (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                    json_text TEXT)''')
+    _conn.commit()
+    res = json.dumps(list_connections)
+    _c.execute(
+        """INSERT INTO mvlab_connections (json_text) VALUES ('""" + str(res) + """');""")
+    _conn.commit()
+
+
+def restart_process_if_not_alive(p):
+    if (not pr[p].is_alive()):
+        cprint.err("restart process %s" % p)
+        pr[p].kill()
+        pr[p] = StartProcessOpcForConnectToPLC(
+            data_for_restart[p]['ip'],
+            data_for_restart[p]['rack'],
+            data_for_restart[p]['slot'],
+            data_for_restart[p]['DB'],
+            data_for_restart[p]['start'],
+            data_for_restart[p]['offset'],
+            values_list=data_for_restart[p]['value_list'],
+            name_connect=data_for_restart[p]['name'],
+            status=statuses_connection,
+            count=data_for_restart[p]['count']
+        )
+
+
+
+
+
+
+if __name__ == '__main__':
+    #add_to_bd_connections()
+    proc = Process(target=run_flask, args=(statuses_connection,))
+    proc.start()
     main()
