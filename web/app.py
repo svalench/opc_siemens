@@ -218,7 +218,13 @@ def value_list(id):
 
 @app.route('/value_list/<int:id>/add_value_list', methods=['GET'])
 def add_value_list(id):
-    return render_template('add_value_list.html', data=id)
+    session = Session()
+    a = session.query(Alarms).all()
+    data = {
+        "id": id,
+        "array": a
+    }
+    return render_template('add_value_list.html', data=data)
 
 
 @app.route('/value_list/<int:id>/add_value_list', methods=['POST'])
@@ -321,6 +327,51 @@ def alarm_list(id_alarm_text):
         "type": b.type
     }
     return render_template('alarm_list.html', data=data)
+
+
+@app.route('/alarm_text/<int:id_alarm_text>/alarm/add_alarm', methods=['GET'])
+def add_alarm_form(id_alarm_text):
+    return render_template('add_alarm.html', data=id_alarm_text)
+
+
+@app.route('/alarm_text/<int:id_alarm_text>/alarm/add_alarm', methods=['POST'])
+def add_alarm(id_alarm_text):
+    bit = request.form['bit']
+    session = Session()
+    a = Alarms(bit=bit, text_alarm_id=id_alarm_text)
+    session.add(a)
+    session.commit()
+    return redirect(url_for('alarm_list', id_alarm_text=id_alarm_text))
+
+
+@app.route('/alarm_text/<int:id_alarm_text>/alarm/up/<int:id_alarm>', methods=['GET'])
+def up_alarm_form(id_alarm_text, id_alarm):
+    session = Session()
+    a = session.query(Alarms).get(id_alarm)
+    data = {
+        "array": a,
+        "id_alarm_text": id_alarm_text
+    }
+    return render_template('up_alarm.html', data=data)
+
+
+@app.route('/alarm_text/<int:id_alarm_text>/alarm/up/<int:id_alarm>', methods=['POST'])
+def up_alarm(id_alarm_text, id_alarm):
+    bit = request.form['bit']
+    session = Session()
+    a = session.query(Alarms).get(id_alarm)
+    a.bit = bit
+    session.commit()
+    return redirect(url_for('alarm_list', id_alarm_text=id_alarm_text))
+
+
+@app.route('/alarm_text/<int:id_alarm_text>/alarm/del/<int:id_alarm>', methods=['POST'])
+def del_alarm(id_alarm_text, id_alarm):
+    session = Session()
+    a = session.query(Alarms).get(id_alarm)
+    session.delete(a)
+    session.commit()
+    return redirect(url_for('alarm_list', id_alarm_text=id_alarm_text))
 
 
 def run_flask(status):
