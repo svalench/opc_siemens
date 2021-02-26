@@ -121,3 +121,17 @@ div h4{
 .tbody td{
    color: #4B6075;
 }
+
+.btn_back{
+    margin-left: 20px;
+    width: 26px;
+    height: 26px;
+    display: block;
+    background: no-repeat url(../img/btn_back.svg);
+    border: none;
+}
+
+.header_btn{
+    flex-direction: row;
+    display: flex;
+}

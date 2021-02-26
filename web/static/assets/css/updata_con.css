@@ -1,4 +1,4 @@
-.data_con{
+.updata_con{
     display: flex;
     height: 100%;
     width: 100%;
@@ -7,7 +7,7 @@
     background-color:#F5F5FA;
 }
 
-.header_data_con{
+.header_updata_con{
     height: 48px;
     display: flex;
     background-color: #E0E0EE; 
@@ -17,7 +17,7 @@
     /* justify-content: space-between; */
 }
 
-div h2{
+div h4{
     margin: 0;
     padding: 0;
     font-family: 'Montserrat';
@@ -28,7 +28,8 @@ div h2{
     color: #30307A;
 }
 
-.table_and_btn{
+
+.up_table_and_btn{
     display: flex;
     align-content: center;
     padding-top: 10px;
@@ -38,16 +39,7 @@ div h2{
     margin-right: auto;
 }
 
-div h5{
-    color: #30307A;
-    text-align: center;
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-
-}
-.input_add_con th{
+.input_upadd_con th{
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
@@ -59,9 +51,29 @@ div h5{
     color: #4B6075;
     font-weight: 700;
     padding-left: 10px;
+
 }
 
-.submit_btn{
+.btn_back{
+    width: 26px;
+    height: 26px;
+    display: block;
+    background: no-repeat url(../img/btn_back.svg);
+    border: none;
+    margin-left: 20px;
+}
+
+
+input{
+    border: 1px solid #9098AF;
+    border-radius: 4px;
+    height: 50%;
+    width: 100%;
+
+}
+
+.submit_btn_up{
+    display: flex;
     height: 30px;
     width: 80px;
     background: #ffffff;
@@ -75,32 +87,12 @@ div h5{
     border: none;
     margin-left: auto;
     margin-right: 0;
+    align-items: center;
+    justify-content: center;
 }
 
-.submit_btn:hover{
+.submit_btn_up:hover{
     background:#7db38a;
     box-shadow: 5px 5px 10px rgba(170, 170, 204, 0.5), -5px -5px 10px #E5E5F0;
     color: #ffffff;
-}
-
-.add_conn_btn{
-    display: flex;
-    align-items: center;
-}
-
-input{
-    border: 1px solid #9098AF;
-    border-radius: 4px;
-    height: 50%;
-    width: 100%;
-
-}
-
-.btn_back{
-    width: 26px;
-    height: 26px;
-    display: block;
-    background: no-repeat url(../img/btn_back.svg);
-    border: none;
-    margin-left: 20px;
 }
