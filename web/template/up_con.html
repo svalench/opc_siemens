@@ -3,20 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Value</title>
-    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/updata_con.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
 </head>
 <body>
-<h4>updata_con</h4>
-<form method="post" action="/updata_con">
-    <div>id:<input type="text" name="id" value={{data.id}}></div>
-    <div>name:<input type="text" name="name" value={{data.name}}></div>
-    <div>ip:<input type="text" name="ip" value={{data.ip}}></div>
-    <div>rack:<input type="number" name="rack" value={{data.rack}}></div>
-    <div>slot:<input type="number" name="slot" value={{data.slot}}></div>
-    <div>DB:<input type="number" name="DB" value={{data.DB}}></div>
-    <div>start:<input type="number" name="start" value={{data.start}}></div>
-    <div>offset:<input type="number" name="offset" value={{data.offset}}></div>
-    <div><button type="submit">Updata con</button></div>
-</form>
+    <div class="updata_con">
+    <div class="header_updata_con">
+        <h4>Updata con</h4>
+        <input class="btn_back" type="button" onclick="history.back();"/>
+    </div>
+<div class="up_table_and_btn">
+    <form method="post" action="/updata_con">
+        <table class="input_upadd_con">
+            <tr>
+                <th>id:</th>
+                <th><input type="text" name="id" value={{data.id}}></th>
+            </tr>
+            <tr>
+                <th>name:</th>
+                <th><input type="text" name="name" value={{data.name}}></th>
+            </tr>
+            <tr>
+                <th>ip:</th>
+                <th><input type="text" name="ip" value={{data.ip}}></th>
+            </tr>
+            <tr>
+                <th>rack:</th>
+                <th><input type="number" name="rack" value={{data.rack}}></th>
+            </tr>
+            <tr>
+                <th>slot:</th>
+                <th><input type="number" name="slot" value={{data.slot}}></th>
+            </tr>
+            <tr>
+                <th>DB:</th>
+                <th><input type="number" name="DB" value={{data.DB}}></th>
+            </tr>
+            <tr>
+                <th>start:</th>
+                <th><input type="number" name="start" value={{data.start}}></th>
+            </tr>
+            <tr>
+                <th>offset:</th>
+                <th><input type="number" name="offset" value={{data.offset}}></th>
+            </tr>
+        </table>
+        
+        <!-- <div>id:<input type="text" name="id" value={{data.id}}></div> -->
+        <!-- <div>name:<input type="text" name="name" value={{data.name}}></div> -->
+        <!-- <div>ip:<input type="text" name="ip" value={{data.ip}}></div> -->
+        <!-- <div>rack:<input type="number" name="rack" value={{data.rack}}></div> -->
+        <!-- <div>slot:<input type="number" name="slot" value={{data.slot}}></div> -->
+        <!-- <div>DB:<input type="number" name="DB" value={{data.DB}}></div> -->
+        <!-- <div>start:<input type="number" name="start" value={{data.start}}></div> -->
+        <!-- <div>offset:<input type="number" name="offset" value={{data.offset}}></div> -->
+        <div class="up_conn_btn">
+            <button class="submit_btn_up" type="submit">Updata</button>
+        </div>
+    </form>
+</div>
+</div>
 </body>
 </html>

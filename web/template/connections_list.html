@@ -4,15 +4,25 @@
     <title>start page</title>
     <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="/assets/css/connection.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
 
 </head>
 
 <body>
     <div class="connection">
         <div class="header_con">
-            <a href="/add_con"><button class="add_connection"type="submit">Add connection</button></a>
-            <h4>Connections</h4>
+            <div class="header_btn">
+                <a href="/add_con"><button class="add_connection"type="submit">Add connection</button></a>
+                <!-- <input class="btn_back" type="button" onclick="history.back();"/> -->
+            </div>
+            
+            <!-- <a href="/"><button type="submit">rgrgr</button></a> -->
 
+            <div class="header_btn">
+                <div style="margin: auto;"><h4>Connections</h4></div>
+                <input class="btn_back" type="button" onclick="history.back();"/>
+            </div>
+            
         </div>
 
         <table class="con_tab">
