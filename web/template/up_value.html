@@ -106,6 +106,20 @@
         <th>bit_bind</th>
         <th><input type="number" name="bit_bind" value={{data.a.bit_bind}}></th>
     </tr>
+    <tr>
+        <th>Alarm bit:</th>
+        <th>
+            <select name="alarm">
+                {% for i in data.array %}
+                {% if i == data.b %}
+                    <option value={{i.id}} selected>{{i.bit}}</option>
+                {% else %}
+                    <option value={{i.id}}>{{i.bit}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </th>
+    </tr>
 </table>
 <button type="submit">Updata value</button>
 </form>

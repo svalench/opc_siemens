@@ -50,7 +50,7 @@ class ListValue(base):
 
     def get_name_alarm(self):
         session = Session()
-        a = session.query(Alarms).get(self.id).text_alarm_id
+        a = session.query(Alarms).get(self.alarms_id).text_alarm_id
         a = session.query(Text_Alarm).get(a).name
         return a
 
@@ -299,13 +299,17 @@ def del_value(id):
 def up_value(id1, id2):
     session = Session()
     a = session.query(ListValue).get(id2)
+    b = session.query(Alarms).get(a.alarms_id)
+    array = session.query(Alarms).all()
     data = {
         "a": a,
         "id1": id1,
         "int": "int",
         "real": "real",
         "bool": "bool",
-        "double": "double"
+        "double": "double",
+        "b": b,
+        "array": array
     }
     return render_template('up_value.html', data=data)
 
@@ -328,6 +332,7 @@ def up_value_ch(id1, id2):
         if_change = False
     byte_bind = request.form['byte_bind']
     bit_bind = request.form['bit_bind']
+    alarm = request.form['alarm']
     a.name = name
     a.offset = offset
     a.type_value = type_value
@@ -337,6 +342,7 @@ def up_value_ch(id1, id2):
     a.if_change = if_change
     a.byte_bind = byte_bind
     a.bit_bind = bit_bind
+    a.alarms_id = alarm
     session.commit()
     return redirect(url_for('value_list', id=id1))
 
