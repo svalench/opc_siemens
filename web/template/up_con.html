@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Value</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<h4>updata_con</h4>
+<form method="post" action="/updata_con">
+    <div>id:<input type="text" name="id" value={{data.id}}></div>
+    <div>name:<input type="text" name="name" value={{data.name}}></div>
+    <div>ip:<input type="text" name="ip" value={{data.ip}}></div>
+    <div>rack:<input type="number" name="rack" value={{data.rack}}></div>
+    <div>slot:<input type="number" name="slot" value={{data.slot}}></div>
+    <div>DB:<input type="number" name="DB" value={{data.DB}}></div>
+    <div>start:<input type="number" name="start" value={{data.start}}></div>
+    <div>offset:<input type="number" name="offset" value={{data.offset}}></div>
+    <div><button type="submit">Updata con</button></div>
+</form>
+</body>
+</html>
