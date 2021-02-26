@@ -1,40 +1,61 @@
 <html>
+
 <head>
-<title>start page</title>
-    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <title>start page</title>
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/alarm_text.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
 </head>
+
 <body>
-<a href="/"><button type="submit">Back to main page</a>
-<a href="/alarm_text/add_alarm_text"><button type="submit">Add alarm text</button></a>
-<div>
-    <h4>Alarm text</h4>
-    <table border="3">
-        <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>type</th>
-            <th></th>
-            <th></th>
-        </tr>
-        {% for i in data %}
-        <tr>
-            <th>{{i.id}}</th>
-            <th><a href="/alarm_text/up/{{i.id}}">{{i.name}}</a></th>
-            <th>{{i.type}}</th>
-            <th>
-                <form method="post", action="/alarm_text/del">
-                    <input type=hidden name="del" value={{i.id}}>
-                    <button type="submit">DEL</button>
-                </form>
-            </th>
-            <th>
-                <form method="get", action="/alarm_text/{{i.id}}/alarm">
-                    <button type="submit">alarm</button>
-                </form>
-            </th>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+    <div class="alarm_text_list">
+        <div class="header_alarm">
+            <div class="header_btn">
+                <a href="/alarm_text/add_alarm_text"><button class="add_alarm_text" type="submit">Add alarm
+                        text</button></a>
+            </div>
+
+            <div class="header_btn">
+                <div style="margin: auto;">
+                    <h4>Alarm text</h4>
+                </div>
+                <input class="btn_back" type="button" onclick="history.back();" />
+            </div>
+
+        </div>
+
+        <table class="alarm_tab">
+            <tr class="thead">
+                <td>id</td>
+                <td>name</td>
+                <td>type</td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% for i in data %}
+            <tr class="tbody">
+                <td>{{i.id}}</td>
+                <td><a href="/alarm_text/up/{{i.id}}">{{i.name}}</a></td>
+                <td>{{i.type}}</td>
+                <td>
+                    <td style="width: 160px;"> 
+                        <form method="get" , action="/alarm_text/{{i.id}}/alarm">
+                            <button class="btn_alarm_list" type="submit">Alarm</button>
+                        </form>
+                    </td>
+                <td style="width: 160px;">
+                    <form method="post" , action="/alarm_text/del">
+                        <input type=hidden name="del" value={{i.id}}>
+                        <button class="btn_delete_alarm" type="submit">Delete</button>
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
 </body>
+
 </html>
