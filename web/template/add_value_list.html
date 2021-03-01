@@ -62,6 +62,7 @@
         <th>Alarm bit:</th>
         <th>
             <select name="alarm">
+                    <option value="Null">Нет связи</option>
                 {% for i in data.array %}
                     <option value={{i.id}}>{{i.bit}}</option>
                 {% endfor %}
