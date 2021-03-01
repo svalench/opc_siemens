@@ -69,6 +69,12 @@ input{
     border-radius: 4px;
     height: 50%;
     width: 100%;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 12px;
+
 
 }
 
