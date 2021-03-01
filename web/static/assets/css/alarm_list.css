@@ -1,0 +1,110 @@
+.alarm_list{
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.header_alarm_list{
+    height: 48px;
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: #E0E0EE; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+div h4{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 14px;
+    color: #30307A;
+}
+
+.add_alarm_btn{
+    width: 180px;
+    height: 30px;
+    background: #E5E5F0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 12px;
+    color: #7878AB;
+    border: none;
+}
+.add_alarm_btn:hover{
+    background:#7878AB;
+    box-shadow: 5px 5px 10px rgba(170, 170, 204, 0.5), -5px -5px 10px #E5E5F0;
+    color: #E5E5F0;
+}
+
+.tab_alarmm td{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 12px;
+    height: 42px;
+    background-color: none;
+    /* background-color: #F5F5FA; */
+    border-bottom: 1px solid #E0E0EE;
+    text-align: center;
+    color: #232323;
+    }
+
+.tab_alarmm{
+    
+    margin: 0px 10px 0px 10px;
+} 
+   
+
+.btn_delete_al{
+    height: 30px;
+    width: 140px;
+    background:#ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    color: #FC938A;
+    border: none;
+}
+.btn_delete_al:hover{
+    background: #FC938A;
+    box-shadow: 5px 5px 10px rgba(170, 170, 204, 0.5), -5px -5px 10px #E5E5F0;
+    color: #ffffff;
+}
+.thead td{
+    color:#30307A;
+    font-weight: bold;
+}
+.tbody td{
+   color: #4B6075;
+}
+
+.btn_back{
+    margin-left: 20px;
+    width: 26px;
+    height: 26px;
+    display: block;
+    background: no-repeat url(../img/btn_back.svg);
+    border: none;
+}
+
+.header_btn{
+    flex-direction: row;
+    display: flex;
+}

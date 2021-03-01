@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <title>start page</title>
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/connection.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
+
+</head>
+
+<body>
+    <div class="connection">
+        <div class="header_con">
+            <div class="header_btn">
+                <a href="/add_con"><button class="add_connection"type="submit">Add connection</button></a>
+                <!-- <input class="btn_back" type="button" onclick="history.back();"/> -->
+            </div>
+            
+            <!-- <a href="/"><button type="submit">rgrgr</button></a> -->
+
+            <div class="header_btn">
+                <div style="margin: auto;"><h4>Connections</h4></div>
+                <a href="/"><button class="btn_back" type="submit"></button></a>
+            </div>
+            
+        </div>
+
+        <table class="con_tab">
+            <tr class=thead>
+                <td>id</td>
+                <td>name</td>
+                <td>ip</td>
+                <td>rack</td>
+                <td>slot</td>
+                <td>DB</td>
+                <td>start</td>
+                <td>offset</td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% for i in data %}
+            <tr class="tbody">
+                <td>{{i.id}}</td>
+                <td><a href="/updata_con/{{i.id}}">{{i.name}}</a></td>
+                <td>{{i.ip}}</td>
+                <td>{{i.rack}}</td>
+                <td>{{i.slot}}</td>
+                <td>{{i.DB}}</td>
+                <td>{{i.start}}</td>
+                <td>{{i.offset}}</td>
+                <td style="width: 160px;">
+                    <form method="get" , action="/value_list/{{i.id}}">
+                        <button class="btn_value_list" type="submit">Value list</button>
+                    </form>
+                </td>
+                <td style="width: 160px;">
+                    <form method="post" , action="/del_con">
+                        <input type=hidden name="id" value={{i.id}}>
+                        <button class="btn_delete_con" type="submit">Delete</button>
+                    </form>
+                </td>
+
+            </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+</body>
+
+</html>

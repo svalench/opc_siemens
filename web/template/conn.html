@@ -1,0 +1,60 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Con</title>
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/Data_con.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
+</head>
+<body>
+    <div class="data_con">
+        <div class="header_data_con">
+            <h2>Data Con</h2>
+            <a href="/connections"><button class="btn_back" type="submit"></button></a>
+        </div>
+        <div class="table_and_btn">
+            <h5>Add connection</h5>
+        
+<form method="post" action="/add_con">
+    <table class="input_add_con">
+        <tr>
+           <th>name</th>
+           <th><input type="text" name="name"></th> 
+        </tr>
+        <tr>
+           <th>id</th>
+           <th><input type="text" name="ip"></th>
+        </tr>
+        <tr>
+            <th>rack</th>
+            <th><input type="number" name="rack"></th>
+        </tr>
+        <tr>
+            <th>slot</th>
+            <th><input type="number" name="slot"></th>
+        </tr>
+        <tr>
+            <th>DB</th>
+            <th><input type="number" name="DB"></th>
+        </tr>
+        <tr>
+            <th>start</th>
+            <th><input type="number" name="start"></th>
+        </tr>
+        <tr>
+            <th>offset</th>
+            <th><input type="number" name="offset"></th>
+        </tr>
+
+        
+    </table>
+    <div class="add_conn_btn">
+        <button class="submit_btn" type="submit">Add</button>
+    </div> 
+</form>
+</div>
+</div>
+</body>
+</html>

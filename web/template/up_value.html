@@ -1,113 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Con</title>
-    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/up_value.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
 </head>
+
 <body>
-<h2>Data Value</h2>
-<h4>Add</h4>
-<form method="post" action="/value_list/up/{{data.a.connections_id}}/{{data.a.id}}">
-<table border="1">
-    <tr>
-        <th>name</th>
-        <th><input type="text" name="name" value={{data.a.name}}></th>
-    </tr>
-    <tr>
-        <th>offset</th>
-        <th><input type="number" name="offset" value={{data.a.offset}}></th>
-    </tr>
-    <tr>
-        <th>type_value</th>
-        <th>
-            {% if data.int == data.a.type_value %}
-                <input type="radio" name="type_value" value="int" checked>int<br>
-            {% else %}
-                <input type="radio" name="type_value" value="int">int<br>
-            {% endif %}
+    <div class="updata_value">
+        <div class="header_up_value_text">
+            <h2>Data Value</h2> 
+            <!-- ТУТ НЕ РАБОТАЕТ ССЫЛКА -->
+            <a href="/value_list/{{data.id1}}"><button class="btn_back" type="submit"></button></a>
+        </div>
+        <div class="table_and_btn">
+            <h5>Add</h5>
 
-            {% if data.real == data.a.type_value %}
-                <input type="radio" name="type_value" value="real" checked>real<br>
-            {% else %}
-                <input type="radio" name="type_value" value="real">real<br>
-            {% endif %}
 
-            {% if data.bool == data.a.type_value %}
-                <input type="radio" name="type_value" value="bool" checked>bool<br>
-            {% else %}
-                <input type="radio" name="type_value" value="bool">bool<br>
-            {% endif %}
+            <form method="post" action="/value_list/up/{{data.a.connections_id}}/{{data.a.id}}">
+                <table class="input_up_value">
+                    <tr>
+                        <th>name</th>
+                        <th><input type="text" name="name" value={{data.a.name}}></th>
+                    </tr>
+                    <tr>
+                        <th>start</th>
+                        <th><input type="number" name="start" value={{data.a.start}}></th>
+                    </tr>
+                    <tr>
+                        <th>type_value</th>
+                        <th>
+                            {% if data.int == data.a.type_value %}
+                            <input type="radio" name="type_value" value="int" checked>int<br>
+                            {% else %}
+                            <input type="radio" name="type_value" value="int">int<br>
+                            {% endif %}
 
-            {% if data.double == data.a.type_value %}
-                <input type="radio" name="type_value" value="double" checked>double
-            {% else %}
-                <input type="radio" name="type_value" value="double">double
-            {% endif %}
-        </th>
-    </tr>
-    <tr>
-        <th>type_table</th>
-        <th>
-            {% if data.int == data.a.type_table %}
-                <input type="radio" name="type_table" value="int" checked>int<br>
-            {% else %}
-                <input type="radio" name="type_table" value="int">int<br>
-            {% endif %}
+                            {% if data.real == data.a.type_value %}
+                            <input type="radio" name="type_value" value="real" checked>real<br>
+                            {% else %}
+                            <input type="radio" name="type_value" value="real">real<br>
+                            {% endif %}
 
-            {% if data.real == data.a.type_table %}
-                <input type="radio" name="type_table" value="real" checked>real<br>
-            {% else %}
-                <input type="radio" name="type_table" value="real">real<br>
-            {% endif %}
+                            {% if data.bool == data.a.type_value %}
+                            <input type="radio" name="type_value" value="bool" checked>bool<br>
+                            {% else %}
+                            <input type="radio" name="type_value" value="bool">bool<br>
+                            {% endif %}
 
-            {% if data.bool == data.a.type_table %}
-                <input type="radio" name="type_table" value="bool" checked>bool<br>
-            {% else %}
-                <input type="radio" name="type_table" value="bool">bool<br>
-            {% endif %}
+                            {% if data.double == data.a.type_value %}
+                            <input type="radio" name="type_value" value="double" checked>double
+                            {% else %}
+                            <input type="radio" name="type_value" value="double">double
+                            {% endif %}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>type_table</th>
+                        <th>
+                            {% if data.int == data.a.type_table %}
+                            <input type="radio" name="type_table" value="int" checked>int<br>
+                            {% else %}
+                            <input type="radio" name="type_table" value="int">int<br>
+                            {% endif %}
 
-            {% if data.double == data.a.type_table %}
-                <input type="radio" name="type_table" value="double" checked>double
-            {% else %}
-                <input type="radio" name="type_table" value="double">double
-            {% endif %}
-        </th>
-    </tr>
-    <tr>
-        <th>divide</th>
-        <th>
-            {% if data.a.divide == True %}
-                <input type="radio" name="divide" value="True" checked>True<br>
-                <input type="radio" name="divide" value="False">False
-            {% else %}
-                <input type="radio" name="divide" value="True">True<br>
-                <input type="radio" name="divide" value="False" checked>False
-            {% endif %}
-        </th>
-    </tr>
-    <tr>
-        <th>if_change</th>
-        <th>
-            {% if data.a.if_change == True %}
-                <input type="radio" name="if_change" value="True" checked>True<br>
-                <input type="radio" name="if_change" value="False">False
-            {% else %}
-                <input type="radio" name="if_change" value="True">True<br>
-                <input type="radio" name="if_change" value="False" checked>False
-            {% endif %}
-        </th>
-    </tr>
-    <tr>
-        <th>byte_bind</th>
-        <th><input type="number" name="byte_bind" value={{data.a.byte_bind}}></th>
-    </tr>
-    <tr>
-        <th>bit_bind</th>
-        <th><input type="number" name="bit_bind" value={{data.a.bit_bind}}></th>
-    </tr>
-</table>
-<button type="submit">Updata value</button>
-</form>
+                            {% if data.real == data.a.type_table %}
+                            <input type="radio" name="type_table" value="real" checked>real<br>
+                            {% else %}
+                            <input type="radio" name="type_table" value="real">real<br>
+                            {% endif %}
+
+                            {% if data.bool == data.a.type_table %}
+                            <input type="radio" name="type_table" value="bool" checked>bool<br>
+                            {% else %}
+                            <input type="radio" name="type_table" value="bool">bool<br>
+                            {% endif %}
+
+                            {% if data.double == data.a.type_table %}
+                            <input type="radio" name="type_table" value="double" checked>double
+                            {% else %}
+                            <input type="radio" name="type_table" value="double">double
+                            {% endif %}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>divide</th>
+                        <th>
+                            {% if data.a.divide == True %}
+                            <input type="radio" name="divide" value="True" checked>True<br>
+                            <input type="radio" name="divide" value="False">False
+                            {% else %}
+                            <input type="radio" name="divide" value="True">True<br>
+                            <input type="radio" name="divide" value="False" checked>False
+                            {% endif %}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>if_change</th>
+                        <th>
+                            {% if data.a.if_change == True %}
+                            <input type="radio" name="if_change" value="True" checked>True<br>
+                            <input type="radio" name="if_change" value="False">False
+                            {% else %}
+                            <input type="radio" name="if_change" value="True">True<br>
+                            <input type="radio" name="if_change" value="False" checked>False
+                            {% endif %}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>byte_bind</th>
+                        <th><input type="number" name="byte_bind" value={{data.a.byte_bind}}></th>
+                    </tr>
+                    <tr>
+                        <th>bit_bind</th>
+                        <th><input type="number" name="bit_bind" value={{data.a.bit_bind}}></th>
+                    </tr>
+                    <tr>
+                        <th>Alarm bit:</th>
+                        <th>
+                            <select name="alarm">
+                                <option value="Null">Нет связи</option>
+                                {% for i in data.array %}
+                                {% if i == data.b %}
+                                <option value={{i.id}} selected>{{i.bit}}</option>
+                                {% else %}
+                                <option value={{i.id}}>{{i.bit}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </th>
+                    </tr>
+                </table>
+                <div class="up_value_btn">
+                    <button class="submit_btn" type="submit">Updata</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </body>
+
 </html>

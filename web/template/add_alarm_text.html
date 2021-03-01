@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD Alarm text</title>
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/add_alarm_text.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
+</head>
+<body>
+    <div class="add_alarm_text">
+<div class="header_add_alarm_text">
+    <h2>Alarm text</h2>
+    <a href="/alarm_text"><button class="btn_back" type="submit"></button> </a>
+</div>
+<div class="table_and_btn">
+    <h5>Add alarm text</h5>
+
+
+<form method="post" action="/alarm_text/add_alarm_text">
+    <table class="input_add_alarm">
+        <tr>
+            <th>name</th>
+            <th><input type="text" name="name"></th>
+        </tr>
+        <tr>
+            <th>type</th>
+            <th><input type="text" name="type"></th>
+        </tr>
+    </table>
+    <div class="add_alarm_btn">
+        <button class="submit_btn" type="submit">Add</button>
+    </div>
+
+    <!-- <div><a href="/alarm_text"><button type="submit">back to Alarm text list</button> </a> </div> -->
+</form>
+</div>
+</div>
+</body>
+</html>

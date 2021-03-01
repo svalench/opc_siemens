@@ -1,2 +1,13 @@
 # Project exclude paths
 /venv/
+**/__pycache__/
+__pycache__/data.cpython-39.pyc
+__pycache__/settings.cpython-39.pyc
+core/__pycache__/__init__.cpython-39.pyc
+core/__pycache__/bind_error.cpython-39.pyc
+core/__pycache__/processor.cpython-39.pyc
+core/__pycache__/socket_server.cpython-39.pyc
+core/__pycache__/teldafax_dashboard_data.cpython-39.pyc
+test.db
+web/__pycache__/__init__.cpython-39.pyc
+web/__pycache__/app.cpython-39.pyc
