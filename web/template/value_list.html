@@ -1,47 +1,59 @@
 <html>
 <head>
 <title>start page</title>
-    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/value_list.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
 </head>
 <body>
-<a href="/value_list/{{data.id}}/add_value_list"><button type="submit">Add value</button></a>
-<div>
-    <h4>Value list: {{data.name}}</h4>
-    <table border="3">
-        <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>start</th>
-            <th>type value</th>
-            <th>type table</th>
-            <th>divide</th>
-            <th>if_change</th>
-            <th>byte_bind</th>
-            <th>bit_bind</th>
-            <th>alarm</th>
-            <th></th>
-        </tr>
-        {% for da in data.data %}
-        <tr>
-            <th>{{da.id}}</th>
-            <th><a href="/value_list/up/{{da.connections_id}}/{{da.id}}">{{da.name}}</a></th>
-            <th>{{da.start}}</th>
-            <th>{{da.type_value}}</th>
-            <th>{{da.type_table}}</th>
-            <th>{{da.divide}}</th>
-            <th>{{da.if_change}}</th>
-            <th>{{da.byte_bind}}</th>
-            <th>{{da.bit_bind}}</th>
-            <th>{{da.name_alarm}}</th>
-            <th>
-                <form method="post", action="/value_list/{{data.id}}/del">
-                    <input type=hidden name="id_val" value={{da.id}}>
-                    <button type="submit">DEL</button>
-                </form>
-            </th>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+    <div class="value_list">
+        <div class="header_value_list">
+            <div class="header_btn">
+                <a href="/value_list/{{data.id}}/add_value_list"><button class="add_value_btn" type="submit">Add value</button></a>
+            </div>
+            <div class="header_btn">
+                <div style="margin: auto;"><h4>Value list {{data.name}}</h4></div>
+                <a href="/connections"><button class="btn_back" type="submit"></button></a>
+            </div>
+        </div>
+
+            <table class="tab_value">
+                <tr class="thead">
+                    <td>id</td>
+                    <td>name</td>
+                    <td>start</td>
+                    <td>type value</td>
+                    <td>type table</td>
+                    <td>divide</td>
+                    <td>if_change</td>
+                    <td>byte_bind</td>
+                    <td>bit_bind</td>
+                    <td>alarm</td>
+                    <td></td>
+                </tr>
+                {% for da in data.data %}
+                <tr class="tbody">
+                    <td>{{da.id}}</th>
+                    <td><a href="/value_list/up/{{da.connections_id}}/{{da.id}}">{{da.name}}</a></th>
+                    <td>{{da.start}}</td>
+                    <td>{{da.type_value}}</td>
+                    <td>{{da.type_table}}</td>
+                    <td>{{da.divide}}</td>
+                    <td>{{da.if_change}}</td>
+                    <td>{{da.byte_bind}}</td>
+                    <td>{{da.bit_bind}}</td>
+                    <td>{{da.name_alarm}}</td>
+                    <td style="width: 160px;">
+                        <form method="post", action="/value_list/{{data.id}}/del">
+                            <input type=hidden name="id_val" value={{da.id}}>
+                            <button class="btn_delete_value" type="submit">DEL</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+    </div>
+
 </body>
 </html>

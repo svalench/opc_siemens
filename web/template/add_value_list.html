@@ -3,74 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Con</title>
-    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/add_value_list.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
 </head>
 <body>
-<h2>Data Value</h2>
-<h4>Add</h4>
-<form method="post" action="/value_list/{{data.id}}/add_value_list">
-<table border="1">
-    <tr>
-        <th>name</th>
-        <th><input type="text" name="name"></th>
-    </tr>
-    <tr>
-        <th>start</th>
-        <th><input type="number" name="start"></th>
-    </tr>
-    <tr>
-        <th>type_value</th>
-        <th>
-            <input type="radio" name="type_value" value="int" checked>int<br>
-            <input type="radio" name="type_value" value="real">real<br>
-            <input type="radio" name="type_value" value="bool">bool<br>
-            <input type="radio" name="type_value" value="double">double
-        </th>
-    </tr>
-    <tr>
-        <th>type_table</th>
-        <th>
-            <input type="radio" name="type_table" value="int" checked>int<br>
-            <input type="radio" name="type_table" value="real">real<br>
-            <input type="radio" name="type_table" value="bool">bool<br>
-            <input type="radio" name="type_table" value="double">double
-        </th>
-    </tr>
-    <tr>
-        <th>divide</th>
-        <th>
-            <input type="radio" name="divide" value="True" checked>True<br>
-            <input type="radio" name="divide" value="False">False
-        </th>
-    </tr>
-    <tr>
-        <th>if_change</th>
-        <th>
-            <input type="radio" name="if_change" value="True" checked>True<br>
-            <input type="radio" name="if_change" value="False">False
-        </th>
-    </tr>
-    <tr>
-        <th>byte_bind</th>
-        <th><input type="number" name="byte_bind"></th>
-    </tr>
-    <tr>
-        <th>bit_bind</th>
-        <th><input type="number" name="bit_bind"></th>
-    </tr>
-    <tr>
-        <th>Alarm bit:</th>
-        <th>
-            <select name="alarm">
-                    <option value="Null">Нет связи</option>
-                {% for i in data.array %}
-                    <option value={{i.id}}>{{i.bit}}</option>
-                {% endfor %}
-            </select>
-        </th>
-    </tr>
-</table>
-    <button type="submit">Add value</button>
-</form>
+    <div class="add_value_list">
+        <div class="header_value_list">
+            <h2>Data Value</h2>
+            <a href="/value_list/{{data.id}}"><button class="btn_back" type="submit"></button></a>
+        </div>
+        <div class="table_and_btn">
+            <h5>Add</h5>
+            <form method="post" action="/value_list/{{data.id}}/add_value_list">
+            <table class="input_add_value">
+                <tr>
+                    <th>name</th>
+                    <th><input type="text" name="name"></th>
+                </tr>
+                <tr>
+                    <th>start</th>
+                    <th><input type="number" name="start"></th>
+                </tr>
+                <tr>
+                    <th>type_value</th>
+                    <th>
+                        <input type="radio" name="type_value" value="int" checked>int<br>
+                        <input type="radio" name="type_value" value="real">real<br>
+                        <input type="radio" name="type_value" value="bool">bool<br>
+                        <input type="radio" name="type_value" value="double">double
+                    </th>
+                </tr>
+                <tr>
+                    <th>type_table</th>
+                    <th>
+                        <input type="radio" name="type_table" value="int" checked>int<br>
+                        <input type="radio" name="type_table" value="real">real<br>
+                        <input type="radio" name="type_table" value="bool">bool<br>
+                        <input type="radio" name="type_table" value="double">double
+                    </th>
+                </tr>
+                <tr>
+                    <th>divide</th>
+                    <th>
+                        <input type="radio" name="divide" value="True" checked>True<br>
+                        <input type="radio" name="divide" value="False">False
+                    </th>
+                </tr>
+                <tr>
+                    <th>if_change</th>
+                    <th>
+                        <input type="radio" name="if_change" value="True" checked>True<br>
+                        <input type="radio" name="if_change" value="False">False
+                    </th>
+                </tr>
+                <tr>
+                    <th>byte_bind</th>
+                    <th><input type="number" name="byte_bind"></th>
+                </tr>
+                <tr>
+                    <th>bit_bind</th>
+                    <th><input type="number" name="bit_bind"></th>
+                </tr>
+                <tr>
+                    <th>Alarm bit:</th>
+                    <th>
+                        <select name="alarm">
+                                <option value="Null">Нет связи</option>
+                            {% for i in data.array %}
+                                <option value={{i.id}}>{{i.bit}}</option>
+                            {% endfor %}
+                        </select>
+                    </th>
+                </tr>
+            </table>
+            <div class="add_value_btn">
+                <button class="submit_btn" type="submit">Add</button>
+            </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
