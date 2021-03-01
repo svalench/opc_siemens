@@ -46,12 +46,16 @@ class ListValue(base):
     if_change = Column(Boolean, default=False)
     byte_bind = Column(Integer, nullable=False)
     bit_bind = Column(Integer, nullable=False)
-    alarms_id = Column(Integer, ForeignKey('alarms.id'))
+    alarms_id = Column(Integer, ForeignKey('alarms.id'), nullable=True)
 
     def get_name_alarm(self):
         session = Session()
-        a = session.query(Alarms).get(self.alarms_id).text_alarm_id
-        a = session.query(Text_Alarm).get(a).name
+        a = session.query(Alarms).get(self.alarms_id)
+        if a == None:
+            a = "Нет связи"
+        else:
+            a = session.query(Alarms).get(self.alarms_id).text_alarm_id
+            a = session.query(Text_Alarm).get(a).name
         return a
 
 
@@ -218,6 +222,10 @@ def value_list(id):
     # c = a.get_name_alarm()
     array = []
     for i in a:
+        if i.alarms_id == "None":
+            name_alarm = ''
+        else:
+            name_alarm = i.get_name_alarm()
         c = {
             "id": i.id,
             "name": i.name,
@@ -229,7 +237,7 @@ def value_list(id):
             "if_change": i.if_change,
             "byte_bind": i.byte_bind,
             "bit_bind": i.bit_bind,
-            "name_alarm": i.get_name_alarm()
+            "name_alarm": name_alarm
         }
         array.append(c)
     data = {
