@@ -1,4 +1,4 @@
-.alarm_list{
+.value_list{
     height: auto;
     width: auto;
     display: flex;
@@ -7,7 +7,7 @@
     padding: 0;
 }
 
-.header_alarm_list{
+.header_value_list{
     height: 48px;
     display: flex;
     flex-direction: row-reverse;
@@ -29,7 +29,7 @@ div h4{
     color: #30307A;
 }
 
-.add_alarm_btn{
+.add_value_btn{
     width: 180px;
     height: 30px;
     background: #E5E5F0;
@@ -43,13 +43,13 @@ div h4{
     color: #7878AB;
     border: none;
 }
-.add_alarm_btn:hover{
+.add_value_btn:hover{
     background:#7878AB;
     box-shadow: 5px 5px 10px rgba(170, 170, 204, 0.5), -5px -5px 10px #E5E5F0;
     color: #E5E5F0;
 }
 
-.tab_alarmm td{
+.tab_value td{
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
@@ -63,13 +63,12 @@ div h4{
     color: #232323;
     }
 
-.tab_alarmm{
+.tab_value{
     
     margin: 0px 10px 0px 10px;
-} 
-   
+}
 
-.btn_delete_al{
+.btn_delete_value{
     height: 30px;
     width: 140px;
     background:#ffffff;
@@ -82,7 +81,7 @@ div h4{
     color: #FC938A;
     border: none;
 }
-.btn_delete_al:hover{
+.btn_delete_value:hover{
     background: #FC938A;
     box-shadow: 5px 5px 10px rgba(170, 170, 204, 0.5), -5px -5px 10px #E5E5F0;
     color: #ffffff;
