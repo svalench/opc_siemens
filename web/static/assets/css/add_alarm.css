@@ -1,4 +1,4 @@
-.data_con{
+.add_alarm{
     display: flex;
     height: 100%;
     width: 100%;
@@ -7,7 +7,7 @@
     background-color:#F5F5FA;
 }
 
-.header_data_con{
+.header_add_alarm{
     height: 48px;
     display: flex;
     background-color: #E0E0EE; 
@@ -47,7 +47,8 @@ div h5{
     font-size: 16px;
 
 }
-.input_add_con th{
+
+.input_add_alarm th{
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
@@ -103,10 +104,4 @@ input{
     background: no-repeat url(../img/btn_back.svg);
     border: none;
     margin-left: 20px;
-}
-
-.add_conn_btn{
-    display: flex;
-    margin-left: 0;
-    margin-right: auto;
 }
