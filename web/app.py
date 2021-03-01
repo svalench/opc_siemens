@@ -38,7 +38,7 @@ class ListValue(base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    offset = Column(Integer, nullable=False)
+    start = Column(Integer, nullable=False)
     type_value = Column(ChoiceType(TYPES))
     type_table = Column(ChoiceType(TYPES))
     connections_id = Column(Integer, ForeignKey('connections.id'))
@@ -229,7 +229,7 @@ def value_list(id):
         c = {
             "id": i.id,
             "name": i.name,
-            "offset": i.offset,
+            "start": i.start,
             "type_value": i.type_value,
             "type_table": i.type_table,
             "connections_id": i.connections_id,
@@ -262,7 +262,7 @@ def add_value_list(id):
 @app.route('/value_list/<int:id>/add_value_list', methods=['POST'])
 def add_value(id):
     name = request.form['name']
-    offset = request.form['offset']
+    start = request.form['start']
     type_value = request.form['type_value']
     type_table = request.form['type_table']
 
@@ -278,7 +278,7 @@ def add_value(id):
     bit_bind = request.form['bit_bind']
     alarm = request.form['alarm']
     a = ListValue(name=name,
-                  offset=offset,
+                  start=start,
                   type_value=type_value,
                   type_table=type_table,
                   connections_id=id,
@@ -328,7 +328,7 @@ def up_value_ch(id1, id2):
     session = Session()
     a = session.query(ListValue).get(id2)
     name = request.form['name']
-    offset = request.form['offset']
+    start = request.form['start']
     type_value = request.form['type_value']
     type_table = request.form['type_table']
     if request.form['divide'] == "True":
@@ -343,7 +343,7 @@ def up_value_ch(id1, id2):
     bit_bind = request.form['bit_bind']
     alarm = request.form['alarm']
     a.name = name
-    a.offset = offset
+    a.start = start
     a.type_value = type_value
     a.type_table = type_table
     a.connections_id = id1
