@@ -65,6 +65,7 @@ class Alarms(base):
     id = Column(Integer, primary_key=True)
     bit = Column(Integer, nullable=False)
     text_alarm_id = Column(Integer, ForeignKey('text_alarm.id'))
+    Value = relationship('ListValue', cascade='save-update')
 
 
 class Text_Alarm(base):
