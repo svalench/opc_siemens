@@ -23,6 +23,7 @@ class Connections(base):
     DB = Column(Integer, nullable=False)
     start = Column(Integer, nullable=False)
     offset = Column(Integer, nullable=False)
+    listvalue = relationship("ListValue", cascade="all, delete")
 
 
 class ListValue(base):
@@ -41,7 +42,6 @@ class ListValue(base):
     type_value = Column(ChoiceType(TYPES))
     type_table = Column(ChoiceType(TYPES))
     connections_id = Column(Integer, ForeignKey('connections.id'))
-    # connections = relationship(Connections, cascade="all,delete", backref="value")
     divide = Column(Boolean, default=False)
     if_change = Column(Boolean, default=False)
     byte_bind = Column(Integer, nullable=False)
@@ -69,6 +69,7 @@ class Text_Alarm(base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     type = Column(String, nullable=False)
+    alarm = relationship("Alarms", cascade="all, delete")
 
 
 base.metadata.create_all(engine)
@@ -199,10 +200,10 @@ def updata_connections():
 def del_connections():
     id = request.form['id']
     session = Session()
-    b = session.query(ListValue).filter_by(connections_id=id)
-    for i in b:
-        session.delete(i)
-        session.commit()
+    # b = session.query(ListValue).filter_by(connections_id=id)
+    # for i in b:
+    #     session.delete(i)
+    #     session.commit()
     a = session.query(Connections).get(id)
     session.delete(a)
     session.commit()
@@ -395,6 +396,34 @@ def up_alarm(id_alarm_text, id_alarm):
     session.commit()
     return redirect(url_for('alarm_list', id_alarm_text=id_alarm_text))
 
+
+# @app.route('/yyyyyyyyy', methods=['POST'])
+# def valuelistsasha():
+#     session = Session()
+#     for i in list_data:
+#         a = ListValue(name=i['name'], offset=i['start'], type_value=i['type'], type_table=i['table'],
+#                       connections_id=1, itarable=i['itarable'], divide=i['divide'], if_change=i['if_change'],
+#                       byte_bind=['byte_bind'], bit_bind=i['bit_bind'])
+#         session.add(a)
+#         session.commit()
+#     for i in list_data_not_speed_s300:
+#         a = ListValue(name=i['name'], offset=i['start'], type_value=i['type'], type_table=i['table'],
+#                       connections_id=1, itarable=i['itarable'], divide=i['divide'], if_change=i['if_change'],
+#                       byte_bind=['byte_bind'], bit_bind=i['bit_bind'])
+#
+#     id = Column(Integer, primary_key=True)
+#     name = Column(String, nullable=False)
+#     offset = Column(Integer, nullable=False)
+#     type_value = Column(ChoiceType(TYPES))
+#     type_table = Column(ChoiceType(TYPES))
+#     connections_id = Column(Integer, ForeignKey('connections.id'))
+#     # connections = relationship(Connections, cascade="all,delete", backref="value")
+#     ?itarable
+#     divide = Column(Boolean, default=False)
+#     if_change = Column(Boolean, default=False)
+#     byte_bind = Column(Integer, nullable=False)
+#     bit_bind = Column(Integer, nullable=False)
+#     ?alarms_id = Column(Integer, ForeignKey('alarms.id'))
 
 @app.route('/alarm_text/<int:id_alarm_text>/alarm/del/<int:id_alarm>', methods=['POST'])
 def del_alarm(id_alarm_text, id_alarm):
