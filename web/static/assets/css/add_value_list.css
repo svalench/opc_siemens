@@ -1,0 +1,121 @@
+.add_value_list{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: start;
+    background-color:#F5F5FA;
+}
+
+.header_value_list{
+    height: 48px;
+    display: flex;
+    background-color: #E0E0EE; 
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    align-content: flex-start;
+    /* justify-content: space-between; */
+}
+
+div h2{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 14px;
+    color: #30307A;
+}
+
+.table_and_btn{
+    display: flex;
+    align-content: center;
+    padding-top: 10px;
+    background: none;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div h5{
+    color: #30307A;
+    text-align: center;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+
+}
+
+.input_add_value th{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 6px;
+    height: 40px;
+    background-color: none;
+    text-align: center;
+    color: #4B6075;
+    font-weight: 700;
+    padding-left: 10px;
+}
+
+
+
+.submit_btn{
+    height: 30px;
+    width: 80px;
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    color: #7db38a;
+    border: none;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.submit_btn:hover{
+    background:#7db38a;
+    box-shadow: 5px 5px 10px rgba(170, 170, 204, 0.5), -5px -5px 10px #E5E5F0;
+    color: #ffffff;
+}
+
+.add_value_btn{
+    display: flex;
+    align-items: center;
+}
+
+input{
+    border: 1px solid #9098AF;
+    border-radius: 4px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 12px;
+
+}
+
+.btn_back{
+    width: 26px;
+    height: 26px;
+    display: block;
+    background: no-repeat url(../img/btn_back.svg);
+    border: none;
+    margin-left: 20px;
+}
+
+select{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    border: 1px solid #9098AF;
+    border-radius: 4px;
+}

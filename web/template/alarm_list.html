@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>start page</title>
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/alarm_list.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
+</head>
+<body>
+    <div class="alarm_list">
+        <div class="header_alarm_list">
+            <div class="header_btn">
+                <a href="/alarm_text/{{data.id_alarm_text}}/alarm/add_alarm"><button class="add_alarm_btn" type="submit">Add alarm</button></a>
+            </div>
+            <div class="header_btn">
+                <div style="margin: auto;"><h4>Alarm</h4></div>
+                <a href="/alarm_text"><button class="btn_back" type="submit"></button></a>
+            </div>
+        </div>
+           <!-- <a href="/"><button type="submit">Back to main page</button> </a> -->
+
+                <!-- <h5>Alarm</h5> -->
+                <table class="tab_alarmm">
+                    <tr class="thead">
+                        <td>id</td>
+                        <td>bit</td>
+                        <td>text_alarm</td>
+                        <td>text_type</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% for i in data.array_alarms %}
+                    <tr class="tbody">
+                        <td><a href="/alarm_text/{{data.id_alarm_text}}/alarm/up/{{i.id}}">{{i.id}}</a></td>
+                        <td>{{i.bit}}</td>
+                        <td>{{data.text}}</td>
+                        <td>{{data.type}}</td>
+                        <td style="width: 160px;">
+                            <!-- <form method="get", action="">
+                                <button class="btn_hzhz_list" type="submit">HZHHZZ</button>
+                            </form> -->
+                        </td>
+                        <td style="width: 160px;">
+                            <form method="post", action="/alarm_text/{{data.id_alarm_text}}/alarm/del/{{i.id}}">
+                                <input type=hidden name="del" value=>
+                                <button class="btn_delete_al" type="submit">DEL</button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+    </div>
+
+</body>
+</html>

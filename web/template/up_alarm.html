@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Updata Alarm</title>
+    <!-- <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
+    <link rel="stylesheet" href="/assets/css/up_alarm.css">
+</head>
+
+<body>
+    <div class="up_alarm">
+        <div class="header_up_alarm">
+            <h2>Alarm</h2>
+            <a href="/alarm_text/{{data.id_alarm_text}}/alarm"><button class="btn_back" type="submit"></button></a>
+        </div>
+        <div class="table_and_btn">
+            <h5>Updata</h5>
+            <form method="post" action="">
+                <table class="input_up_alarm">
+                    <tr>
+                        <th>id:</th>
+                        <th> {{data.array.id}}</th>
+                    </tr>
+                    <tr>
+                        <th>bit</th>
+                        <th>
+                            <input type="number" name="bit" value={{data.array.bit}}>
+                        </th>
+                    </tr>
+                </table>
+                <div class="up_alarm_btn">
+                    <button class="submit_btn" type="submit">Updata</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

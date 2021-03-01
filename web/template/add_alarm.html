@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD Alarm</title>
+    <link rel="stylesheet" href="/assets/css/add_alarm.css">
+    <link rel="stylesheet" href="/assets/css/global_setting.css">
+</head>
+<body>
+    <div class="add_alarm">
+        <div class="header_add_alarm">
+            <h2>Alarm Text</h2>
+            <a href="/alarm_text/{{data}}/alarm"><button class="btn_back" type="submit"></button> </a>
+        </div>
+        <div class="table_and_btn">
+            <h5>Add</h5>
+            <form method="post" action="/alarm_text/{{data}}/alarm/add_alarm">
+        <table class="input_add_alarm">
+            <tr>
+                <th>bit</th>
+                <th><input type="number" name="bit"></th>
+            </tr>
+        </table>
+        <div class="add_alarm_btn">
+            <button class="submit_btn" type="submit">Add</button>
+        </div>
+    </div>
+</form>
+</div>
+    <!-- </div><a href="/alarm_text/{{data}}/alarm"><button type="submit">back to Alarm list</button> </a> </div> -->
+</body>
+</html>
