@@ -11,22 +11,8 @@ from core.socket_server import listen_server_mvlab
 
 class TestSocetServerRun(TestCase):
     def setUp(self):
-        time.sleep(5)
-        self.my_thread = threading.Thread(target=listen_server_mvlab)
-        self.my_thread.start()
-
-    def test_send_socket(self):
-        sock = socket.socket()
         time.sleep(1)
 
-        sock.connect(('0.0.0.0', 8084))
-        sock.send(b'{"test_socket":1}')
-        data = sock.recv(1024)
-        sock.close()
-        time.sleep(1)
-        data = json.loads(data)
-        self.my_thread.join()
-        self.assertEqual(data, "{'test':True}")
 
 class TestStart100ProccessCase(TestCase):
     def test_start_10_process(self):
