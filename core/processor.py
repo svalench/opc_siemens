@@ -199,7 +199,9 @@ class StartProcessOpcForConnectToPLC(Process):
     def add_to_alarm_new(self, d):
         for a in d['alarms']:
             status = self.check_bit_in_int(self.values[d['name']], int(a['bit']))
-
+            cprint.cprint.info(a['type'])
+            cprint.cprint.warn(d['name'])
+            cprint.cprint.info(a['bit'])
             if status == "1":
                 if a['type'] == "alarm":
                     tablename = "alarms"
