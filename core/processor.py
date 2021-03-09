@@ -173,6 +173,8 @@ class StartProcessOpcForConnectToPLC(Process):
 
         if 'if_change' in d and not d['if_change']:
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
+            if 'alarms' in d:
+                self.add_to_alarm_new(d)
 
     def check_bit_in_int(self, value, bit):
         bits = bin(value)
