@@ -177,6 +177,7 @@ class StartProcessOpcForConnectToPLC(Process):
                 self.add_to_alarm_new(d)
 
     def check_bit_in_int(self, value, bit):
+        value = int.from_bytes(value, byteorder='little', signed=True)
         bits = bin(value)
         bits = bits.replace("0b", "")
         bits = bits[::-1]
