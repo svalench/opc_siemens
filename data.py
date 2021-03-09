@@ -314,39 +314,21 @@ alarm_world = [
      } for k, i in enumerate(list_data) if i['itarable']]
 
 list_data_not_speed_s300 = list_data_not_speed_s300_low_limits_warn + list_data_not_speed_s300_hight_limits_warn + list_data_not_speed_s300_low_limits_error + list_data_not_speed_s300_hight_limits_error + alarm_world + alarm_all_world
+
+status_oee = [
+        {"value": 7, 'type': 2, "text": "авария", "factor": 7},
+        {"value": 6, 'type': 2, "text": "авария", "factor": 7},
+        {"value": 4, 'type': 2, "text": "авария", "factor": 7},
+        {"value": 0, 'type': 0, "text": "простой", "factor": 24},
+        {"value": 24, 'type': 0, "text": "работа", "factor": 24},
+        {"value": 8, 'type': 0, "text": "работа", "factor": 24},
+    ]
+
 oee = [
-    {"start": 5831, 'name': 'Машина 1', "end": 5832, "status": [
-        {"value": 7, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 6, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 4, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 0, 'type': 0, "text": "простой", "factor": 24},
-        {"value": 24, 'type': 0, "text": "работа", "factor": 24},
-        {"value": 8, 'type': 0, "text": "работа", "factor": 24},
-    ]},
-    {"start": 5836, 'name': 'Машина 2', "end": 5837, "status": [
-        {"value": 7, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 6, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 4, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 0, 'type': 0, "text": "простой", "factor": 24},
-        {"value": 24, 'type': 0, "text": "работа", "factor": 24},
-        {"value": 8, 'type': 0, "text": "работа", "factor": 24},
-    ]},
-    {"start": 5842, 'name': 'Машина 3', "end": 5843, "status": [
-        {"value": 7, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 6, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 4, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 0, 'type': 0, "text": "простой", "factor": 24},
-        {"value": 24, 'type': 0, "text": "работа", "factor": 24},
-        {"value": 8, 'type': 0, "text": "работа", "factor": 24},
-    ]},
-    {"start": 5848, 'name': 'Машина 4', "end": 5849, "status": [
-        {"value": 7, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 6, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 4, 'type': 2, "text": "авария", "factor": 7},
-        {"value": 0, 'type': 0, "text": "простой", "factor": 24},
-        {"value": 24, 'type': 0, "text": "работа", "factor": 24},
-        {"value": 8, 'type': 0, "text": "работа", "factor": 24},
-    ]},
+    {"start": 5831, 'name': 'Машина 1', "end": 5832, "status": status_oee},
+    {"start": 5836, 'name': 'Машина 2', "end": 5837, "status": status_oee},
+    {"start": 5842, 'name': 'Машина 3', "end": 5843, "status": status_oee},
+    {"start": 5848, 'name': 'Машина 4', "end": 5849, "status": status_oee},
 ]
 list_connections = [
     {
