@@ -214,7 +214,7 @@ class StartProcessOpcForConnectToPLC(Process):
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     return False
                 try:
-                    if records[0][0]>0 and len(records):
+                    if len(records) and records[0][0]>0:
                         pass
                     else:
                         self._c.execute(
