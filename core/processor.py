@@ -214,9 +214,9 @@ class StartProcessOpcForConnectToPLC(Process):
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     return False
                 try:
-                    if len(records) and records[0][0]>0:
-                        pass
-                    else:
+                    try:
+                        a = records[0][0]
+                    except:
                         self._c.execute(
                             '''INSERT INTO mvlab_''' + tablename + \
                             """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(a['text']) + """','""" + str(
