@@ -223,13 +223,19 @@ class StartProcessOpcForConnectToPLC(Process):
                 try:
                     try:
                         a = records[0][0]
+                        if not records[0][0]:
+                            self._c.execute(
+                                '''INSERT INTO mvlab_''' + tablename + \
+                                """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(
+                                    a['text']) + """','""" + str(
+                                    1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     except:
                         self._c.execute(
                             '''INSERT INTO mvlab_''' + tablename + \
                             """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(a['text']) + """','""" + str(
                                 1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                 except:
-                    cprint.cprint.info("error in 202 string proccess.py")
+                    cprint.cprint.info("error in 211 string proccess.py")
 
     def run(self):
         self.__create_table_if_not_exist()  # создание таблиц если их нет
