@@ -205,7 +205,7 @@ class StartProcessOpcForConnectToPLC(Process):
                 if a['type'] == "alarm":
                     tablename = "alarms"
                 else:
-                    tablename = "warnings"
+                    tablename = "alarms"
                 records = []
                 try:
                     self._c.execute(
