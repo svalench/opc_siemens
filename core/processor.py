@@ -179,12 +179,12 @@ class StartProcessOpcForConnectToPLC(Process):
     def check_bit_in_int(self, value, bit):
         #value = int.from_bytes(int.to_bytes(value, byteorder='little'), byteorder='little', signed=True)
         bits = bin(value)
-
-        if(value==254):
-            print("77" * 122)
-            print(bits)
+        print("88" * 122)
+        print(bits)
         bits = bits.replace("0b", "")
         bits = bits[::-1]
+        print("77" * 122)
+        print(bits)
         try:
             status = bits[bit]
         except:
