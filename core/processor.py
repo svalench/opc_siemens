@@ -184,7 +184,7 @@ class StartProcessOpcForConnectToPLC(Process):
             print("77" * 122)
             print(bits)
         bits = bits.replace("0b", "")
-        #bits = bits[::-1]
+        bits = bits[::-1]
         try:
             status = bits[bit]
         except:
