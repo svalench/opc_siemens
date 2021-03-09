@@ -217,7 +217,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     records = self._c.fetchall()
                 except:
                     self._c.execute(
-                        '''INSERT INTO mvlab_''' + tablename + \
+                        '''INSERT INTO mvlab_alarms''' \
                         """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(
                             a['text']) + """','""" + str(
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
@@ -227,7 +227,7 @@ class StartProcessOpcForConnectToPLC(Process):
                         pass
                     else:
                         self._c.execute(
-                            '''INSERT INTO mvlab_''' + tablename + ''' '''\
+                            '''INSERT INTO mvlab_alarms'''\
                             """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(a['text']) + """','""" + str(
                                 1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                 except:
