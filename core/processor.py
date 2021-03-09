@@ -176,13 +176,21 @@ class StartProcessOpcForConnectToPLC(Process):
             if 'alarms' in d:
                 self.add_to_alarm_new(d)
 
+    def add_to_16_bit(self, string):
+        while len(string)<16:
+            string = "0"+string
+        string1 = string[0:8]
+        string2 = string[8::]
+        return string2+string1
+
     def check_bit_in_int(self, value, bit):
         #value = int.from_bytes(int.to_bytes(value, byteorder='little'), byteorder='little', signed=True)
         bits = bin(value)
         print("88" * 12)
         print(bits)
         bits = bits.replace("0b", "")
-        bits = bits[::-1]
+        #bits = bits[::-1]
+        bits = self.add_to_16_bit(bits)
         print("77" * 12)
         print(bits)
         try:
@@ -218,7 +226,7 @@ class StartProcessOpcForConnectToPLC(Process):
                         pass
                     else:
                         self._c.execute(
-                            '''INSERT INTO mvlab_''' + tablename + \
+                            '''INSERT INTO mvlab_''' + tablename + ''' '''\
                             """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(a['text']) + """','""" + str(
                                 1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                 except:
