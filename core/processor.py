@@ -203,7 +203,7 @@ class StartProcessOpcForConnectToPLC(Process):
                 records = []
                 try:
                     self._c.execute(
-                        """SELECT COUNT(*) FROM mvlab_alarms  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
+                        """SELECT COUNT(*) FROM mvlab_""" + tablename +"""  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
                          type_alarm='""" + str(a['type']) + """' and  object_alarm='""" + str(d['name']) + """';""")
                     records = self._c.fetchall()
                 except:
