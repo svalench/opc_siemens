@@ -231,6 +231,11 @@ class StartProcessOpcForConnectToPLC(Process):
                             """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(a['text']) + """','""" + str(
                                 1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                 except:
+                    self._c.execute(
+                        '''INSERT INTO mvlab_alarms''' \
+                        """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(
+                            a['text']) + """','""" + str(
+                            1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     cprint.cprint.info("error in 202 string proccess.py")
 
     def run(self):
