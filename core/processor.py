@@ -200,13 +200,21 @@ class StartProcessOpcForConnectToPLC(Process):
                     tablename = "alarms"
                 else:
                     tablename = "warnings"
-
-                self._c.execute(
-                    """SELECT COUNT(*) FROM mvlab_alarms  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
-                     type_alarm='""" + str(a['type']) + """' and  object_alarm='""" + str(d['name']) + """';""")
-                records = self._c.fetchall()
+                records = []
                 try:
-                    if records[0][0]>0:
+                    self._c.execute(
+                        """SELECT COUNT(*) FROM mvlab_alarms  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
+                         type_alarm='""" + str(a['type']) + """' and  object_alarm='""" + str(d['name']) + """';""")
+                    records = self._c.fetchall()
+                except:
+                    self._c.execute(
+                        '''INSERT INTO mvlab_''' + tablename + \
+                        """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(
+                            a['text']) + """','""" + str(
+                            1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
+                    return False
+                try:
+                    if records[0][0]>0 and len(records):
                         pass
                     else:
                         self._c.execute(
