@@ -189,8 +189,9 @@ class StartProcessOpcForConnectToPLC(Process):
         print("88" * 12)
         print(bits)
         bits = bits.replace("0b", "")
-        #bits = bits[::-1]
+
         bits = self.add_to_16_bit(bits)
+        bits = bits[::-1]
         print("77" * 12)
         print(bits)
         try:
