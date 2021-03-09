@@ -320,8 +320,8 @@ status_oee = [
         {"value": 6, 'type': 2, "text": "авария", "factor": 7},
         {"value": 4, 'type': 2, "text": "авария", "factor": 7},
         {"value": 0, 'type': 0, "text": "простой", "factor": 24},
-        {"value": 24, 'type': 0, "text": "работа", "factor": 24},
-        {"value": 8, 'type': 0, "text": "работа", "factor": 24},
+        {"value": 24, 'type': 1, "text": "работа", "factor": 24},
+        {"value": 8, 'type': 1, "text": "работа", "factor": 24},
     ]
 
 oee = [
