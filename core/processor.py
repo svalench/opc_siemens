@@ -176,6 +176,11 @@ class StartProcessOpcForConnectToPLC(Process):
             if 'alarms' in d:
                 self.add_to_alarm_new(d)
 
+    def add_bit_0_to_all_word(self, string):
+        while len(string)<15:
+            string = "0"+string
+        return string
+
     def check_bit_in_int(self, value, bit):
         #value = int.from_bytes(int.to_bytes(value, byteorder='little'), byteorder='little', signed=True)
         bits = bin(value)
@@ -183,6 +188,7 @@ class StartProcessOpcForConnectToPLC(Process):
         print(bits)
         bits = bits.replace("0b", "")
         #bits = bits[::-1]
+        bits = self.add_bit_0_to_all_word(bits)
         print("77" * 12)
         print(bits)
         try:
