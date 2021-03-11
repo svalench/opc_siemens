@@ -23,6 +23,10 @@ def main():
     for connection in list_connections:
         try:
             time.sleep(3)
+            if 'oee' in connection:
+                oee = connection['oee']
+            else:
+                oee = None
             pr[connection['name']] = StartProcessOpcForConnectToPLC(
                 connection['ip'],
                 connection['rack'],
@@ -33,7 +37,8 @@ def main():
                 values_list=connection['value_list'],
                 name_connect=connection['name'],
                 status=statuses_connection,
-                count=count
+                count=count,
+                oee=oee
             )
             data_for_restart[connection['name']] = {
                                                         "ip":connection['ip'],
@@ -43,7 +48,8 @@ def main():
                                                         "start":connection['start'],
                                                         "offset":connection['offset'],
                                                         'values_list':connection['value_list'],
-                                                        'count':count
+                                                        'count':count,
+                                                        'oee':oee
                                                     }
             count += 1
             pr[connection['name']].start()
@@ -89,7 +95,8 @@ def restart_process_if_not_alive(p):
             values_list=data_for_restart[p]['value_list'],
             name_connect=data_for_restart[p]['name'],
             status=statuses_connection,
-            count=data_for_restart[p]['count']
+            count=data_for_restart[p]['count'],
+            oee=data_for_restart[p]['oee']
         )
 
 
