@@ -255,7 +255,7 @@ class StartProcessOpcForConnectToPLC(Process):
     def write_change_oee_to_db(self, oee:dict) -> None:
         """запись структурированнфх данных в БД"""
         self._c.execute(
-            '''INSERT INTO mvlab_oee_''' + oee['table_name'] + ''' (value) VALUES (''' + str(oee['value']) + ''');''')
+            '''INSERT INTO mvlab_oee_''' + oee['table_name'] + ''' (value) VALUES (''' + str(oee['status']) + ''');''')
         self._conn.commit()
 
     def find_oee_status(self, e) -> dict:
