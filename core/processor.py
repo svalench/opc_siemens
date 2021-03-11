@@ -245,17 +245,17 @@ class StartProcessOpcForConnectToPLC(Process):
         for e in self.oee: # проходим по списку ОЕЕ для подключения
             oee_status = self.find_oee_status(e)
             if oee_status['table_name'] not in self.oee_status:
-                self.oee_status[oee_status['table_name']] = oee_status['value']
+                self.oee_status[oee_status['table_name']] = oee_status['type']
                 self.write_change_oee_to_db(oee_status)
             else:
-                if self.oee_status[oee_status['table_name']] != oee_status['value']:
+                if self.oee_status[oee_status['table_name']] != oee_status['type']:
                     self.write_change_oee_to_db(oee_status)
 
 
     def write_change_oee_to_db(self, oee:dict) -> None:
         """запись структурированнфх данных в БД"""
         self._c.execute(
-            '''INSERT INTO mvlab_oee_''' + oee['table_name'] + ''' (value) VALUES (''' + str(oee['status']) + ''');''')
+            '''INSERT INTO mvlab_oee_''' + oee['table_name'] + ''' (value) VALUES (''' + str(oee['type']) + ''');''')
         self._conn.commit()
 
     def find_oee_status(self, e) -> dict:
