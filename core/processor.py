@@ -239,6 +239,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     cprint.cprint.info("error in 202 string proccess.py")
 
     def run(self):
+        """основной цикл процесса"""
         self.__create_table_if_not_exist()  # создание таблиц если их нет
         while True:
             start_time = time.time()
@@ -247,11 +248,13 @@ class StartProcessOpcForConnectToPLC(Process):
                 self.status[self.count] = 0
             else:
                 threads = list()
-                for d in self.values_list:
-                    if d['name'] not in self.bind and d['divide']:
+                for d in self.values_list: # проход по массиву данных подключения
+                    if d['name'] not in self.bind and d['divide']: # проверка на первый запуск.
+                        # Если отслеживание включено но данной переменной нет в массиве с переменными слежения,
+                        # то добавляем ее и включаем слежение
                         time.sleep(1)
                         self.bind[d['name']] = BindError(self.bytearray_data, d)
-                    if d['divide']:
+                    if d['divide']: # если переменная отслеживается то чекаем аварию
                         self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
                     x = threading.Thread(target=self._thread_for_write_data, args=(d,))
                     threads.append(x)
