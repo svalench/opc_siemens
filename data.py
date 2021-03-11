@@ -325,7 +325,7 @@ status_oee = [
 ]
 
 oee = [
-    {"start": 5831, 'name': 'Машина 1', 'table_name': 'machine1', "end": 5832, "status": status_oee},
+    {"start": 5830, 'name': 'Машина 1', 'table_name': 'machine1', "end": 5831, "status": status_oee},
     {"start": 5836, 'name': 'Машина 2', 'table_name': 'machine2', "end": 5837, "status": status_oee},
     {"start": 5842, 'name': 'Машина 3', 'table_name': 'machine3', "end": 5843, "status": status_oee},
     {"start": 5848, 'name': 'Машина 4', 'table_name': 'machine4', "end": 5849, "status": status_oee},
