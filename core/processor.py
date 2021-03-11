@@ -14,7 +14,7 @@ from settings import createConnection
 class StartProcessOpcForConnectToPLC(Process):
 
     def __init__(self, address: str, rack: int, slot: int, db: int, start_address_db: int, offset_db: int,
-                 values_list: list = None, port=102, name_connect: str = "", status=[], count=0):
+                 values_list: list = None, port=102, name_connect: str = "", status=[], count=0, oee:list = None):
         """Класс процесса для подключения к ПЛК по адресу address, с портом port (по умолчанию 102) и получения заданных
         значений из блока данных db в промежутке с start_address_db по start_address_db+offset_db
         (offset_db - количество забираемых byte из блока). После получения данных разбирает bytearray по
@@ -49,6 +49,8 @@ class StartProcessOpcForConnectToPLC(Process):
         self.last_error = ''
         self.bytearray_data = bytearray()
         self.values = {}
+        self.oee = oee
+        self.oee_status = {}
         self._conn = createConnection()
         self._c = self._conn.cursor()
 
@@ -238,9 +240,47 @@ class StartProcessOpcForConnectToPLC(Process):
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     cprint.cprint.info("error in 202 string proccess.py")
 
+    def oee_module(self) -> None:
+        """парсинг оее и запись в таблицы"""
+        oee_status = self.find_oee_status()
+        if oee_status['table_name'] not in self.oee_status:
+            self.oee_status[oee_status['table_name']] = oee_status['value']
+            self.write_change_oee_to_db(oee_status)
+        else:
+            if self.oee_status[oee_status['table_name']] != oee_status['value']:
+                self.write_change_oee_to_db(oee_status)
+
+
+    def write_change_oee_to_db(self, oee:dict) -> None:
+        """запись структурированнфх данных в БД"""
+        self._c.execute(
+            '''INSERT INTO mvlab_oee_''' + oee['table_name'] + ''' (value) VALUES (''' + str(oee['value']) + ''');''')
+        self._conn.commit()
+
+    def find_oee_status(self) -> dict:
+        for e in self.oee: # проходим по списку ОЕЕ для подключения
+            pre_result = self.disassemble_int(self.bytearray_data[int(e['start']):int(e['end'])])
+            for res in e['status']:
+                result = pre_result & res['factor']
+                if result == res['value']:
+                    res['table_name'] = e['table_name']
+                    res['name'] = e['name']
+                    return res
+            del pre_result
+
+    def create_table_oee(self) -> None:
+        """создание таблиц для ОЕЕ """
+        for oee in self.oee:
+            self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_oee_''' + oee['table_name'] + ''' \
+                            (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                            value int)''')
+        self._conn.commit()
+
     def run(self):
         """основной цикл процесса"""
         self.__create_table_if_not_exist()  # создание таблиц если их нет
+        if self.oee is not None:
+            self.create_table_oee() # создаем таблицы для ОЕЕ если их нет
         while True:
             start_time = time.time()
             if (not self.__get_db_data()):
@@ -248,6 +288,8 @@ class StartProcessOpcForConnectToPLC(Process):
                 self.status[self.count] = 0
             else:
                 threads = list()
+                if self.oee is not None:
+                    self.oee_module()
                 for d in self.values_list: # проход по массиву данных подключения
                     if d['name'] not in self.bind and d['divide']: # проверка на первый запуск.
                         # Если отслеживание включено но данной переменной нет в массиве с переменными слежения,
@@ -265,8 +307,6 @@ class StartProcessOpcForConnectToPLC(Process):
                     thread.join()
                 self._conn.commit()
                 self.status[self.count] = 1
-                # cprint.cprint.info("Данные пришли")
-            # cprint.cprint.info("--- %s seconds ---" % (time.time() - start_time))
 
     def disassemble_float(self, data) -> float:  # метод для преобразования данных в real
         val = struct.unpack('>f', data)
