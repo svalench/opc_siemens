@@ -242,13 +242,14 @@ class StartProcessOpcForConnectToPLC(Process):
 
     def oee_module(self) -> None:
         """парсинг оее и запись в таблицы"""
-        oee_status = self.find_oee_status()
-        if oee_status['table_name'] not in self.oee_status:
-            self.oee_status[oee_status['table_name']] = oee_status['value']
-            self.write_change_oee_to_db(oee_status)
-        else:
-            if self.oee_status[oee_status['table_name']] != oee_status['value']:
+        for e in self.oee: # проходим по списку ОЕЕ для подключения
+            oee_status = self.find_oee_status(e)
+            if oee_status['table_name'] not in self.oee_status:
+                self.oee_status[oee_status['table_name']] = oee_status['value']
                 self.write_change_oee_to_db(oee_status)
+            else:
+                if self.oee_status[oee_status['table_name']] != oee_status['value']:
+                    self.write_change_oee_to_db(oee_status)
 
 
     def write_change_oee_to_db(self, oee:dict) -> None:
@@ -257,17 +258,16 @@ class StartProcessOpcForConnectToPLC(Process):
             '''INSERT INTO mvlab_oee_''' + oee['table_name'] + ''' (value) VALUES (''' + str(oee['value']) + ''');''')
         self._conn.commit()
 
-    def find_oee_status(self) -> dict:
-        for e in self.oee: # проходим по списку ОЕЕ для подключения
-            pre_result = self.disassemble_int(self.bytearray_data[int(e['start']):int(e['end'])])
-            for res in e['status']:
-                result = pre_result & res['factor']
-                if result == res['value']:
-                    res['table_name'] = e['table_name']
-                    res['name'] = e['name']
-                    return res
-            del pre_result
-        return res
+    def find_oee_status(self, e) -> dict:
+        pre_result = self.disassemble_int(self.bytearray_data[int(e['start']):int(e['end'])])
+        for res in e['status']:
+            result = pre_result & res['factor']
+            if result == res['value']:
+                res['table_name'] = e['table_name']
+                res['name'] = e['name']
+                return res
+        del pre_result
+
 
     def create_table_oee(self) -> None:
         """создание таблиц для ОЕЕ """
