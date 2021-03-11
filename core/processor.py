@@ -267,6 +267,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     res['name'] = e['name']
                     return res
             del pre_result
+        return res
 
     def create_table_oee(self) -> None:
         """создание таблиц для ОЕЕ """
