@@ -275,6 +275,9 @@ class StartProcessOpcForConnectToPLC(Process):
             self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_oee_''' + oee['table_name'] + ''' \
                             (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
                             value int)''')
+        self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_oee_list \
+                                    (key serial primary key,date_add TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                                    name varchar(255), table_name varchar(255))''')
         self._conn.commit()
 
     def run(self):
