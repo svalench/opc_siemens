@@ -250,6 +250,7 @@ class StartProcessOpcForConnectToPLC(Process):
             else:
                 if self.oee_status[oee_status['table_name']] != int(oee_status['type']):
                     self.write_change_oee_to_db(oee_status)
+                    self.oee_status[oee_status['table_name']] = int(oee_status['type'])
 
 
     def write_change_oee_to_db(self, oee:dict) -> None:
