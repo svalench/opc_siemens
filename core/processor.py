@@ -245,10 +245,10 @@ class StartProcessOpcForConnectToPLC(Process):
         for e in self.oee: # проходим по списку ОЕЕ для подключения
             oee_status = self.find_oee_status(e)
             if oee_status['table_name'] not in self.oee_status:
-                self.oee_status[oee_status['table_name']] = oee_status['type']
+                self.oee_status[oee_status['table_name']] = int(oee_status['type'])
                 self.write_change_oee_to_db(oee_status)
             else:
-                if self.oee_status[oee_status['table_name']] != oee_status['type']:
+                if self.oee_status[oee_status['table_name']] != int(oee_status['type']):
                     self.write_change_oee_to_db(oee_status)
 
 
