@@ -205,6 +205,15 @@ class StartProcessOpcForConnectToPLC(Process):
     def add_to_alarm_new(self, d):
         for a in d['alarms']:
             status = self.check_bit_in_int(self.values[d['name']], int(a['bit']))
+            if status == "0":
+                try:
+                    self._c.execute(
+                        """UPDATE mvlab_alarms SET status = 0  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
+                         type_alarm='""" + str(a['type']) + """' and  object_alarm='""" + str(d['name']) + """';""")
+                    self._conn.commit()
+                except:
+                    pass
+
 
             if status == "1":
                 if a['type'] == "alarm":
@@ -223,6 +232,7 @@ class StartProcessOpcForConnectToPLC(Process):
                         """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(
                             a['text']) + """','""" + str(
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
+                    self._conn.commit()
                     return False
                 try:
                     if len(records)!=0:
@@ -232,12 +242,14 @@ class StartProcessOpcForConnectToPLC(Process):
                             '''INSERT INTO mvlab_alarms'''\
                             """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(a['text']) + """','""" + str(
                                 1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
+                        self._conn.commit()
                 except:
                     self._c.execute(
                         '''INSERT INTO mvlab_alarms''' \
                         """ (text_alarm, status,type_alarm,object_alarm) VALUES ('""" + str(
                             a['text']) + """','""" + str(
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
+                    self._conn.commit()
                     cprint.cprint.info("error in 202 string proccess.py")
 
     def oee_module(self) -> None:
