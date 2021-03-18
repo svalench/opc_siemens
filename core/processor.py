@@ -92,7 +92,7 @@ class StartProcessOpcForConnectToPLC(Process):
         """фнкция создания таблиц в БД"""
         cprint.cprint.info("Создаем таблицы")
         self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_alarms \
-        (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+        (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, end_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
         text_alarm TEXT, status int, type_alarm VARCHAR(100), object_alarm TEXT)''')
         self._c.execute('''CREATE TABLE IF NOT EXISTS mvlab_warnings \
                 (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
