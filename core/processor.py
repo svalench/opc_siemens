@@ -54,6 +54,7 @@ class StartProcessOpcForConnectToPLC(Process):
         self.oee_status = {}
         self._conn = createConnection()
         self._c = self._conn.cursor()
+        self.alarms_hash={}
 
         self.client = snap7.client.Client()
         self.client.set_connection_type(3)
@@ -208,8 +209,15 @@ class StartProcessOpcForConnectToPLC(Process):
 
     def add_to_alarm_new(self, d):
         cprint.cprint.err('add alarm')
+        if d['name'] not in self.alarms_hash:
+            self.alarms_hash[d['name']] = {}
         for a in d['alarms']:
+            if a['text'] not in self.alarms_hash[d['name']]:
+                self.alarms_hash[d['name']][a['text']] = 0
             status = self.check_bit_in_int(self.values[d['name']], int(a['bit']))
+            if self.alarms_hash[d['name']][a['text']] == status:
+               continue
+
             if status == "0":
                 try:
                     self._c.execute(
@@ -256,6 +264,7 @@ class StartProcessOpcForConnectToPLC(Process):
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     self._conn.commit()
                     cprint.cprint.info("error in 202 string proccess.py")
+            return status
 
     def oee_module(self) -> None:
         """парсинг оее и запись в таблицы"""
