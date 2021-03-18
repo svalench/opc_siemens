@@ -250,7 +250,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     return False
                 try:
                     cprint.cprint.warn("--"*45)
-                    print(len(records))
+                    print(records)
                     if len(records)>0:
                         pass
                     else:
