@@ -165,19 +165,22 @@ class StartProcessOpcForConnectToPLC(Process):
             cprint.cprint.info("create last value in %s " % d['name'])
             self.values[d['name']] = value
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
-            if 'alarms' in d:
-                self.add_to_alarm_new(d)
+        if 'alarms' in d:
+            x = threading.Thread(target=self.add_to_alarm_new, args=(d,))
+            x.start()
 
         if 'if_change' in d and d['if_change'] and self.values[d['name']] != value:
             self.values[d['name']] = value
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
-            if 'alarms' in d:
-                self.add_to_alarm_new(d)
+        if 'alarms' in d:
+            x = threading.Thread(target=self.add_to_alarm_new, args=(d,))
+            x.start()
 
         if 'if_change' in d and not d['if_change']:
             self.__write_to_db(tablename=d['name'], value=value, divide=d['divide'])
-            if 'alarms' in d:
-                self.add_to_alarm_new(d)
+        if 'alarms' in d:
+            x = threading.Thread(target=self.add_to_alarm_new, args=(d,))
+            x.start()
 
     def add_to_16_bit(self, string):
         while len(string)<16:
