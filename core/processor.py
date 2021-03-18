@@ -249,6 +249,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     self._conn.commit()
                     return False
                 try:
+                    cprint.cprint.warn("--"*45)
                     print(len(records))
                     if len(records)!=0:
                         pass
