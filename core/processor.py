@@ -193,14 +193,10 @@ class StartProcessOpcForConnectToPLC(Process):
     def check_bit_in_int(self, value, bit):
         #value = int.from_bytes(int.to_bytes(value, byteorder='little'), byteorder='little', signed=True)
         bits = bin(value)
-        print("88" * 12)
-        print(bits)
         bits = bits.replace("0b", "")
 
         bits = self.add_to_16_bit(bits)
         bits = bits[::-1]
-        print("77" * 12)
-        print(bits)
         try:
             status = bits[bit]
         except:
@@ -208,7 +204,6 @@ class StartProcessOpcForConnectToPLC(Process):
         return status
 
     def add_to_alarm_new(self, d):
-        cprint.cprint.err('add alarm')
         if d['name'] not in self.alarms_hash:
             self.alarms_hash[d['name']] = {}
         for a in d['alarms']:
@@ -229,6 +224,7 @@ class StartProcessOpcForConnectToPLC(Process):
 
 
             if status == "1":
+                print(a['text'])
                 if a['type'] == "alarm":
                     tablename = "alarms"
                 else:
@@ -249,8 +245,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     self._conn.commit()
                     return False
                 try:
-                    cprint.cprint.warn("--"*45)
-                    print(records)
+
                     if len(records)>0:
                         pass
                     else:
@@ -266,7 +261,7 @@ class StartProcessOpcForConnectToPLC(Process):
                             a['text']) + """','""" + str(
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     self._conn.commit()
-                    cprint.cprint.info("error in 202 string proccess.py")
+
                 self.alarms_hash[d['name']][a['text']] = status
             return status
 
