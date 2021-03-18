@@ -267,6 +267,7 @@ class StartProcessOpcForConnectToPLC(Process):
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     self._conn.commit()
                     cprint.cprint.info("error in 202 string proccess.py")
+                self.alarms_hash[d['name']][a['text']] = status
             return status
 
     def oee_module(self) -> None:
