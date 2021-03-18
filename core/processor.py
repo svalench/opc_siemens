@@ -239,6 +239,7 @@ class StartProcessOpcForConnectToPLC(Process):
                         """SELECT COUNT(*) FROM mvlab_alarms  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
                          type_alarm='""" + str(a['type']) + """' and  object_alarm='""" + str(d['name']) + """';""")
                     records = self._c.fetchall()
+                    print(records)
                 except:
                     self._c.execute(
                         '''INSERT INTO mvlab_alarms''' \
