@@ -311,7 +311,6 @@ class StartProcessOpcForConnectToPLC(Process):
                     if d['name'] not in self.bind and d['divide']: # проверка на первый запуск.
                         # Если отслеживание включено но данной переменной нет в массиве с переменными слежения,
                         # то добавляем ее и включаем слежение
-                        time.sleep(1)
                         self.bind[d['name']] = BindError(self.bytearray_data, d)
                     if d['divide']: # если переменная отслеживается то чекаем аварию
                         self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
