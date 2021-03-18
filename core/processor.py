@@ -1,3 +1,4 @@
+import datetime
 import os
 import struct
 import threading
@@ -203,12 +204,13 @@ class StartProcessOpcForConnectToPLC(Process):
         return status
 
     def add_to_alarm_new(self, d):
+        cprint.cprint.err('add alarm')
         for a in d['alarms']:
             status = self.check_bit_in_int(self.values[d['name']], int(a['bit']))
             if status == "0":
                 try:
                     self._c.execute(
-                        """UPDATE mvlab_alarms SET status = 0  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
+                        """UPDATE mvlab_alarms SET status = 0, end_time = '"""+str(datetime.datetime.now())+"""'  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
                          type_alarm='""" + str(a['type']) + """' and  object_alarm='""" + str(d['name']) + """';""")
                     self._conn.commit()
                 except:
