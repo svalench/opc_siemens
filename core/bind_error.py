@@ -66,6 +66,8 @@ class BindError:
                 if len(records) > 0:
                     pass
                 else:
+                    _conn = createConnection()
+                    _c = _conn.cursor()
                     _c.execute(
                         '''INSERT INTO mvlab_alarms''' \
                         """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
