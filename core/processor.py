@@ -204,6 +204,7 @@ class StartProcessOpcForConnectToPLC(Process):
         return status
 
     def add_to_alarm_new(self, d):
+        print(self.alarms_hash)
         if d['name'] not in self.alarms_hash:
             self.alarms_hash[d['name']] = {}
         for a in d['alarms']:
