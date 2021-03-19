@@ -262,7 +262,14 @@ class StartProcessOpcForConnectToPLC(Process):
                             a['text']) + """','""" + str(
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     self._conn.commit()
-
+            else:
+                try:
+                    self._c.execute(
+                        """UPDATE mvlab_alarms SET status = 0, end_time = '"""+str(datetime.datetime.now())+"""'  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
+                         type_alarm='""" + str(a['type']) + """' and  object_alarm='""" + str(d['name']) + """';""")
+                    self._conn.commit()
+                except:
+                    pass
             self.alarms_hash[d['name']][a['text']] = status
 
 
