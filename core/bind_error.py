@@ -83,12 +83,15 @@ class BindError:
         else:
             _conn = createConnection()
             _c = _conn.cursor()
-            _c.execute(
-                """UPDATE mvlab_alarms SET status = 0, end_time = '""" + str(
-                    datetime.datetime.now()) + """'  WHERE status=1 and text_alarm = 'останов машин' and \
-                                     type_alarm='alarm' and  object_alarm='""" + str(
-                    c['name']) + """';""")
-            _conn.commit()
+            try:
+                _c.execute(
+                    """UPDATE mvlab_alarms SET status = 0, end_time = '""" + str(
+                        datetime.datetime.now()) + """'  WHERE status=1 and text_alarm = 'останов машин' and \
+                                         type_alarm='alarm' and  object_alarm='""" + str(
+                        c['name']) + """';""")
+                _conn.commit()
+            except:
+                pass
             _conn.close()
             if (self.__accident_end_time == 0 and not self.transfer_start and
                     self.__accident_start_time == 0 and
