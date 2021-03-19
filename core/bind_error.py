@@ -63,9 +63,16 @@ class BindError:
                     """SELECT COUNT(*) FROM mvlab_alarms  WHERE status=1 and text_alarm = 'останов машин' and \
                                          type_alarm='alarm' and  object_alarm='""" + str(c['name']) + """';""")
                 records = _c.fetchall()
-                if len(records) > 0:
-                    pass
-                else:
+                try:
+                    if len(records[0]) > 0:
+                        pass
+                    else:
+                        _c.execute(
+                            '''INSERT INTO mvlab_alarms''' \
+                            """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
+                                1) + """','alarm','""" + str(c['name']) + """');""")
+                        _conn.commit()
+                except:
                     _c.execute(
                         '''INSERT INTO mvlab_alarms''' \
                         """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
