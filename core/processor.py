@@ -263,8 +263,8 @@ class StartProcessOpcForConnectToPLC(Process):
                             1) + """','""" + str(a['type']) + """','""" + str(d['name']) + """');""")
                     self._conn.commit()
 
-                self.alarms_hash[d['name']][a['text']] = status
-            return status
+            self.alarms_hash[d['name']][a['text']] = status
+
 
     def oee_module(self) -> None:
         """парсинг оее и запись в таблицы"""
