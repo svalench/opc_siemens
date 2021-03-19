@@ -213,7 +213,7 @@ class StartProcessOpcForConnectToPLC(Process):
             if self.alarms_hash[d['name']][a['text']] == status:
                continue
 
-            if status == "0":
+            if status == 0:
                 print(self.alarms_hash[d['name']][a['text']])
                 try:
                     self._c.execute(
