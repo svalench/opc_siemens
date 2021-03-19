@@ -209,7 +209,7 @@ class StartProcessOpcForConnectToPLC(Process):
             self.alarms_hash[d['name']] = {}
         for a in d['alarms']:
             if a['text'] not in self.alarms_hash[d['name']]:
-                self.alarms_hash[d['name']][a['text']] = 0
+                self.alarms_hash[d['name']][a['text']] = 5
             status = self.check_bit_in_int(self.values[d['name']], int(a['bit']))
             if self.alarms_hash[d['name']][a['text']] == status:
                continue
