@@ -204,7 +204,6 @@ class StartProcessOpcForConnectToPLC(Process):
         return status
 
     def add_to_alarm_new(self, d):
-        print(self.alarms_hash)
         if d['name'] not in self.alarms_hash:
             self.alarms_hash[d['name']] = {}
         for a in d['alarms']:
@@ -215,6 +214,7 @@ class StartProcessOpcForConnectToPLC(Process):
                continue
 
             if status == "0":
+                print(self.alarms_hash[d['name']][a['text']])
                 try:
                     self._c.execute(
                         """UPDATE mvlab_alarms SET status = 0, end_time = '"""+str(datetime.datetime.now())+"""'  WHERE status=1 and text_alarm = '""" + str(a['text']) + """' and \
