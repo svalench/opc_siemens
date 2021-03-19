@@ -57,6 +57,11 @@ class BindError:
                                                                data=data))
             # проверяем происходило ли событие до этого
             if self.__accident == 1:
+                self._c.execute(
+                    """SELECT COUNT(*) FROM mvlab_alarms  WHERE status=1 and text_alarm = 'Останов машины' and \
+                                         type_alarm='alarm' and  object_alarm='""" + str(
+                        c['name']) + """';""")
+                records = self._c.fetchall()
                 self.__accident_temp = self.__accident
                 if self.__accident_start_time == 0:
                     #  если событие происходит в первый раз то сохраняем с какого периода выбрать данные
