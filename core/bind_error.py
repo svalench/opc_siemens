@@ -66,8 +66,6 @@ class BindError:
                 if len(records) > 0:
                     pass
                 else:
-                    _conn = createConnection()
-                    _c = _conn.cursor()
                     _c.execute(
                         '''INSERT INTO mvlab_alarms''' \
                         """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
@@ -83,12 +81,15 @@ class BindError:
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
             self.__transfer_accident_data(self.c['name'])
         else:
-            self._c.execute(
+            _conn = createConnection()
+            _c = _conn.cursor()
+            _c.execute(
                 """UPDATE mvlab_alarms SET status = 0, end_time = '""" + str(
                     datetime.datetime.now()) + """'  WHERE status=1 and text_alarm = 'останов машин' and \
                                      type_alarm='alarm' and  object_alarm='""" + str(
                     c['name']) + """';""")
-            self._conn.commit()
+            _conn.commit()
+            _conn.close()
             if (self.__accident_end_time == 0 and not self.transfer_start and
                     self.__accident_start_time == 0 and
                     self.__accident_temp == 0 and
