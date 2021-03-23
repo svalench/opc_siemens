@@ -35,6 +35,7 @@ class BindError:
         self.dleay_upd = self.deleay*2
         self.__interval = 3
         self.transfer_start = False
+        self.write_to_db_alert = False
 
 
     def transform_data_to_bit(self, offset, bit, data):
@@ -57,17 +58,19 @@ class BindError:
                                                              data=data))
             # проверяем происходило ли событие до этого
             if self.__accident == 1:
-                _conn = createConnection()
-                _c = _conn.cursor()
-                _c.execute(
-                    '''INSERT INTO mvlab_alarms''' \
-                    """ (text_alarm, status,type_alarm,object_alarm) VALUES ('оствнов машин','""" + str(
-                        1) + """','alarm','""" + str(c['name']) + """');""")
-                _conn.commit()
-                _conn.close()
                 self.__accident_temp = self.__accident
                 if self.__accident_start_time == 0:
                     #  если событие происходит в первый раз то сохраняем с какого периода выбрать данные
+                    if not self.write_to_db_alert:
+                        self.write_to_db_alert = True
+                        _conn = createConnection()
+                        _c = _conn.cursor()
+                        _c.execute(
+                            '''INSERT INTO mvlab_alarms''' \
+                            """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
+                                1) + """','alarm','""" + str(c['name']) + """');""")
+                        _conn.commit()
+                        _conn.close()
                     self.__accident_start_time = datetime.datetime.now() - datetime.timedelta(minutes=self.deleay)
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
                 if self.__accident_last != self.__accident:
