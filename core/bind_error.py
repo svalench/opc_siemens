@@ -54,7 +54,7 @@ class BindError:
         self.__accident_last = self.__accident
         if 'byte_bind' in c:
             self.__accident = int(self.transform_data_to_bit(offset=int(c['byte_bind']), bit=int(c['bit_bind']),
-                                                               data=data))
+                                                             data=data))
             # проверяем происходило ли событие до этого
             if self.__accident == 1:
                 _conn = createConnection()
@@ -94,7 +94,7 @@ class BindError:
                 _c.execute(
                     """UPDATE mvlab_alarms SET status = 0, end_time = '""" + str(
                         datetime.datetime.now()) + """'  WHERE status=1 and text_alarm = 'останов машин' and \
-                                         type_alarm='alarm' and  object_alarm='""" + str(
+                                           type_alarm='alarm' and  object_alarm='""" + str(
                         c['name']) + """';""")
                 _conn.commit()
             except:
@@ -104,7 +104,7 @@ class BindError:
                     self.__accident_start_time == 0 and
                     self.__accident_temp == 0 and
                     self.__last_update < datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)):
-                #self.__transfer_data(self.c['name'])
+                # self.__transfer_data(self.c['name'])
                 x = threading.Thread(target=self.__transfer_data, args=(self.c['name'],))
                 x.start()
                 self.transfer_start = True
