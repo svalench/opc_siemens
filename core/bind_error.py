@@ -60,24 +60,10 @@ class BindError:
                 _conn = createConnection()
                 _c = _conn.cursor()
                 _c.execute(
-                    """SELECT COUNT(*) FROM mvlab_alarms  WHERE status=1 and text_alarm = 'останов машин' and \
-                                         type_alarm='alarm' and  object_alarm='""" + str(c['name']) + """';""")
-                records = _c.fetchall()
-                try:
-                    if len(records[0]) > 0:
-                        pass
-                    else:
-                        _c.execute(
-                            '''INSERT INTO mvlab_alarms''' \
-                            """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
-                                1) + """','alarm','""" + str(c['name']) + """');""")
-                        _conn.commit()
-                except:
-                    _c.execute(
-                        '''INSERT INTO mvlab_alarms''' \
-                        """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
-                            1) + """','alarm','""" + str(c['name']) + """');""")
-                    _conn.commit()
+                    '''INSERT INTO mvlab_alarms''' \
+                    """ (text_alarm, status,type_alarm,object_alarm) VALUES ('оствнов машин','""" + str(
+                        1) + """','alarm','""" + str(c['name']) + """');""")
+                _conn.commit()
                 _conn.close()
                 self.__accident_temp = self.__accident
                 if self.__accident_start_time == 0:
@@ -88,18 +74,6 @@ class BindError:
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
             self.__transfer_accident_data(self.c['name'])
         else:
-            _conn = createConnection()
-            _c = _conn.cursor()
-            try:
-                _c.execute(
-                    """UPDATE mvlab_alarms SET status = 0, end_time = '""" + str(
-                        datetime.datetime.now()) + """'  WHERE status=1 and text_alarm = 'останов машин' and \
-                                           type_alarm='alarm' and  object_alarm='""" + str(
-                        c['name']) + """';""")
-                _conn.commit()
-            except:
-                pass
-            _conn.close()
             if (self.__accident_end_time == 0 and not self.transfer_start and
                     self.__accident_start_time == 0 and
                     self.__accident_temp == 0 and
