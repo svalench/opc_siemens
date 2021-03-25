@@ -61,7 +61,7 @@ class BindError:
                     _conn = createConnection()
                     _c = _conn.cursor()
                     _c.execute(f"""UPDATE mvlab_alarms SET status = 0, end_time = '{str(datetime.datetime.now())}' 
-                     WHERE status=1 and text_alarm =останов машин'""")
+                     WHERE status=1 and text_alarm ='останов машин'""")
                     _conn.commit()
                     _conn.close()
                 except:
