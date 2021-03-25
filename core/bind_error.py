@@ -56,6 +56,14 @@ class BindError:
         if 'byte_bind' in c:
             self.__accident = int(self.transform_data_to_bit(offset=int(c['byte_bind']), bit=int(c['bit_bind']),
                                                              data=data))
+            if self.__accident == 0:
+                try:
+                    _conn = createConnection()
+                    _c = _conn.cursor()
+                    _c.execute(f"""UPDATE mvlab_alarms SET status = 0, end_time = '{str(datetime.datetime.now())}' 
+                     WHERE status=1 and text_alarm =останов машин'""")
+                except:
+                    cprint.err('Error update records alarm')
             # проверяем происходило ли событие до этого
             if self.__accident == 1:
                 self.__accident_temp = self.__accident
@@ -65,11 +73,14 @@ class BindError:
                         self.write_to_db_alert = True
                         _conn = createConnection()
                         _c = _conn.cursor()
-                        _c.execute(
-                            '''INSERT INTO mvlab_alarms''' \
-                            """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
-                                1) + """','alarm','""" + str(c['name']) + """');""")
-                        _conn.commit()
+                        _c.execute(f"""SELECT * FROM mvlab_alarms WHERE status=1 and text_alarm='останов машин'""")
+                        records = self._c.fetchall()
+                        if len(records)>0:
+                            _c.execute(
+                                '''INSERT INTO mvlab_alarms''' \
+                                """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
+                                    1) + """','alarm','""" + str(c['name']) + """');""")
+                            _conn.commit()
                         _conn.close()
                     self.__accident_start_time = datetime.datetime.now() - datetime.timedelta(minutes=self.deleay)
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
