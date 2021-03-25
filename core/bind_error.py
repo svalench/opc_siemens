@@ -76,7 +76,7 @@ class BindError:
                         _conn = createConnection()
                         _c = _conn.cursor()
                         _c.execute(f"""SELECT * FROM mvlab_alarms WHERE status=1 and text_alarm='останов машин'""")
-                        records = self._c.fetchall()
+                        records = _c.fetchall()
                         if len(records)>0:
                             _c.execute(
                                 '''INSERT INTO mvlab_alarms''' \
