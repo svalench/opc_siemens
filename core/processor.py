@@ -334,6 +334,7 @@ class StartProcessOpcForConnectToPLC(Process):
                         # то добавляем ее и включаем слежение
                         self.bind[d['name']] = BindError(self.bytearray_data, d)
                     if d['divide']: # если переменная отслеживается то чекаем аварию
+                        time.sleep(0.3)
                         self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
                     x = threading.Thread(target=self._thread_for_write_data, args=(d,))
                     threads.append(x)
