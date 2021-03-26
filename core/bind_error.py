@@ -67,7 +67,7 @@ class BindError:
                 except:
                     cprint.err('Error update records alarm')
             # проверяем происходило ли событие до этого
-            if self.__accident == 1:
+            if self.__accident == 1 and self.__accident_last != self.__accident:
                 self.__accident_temp = self.__accident
                 if self.__accident_start_time == 0:
                     #  если событие происходит в первый раз то сохраняем с какого периода выбрать данные
