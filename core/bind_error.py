@@ -90,7 +90,8 @@ class BindError:
                 #     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
             else:
                 self.__accident_temp = 0
-            cprint.info(self.__last_update, (datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)))
+            cprint.info(self.__last_update)
+            cprint.info((datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)))
             self.__transfer_accident_data(self.c['name'])
         else:
             if (self.__accident_end_time == 0 and not self.transfer_start and
