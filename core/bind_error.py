@@ -26,11 +26,12 @@ class BindError:
         self.c = c
         self.__accident = 0
         self.__accident_temp = 0
+        self.__accident_last = 0
         self.__accident_start_time = 0
         self.__accident_end_time = 0
         self.__accident_last = 0
         self.__last_update = datetime.datetime.now()
-        self.deleay = 1
+        self.deleay = 2
         self.dleay_upd = self.deleay*2
         self.__interval = 1
         self.transfer_start = False
@@ -56,7 +57,6 @@ class BindError:
             self.__accident = int(self.transform_data_to_bit(offset=int(c['byte_bind']), bit=int(c['bit_bind']),
                                                              data=data))
             if self.__accident == 0:
-                self.__accident_temp = self.__accident
                 try:
                     _conn = createConnection()
                     _c = _conn.cursor()
@@ -67,7 +67,7 @@ class BindError:
                 except:
                     cprint.err('Error update records alarm')
             # проверяем происходило ли событие до этого
-            if self.__accident == 1 and self.__accident_last != 1:
+            if self.__accident == 1:
                 self.__accident_temp = self.__accident
                 if self.__accident_start_time == 0:
                     #  если событие происходит в первый раз то сохраняем с какого периода выбрать данные
@@ -86,12 +86,8 @@ class BindError:
                         _conn.close()
                     self.__accident_start_time = datetime.datetime.now() - datetime.timedelta(minutes=self.deleay)
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
-                # if self.__accident_last != self.__accident:
-                #     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
-            else:
-                self.__accident_temp = 0
-            cprint.warn(self.__last_update)
-            cprint.info((datetime.datetime.now() - datetime.timedelta(minutes=self.dleay_upd)))
+                if self.__accident_last != self.__accident:
+                    self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
             self.__transfer_accident_data(self.c['name'])
         else:
             if (self.__accident_end_time == 0 and not self.transfer_start and
