@@ -182,6 +182,7 @@ class StartProcessOpcForConnectToPLC(Process):
         if 'alarms' in d:
             x = threading.Thread(target=self.add_to_alarm_new, args=(d,))
             x.start()
+        self._conn.commit()
 
     def add_to_16_bit(self, string):
         while len(string)<16:
@@ -343,7 +344,7 @@ class StartProcessOpcForConnectToPLC(Process):
                     x.start()
                 for thread in threads:
                     thread.join()
-                self._conn.commit()
+                #self._conn.commit()
                 self.status[self.count] = 1
 
     def disassemble_float(self, data) -> float:  # метод для преобразования данных в real
