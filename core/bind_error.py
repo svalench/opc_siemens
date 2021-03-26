@@ -88,7 +88,9 @@ class BindError:
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
                 if self.__accident_last != self.__accident:
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
-            self.__transfer_accident_data(self.c['name'])
+            #self.__transfer_accident_data(self.c['name'])
+            x = threading.Thread(target=self.__transfer_accident_data, args=(self.c['name'],))
+            x.start()
         else:
             if (self.__accident_end_time == 0 and not self.transfer_start and
                     self.__accident_start_time == 0 and
