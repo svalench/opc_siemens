@@ -56,6 +56,7 @@ class BindError:
             self.__accident = int(self.transform_data_to_bit(offset=int(c['byte_bind']), bit=int(c['bit_bind']),
                                                              data=data))
             if self.__accident == 0:
+                self.__accident_temp = self.__accident
                 try:
                     _conn = createConnection()
                     _c = _conn.cursor()
@@ -87,6 +88,8 @@ class BindError:
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
                 # if self.__accident_last != self.__accident:
                 #     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
+            else:
+                self.__accident_temp = 0
             self.__transfer_accident_data(self.c['name'])
         else:
             if (self.__accident_end_time == 0 and not self.transfer_start and
