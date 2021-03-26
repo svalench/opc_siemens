@@ -30,9 +30,9 @@ class BindError:
         self.__accident_end_time = 0
         self.__accident_last = 0
         self.__last_update = datetime.datetime.now()
-        self.deleay = 5
+        self.deleay = 1
         self.dleay_upd = self.deleay*2
-        self.__interval = 3
+        self.__interval = 1
         self.transfer_start = False
         self.write_to_db_alert = False
 
