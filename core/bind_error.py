@@ -26,12 +26,11 @@ class BindError:
         self.c = c
         self.__accident = 0
         self.__accident_temp = 0
-        self.__accident_last = 0
         self.__accident_start_time = 0
         self.__accident_end_time = 0
         self.__accident_last = 0
         self.__last_update = datetime.datetime.now()
-        self.deleay = 10
+        self.deleay = 5
         self.dleay_upd = self.deleay*2
         self.__interval = 3
         self.transfer_start = False
@@ -67,7 +66,7 @@ class BindError:
                 except:
                     cprint.err('Error update records alarm')
             # проверяем происходило ли событие до этого
-            if self.__accident == 1:
+            if self.__accident == 1 and elf.__accident_last != 1:
                 self.__accident_temp = self.__accident
                 if self.__accident_start_time == 0:
                     #  если событие происходит в первый раз то сохраняем с какого периода выбрать данные
@@ -77,7 +76,7 @@ class BindError:
                         _c = _conn.cursor()
                         _c.execute(f"""SELECT * FROM mvlab_alarms WHERE status=1 and text_alarm='останов машин'""")
                         records = _c.fetchall()
-                        if len(records)>0:
+                        if len(records)<=0:
                             _c.execute(
                                 '''INSERT INTO mvlab_alarms''' \
                                 """ (text_alarm, status,type_alarm,object_alarm) VALUES ('останов машин','""" + str(
@@ -86,8 +85,8 @@ class BindError:
                         _conn.close()
                     self.__accident_start_time = datetime.datetime.now() - datetime.timedelta(minutes=self.deleay)
                     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
-                if self.__accident_last != self.__accident:
-                    self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
+                # if self.__accident_last != self.__accident:
+                #     self.__accident_end_time = datetime.datetime.now() + datetime.timedelta(minutes=self.deleay)
             self.__transfer_accident_data(self.c['name'])
         else:
             if (self.__accident_end_time == 0 and not self.transfer_start and
