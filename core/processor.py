@@ -330,11 +330,11 @@ class StartProcessOpcForConnectToPLC(Process):
                     self.oee_module()
                 for d in self.values_list: # проход по массиву данных подключения
                     if d['name'] not in self.bind and d['divide']: # проверка на первый запуск.
+                        time.sleep(0.3)
                         # Если отслеживание включено но данной переменной нет в массиве с переменными слежения,
                         # то добавляем ее и включаем слежение
                         self.bind[d['name']] = BindError(self.bytearray_data, d)
                     if d['divide']: # если переменная отслеживается то чекаем аварию
-                        time.sleep(0.3)
                         self.bind[d['name']].bind_error_function(data=self.bytearray_data, c=d)
                     x = threading.Thread(target=self._thread_for_write_data, args=(d,))
                     threads.append(x)
