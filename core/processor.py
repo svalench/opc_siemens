@@ -123,6 +123,10 @@ class StartProcessOpcForConnectToPLC(Process):
                                 (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
                                 value ''' + vsql + ''')''')
                 self._conn.commit()
+            self._c.execute(f"""CREATE INDEX  IF NOT EXISTS {q['name']}
+                                        ON public.mvlab_{q['name']} USING btree
+                                        (now_time ASC NULLS LAST, value ASC NULLS LAST)
+                                        TABLESPACE pg_default;""")
 
     def __parse_bytearray(self, data: dict) -> any:
         """разбор полученных данных с ПЛК"""
