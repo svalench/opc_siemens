@@ -369,16 +369,6 @@ list_connections = [
         "offset": 24,
         "value_list": list_data2
     },
-{
-        "name": "s300_db300",
-        "ip": '192.168.32.128',
-        "rack": 0,
-        "slot": 2,
-        'DB': 300,
-        "start": 80,
-        "offset": 84,
-        "value_list": list_data_db300
-    }
 ]
 
 

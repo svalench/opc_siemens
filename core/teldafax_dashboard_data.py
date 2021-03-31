@@ -3,6 +3,9 @@ import time
 import snap7
 import struct
 
+from settings import createConnection
+
+
 class PlcRemoteUse():
     """
     class for connect to PLC Siemens
@@ -160,7 +163,13 @@ class PlcRemoteUse():
                 power3 = 0.0
             if power4 >6400:
                 power4 = 0.0
+                cur = createConnection()
+                _c = cur.cursor()
             sum_power = power1 + power2 + power3 + power4
+            self._c.execute(
+                '''INSERT INTO mvlab_s300_db300_power_sum_all''' \
+                """ (value VALUES ('""" + str(sum_power) + """');""")
+            self._conn.commit()
             powers = {"power1": power1, 'power2': power2, 'power3': power3, 'power4': power4, 'sum_power': sum_power}
             return powers
         except:
