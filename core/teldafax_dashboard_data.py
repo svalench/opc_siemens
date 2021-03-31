@@ -163,8 +163,8 @@ class PlcRemoteUse():
                 power3 = 0.0
             if power4 >6400:
                 power4 = 0.0
-                _conn = createConnection()
-                _c = _conn.cursor()
+            _conn = createConnection()
+            _c = _conn.cursor()
             sum_power = power1 + power2 + power3 + power4
             _c.execute(
                 '''INSERT INTO mvlab_s300_db300_power_sum_all (value) VALUES (''' + str(
