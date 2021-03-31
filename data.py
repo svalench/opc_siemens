@@ -330,6 +330,10 @@ oee = [
     {"start": 5842, 'name': 'Машина 3', 'table_name': 'machine3', "end": 5843, "status": status_oee},
     {"start": 5848, 'name': 'Машина 4', 'table_name': 'machine4', "end": 5849, "status": status_oee},
 ]
+list_data_db300 = [
+{"name": "power_sum_all", "start": 0, "type": "int", 'table': 'real', "itarable": False, 'divide': True,
+     'if_change': False},
+]
 list_connections = [
     {
         "name": "connect1",
@@ -364,8 +368,20 @@ list_connections = [
         "start": 0,
         "offset": 24,
         "value_list": list_data2
+    },
+{
+        "name": "s300_db300",
+        "ip": '192.168.32.128',
+        "rack": 0,
+        "slot": 2,
+        'DB': 300,
+        "start": 80,
+        "offset": 84,
+        "value_list": list_data_db300
     }
 ]
+
+
 
 statuses_connection = mp.Array('i', [0 for i in list_connections])
 
