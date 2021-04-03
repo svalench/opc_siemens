@@ -347,7 +347,10 @@ class StartProcessOpcForConnectToPLC(Process):
                     x.start()
                 for thread in threads:
                     thread.join()
-                self._conn.commit()
+                try:
+                    self._conn.commit()
+                except:
+                    cprint.cprint.info('Error commin it line 351 in proccess')
                 self.status[self.count] = 1
 
     def disassemble_float(self, data) -> float:  # метод для преобразования данных в real
