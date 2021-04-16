@@ -129,6 +129,7 @@ class BindError:
             _conn.commit()
             self.__last_update = datetime.datetime.now()
             _conn.close()
+            self.write_to_db_alert = False
             self.transfer_start = False
 
     def __transfer_accident_data(self, tablename):
