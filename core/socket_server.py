@@ -56,12 +56,12 @@ def get_data_from_plc():
                 print('''INSERT INTO mvlab_status_var''' \
                     """ (jsontext,status) VALUES ('""" + str(json.dumps(data)) + """','1');""")
                 _c.execute('''INSERT INTO mvlab_status_var''' \
-                    """ (`jsontext`) VALUES  ('""" + str(json.dumps(data).encode("utf-8")) + """');""")
+                    """ (`jsontext`) VALUES  ('""" + str(json.dumps(data).encode("utf-8")[2:]) + """');""")
                 _conn.commit()
                 #_conn.commit()
             else:
                 print("update")
-                _c.execute(f'UPDATE mvlab_status_var SET jsontext="{json.dumps(data).encode("utf-8")}"')
+                _c.execute(f'UPDATE mvlab_status_var SET jsontext="{json.dumps(data).encode("utf-8")[2:]}"')
             # return data
             _conn.close()
         except Exception as e:
