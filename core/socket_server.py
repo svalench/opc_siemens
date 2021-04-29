@@ -47,6 +47,8 @@ def get_data_from_plc():
             _conn.commit()
             _c.execute('SELECT * from mvlab_status_var limit 1')
             records = _c.fetchall()
+            cprint.warn("---------------------------------------------------------------------------")
+            print(records)
             if not records:
                 _c.execute(f'INSERT INTO mvlab_status_var (json_text) VALUES("{json.dumps(data).encode("utf-8")}");')
                 _conn.commit()
