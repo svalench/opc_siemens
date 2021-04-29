@@ -53,9 +53,10 @@ def get_data_from_plc():
             print(json.dumps(data).encode("utf-8"))
             cprint.warn("-------------------------------------------------------------")
             if len(records)==0:
+                print("insert")
                 _c.execute(f'INSERT INTO mvlab_status_var (json_text) VALUES("asdasd");')
                 #_conn.commit()
-                print("insert")
+
             else:
                 print("update")
                 _c.execute(f'UPDATE mvlab_status_var SET json_text="{json.dumps(data).encode("utf-8")}"')
