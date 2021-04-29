@@ -43,7 +43,7 @@ def get_data_from_plc():
             _c = _conn.cursor()
             _c.execute('''CREATE TABLE IF NOT EXISTS mvlab_status_var \
                                 (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
-                                jsontext TEXT, status int)''')
+                                json_text TEXT, status int)''')
             _conn.commit()
             _c.execute('SELECT * from mvlab_status_var limit 1')
             records = _c.fetchall()
@@ -56,12 +56,12 @@ def get_data_from_plc():
                 print('''INSERT INTO mvlab_status_var''' \
                     """ (jsontext,status) VALUES ('""" + str(json.dumps(data)) + """','1');""")
                 _c.execute('''INSERT INTO mvlab_status_var''' \
-                    """ (jsontext) VALUES  ('""" + str(json.dumps(data)) + """');""")
+                    """ (json_text) VALUES  ('""" + str(json.dumps(data)) + """');""")
                 _conn.commit()
                 #_conn.commit()
             else:
                 print("update")
-                _c.execute(f'UPDATE mvlab_status_var SET jsontext="{json.dumps(data).encode("utf-8")[2:]}"')
+                _c.execute(f'UPDATE mvlab_status_var SET json_text="{json.dumps(data).encode("utf-8")[2:]}"')
             # return data
             _conn.close()
         except Exception as e:
