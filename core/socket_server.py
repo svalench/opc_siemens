@@ -9,7 +9,7 @@ from cprint import cprint
 
 from core.teldafax_dashboard_data import PlcRemoteUse
 from data import list_connections, statuses_connection, PLC_init, result_query
-from settings import SOCKET_PORT
+from settings import SOCKET_PORT, createConnection
 
 
 def start_socket():
@@ -39,6 +39,19 @@ def get_data_from_plc():
             data2 = data.get_status_machine()
             data = {"data1": data1, "data2": data2}
             globals()['result_query'] = data
+            _conn = createConnection()
+            _c = _conn.cursor()
+            _c.execute('''CREATE TABLE IF NOT EXISTS mvlab_status_var \
+                                (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                                json_text TEXT, status int)''')
+            _conn.commit()
+            _c.execute('SELECT * from mvlab_status_var limit 1')
+            records = _c.fetchall()
+            if not records:
+                _c.execute(f'INSERT INTO mvlab_status_var (json_text) VALUES("{json.dumps(data).encode("utf-8")}");')
+                _conn.commit()
+            else:
+                _c.execute(f'UPDATE mvlab_status_var SET json_text="{json.dumps(data).encode("utf-8")}"')
             # return data
         except:
             globals()['result_query'] = [{"error": 0}]
