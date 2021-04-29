@@ -43,7 +43,7 @@ def get_data_from_plc():
             _c = _conn.cursor()
             _c.execute('''CREATE TABLE IF NOT EXISTS mvlab_status_var \
                                 (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
-                                json_text TEXT, status int)''')
+                                jsontext TEXT, status int)''')
             _conn.commit()
             _c.execute('SELECT * from mvlab_status_var limit 1')
             records = _c.fetchall()
@@ -54,14 +54,14 @@ def get_data_from_plc():
             cprint.warn("-------------------------------------------------------------")
             if len(records)==0:
                 print('''INSERT INTO mvlab_status_var''' \
-                    """ (json_text,status) VALUES ('""" + str(json.dumps(data)) + """','1');""")
+                    """ (jsontext,status) VALUES ('""" + str(json.dumps(data)) + """','1');""")
                 _c.execute('''INSERT INTO mvlab_status_var''' \
-                    """ ('json_text','status') VALUES ('""" + str(json.dumps(data).encode("utf-8")) + """','1');""")
+                    """ (jsontext,status) VALUES ('""" + str(json.dumps(data).encode("utf-8")) + """','1');""")
                 _conn.commit()
                 #_conn.commit()
             else:
                 print("update")
-                _c.execute(f'UPDATE mvlab_status_var SET json_text="{json.dumps(data).encode("utf-8")}"')
+                _c.execute(f'UPDATE mvlab_status_var SET jsontext="{json.dumps(data).encode("utf-8")}"')
             # return data
             _conn.close()
         except Exception as e:
