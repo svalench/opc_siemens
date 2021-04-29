@@ -50,6 +50,7 @@ def get_data_from_plc():
             cprint.warn("-------------------------------------------------------------")
             print(records)
             print(len(records))
+            print(json.dumps(data).encode("utf-8"))
             cprint.warn("-------------------------------------------------------------")
             if len(records)==0:
                 _c.execute(f'INSERT INTO mvlab_status_var (json_text) VALUES("{json.dumps(data).encode("utf-8")}");')
