@@ -53,11 +53,12 @@ def get_data_from_plc():
             print(json.dumps(data).encode("utf-8"))
             cprint.warn("-------------------------------------------------------------")
             if len(records)==0:
-                _c.execute(f'INSERT INTO mvlab_status_var (json_text) VALUES({json.dumps(data).encode("utf-8")});')
+                _c.execute(f'INSERT INTO mvlab_status_var (json_text) VALUES("asdasd");')
                 _conn.commit()
             else:
                 _c.execute(f'UPDATE mvlab_status_var SET json_text="{json.dumps(data).encode("utf-8")}"')
             # return data
+            _conn.close()
         except:
             globals()['result_query'] = [{"error": 0}]
             # return json.dumps({"error": "no connection"}).encode('utf-8')
