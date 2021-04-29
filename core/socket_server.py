@@ -49,7 +49,7 @@ def get_data_from_plc():
             records = _c.fetchall()
             cprint.warn("---------------------------------------------------------------------------")
             print(records)
-            if not records:
+            if len(records)<0:
                 _c.execute(f'INSERT INTO mvlab_status_var (json_text) VALUES("{json.dumps(data).encode("utf-8")}");')
                 _conn.commit()
             else:
