@@ -1,3 +1,4 @@
+import datetime
 import gzip
 import json
 import math
@@ -47,21 +48,15 @@ def get_data_from_plc():
             _conn.commit()
             _c.execute('SELECT * from mvlab_status_var limit 1')
             records = _c.fetchall()
-            cprint.warn("-------------------------------------------------------------")
-            print(records)
-            print(len(records))
-            print(json.dumps(data).encode("utf-8"))
-            cprint.warn("-------------------------------------------------------------")
             if len(records)==0:
-                print('''INSERT INTO mvlab_status_var''' \
-                    """ (jsontext,status) VALUES ('""" + str(json.dumps(data)) + """','1');""")
                 _c.execute('''INSERT INTO mvlab_status_var''' \
                     """ (json_text) VALUES  ('""" + str(json.dumps(data)) + """');""")
                 _conn.commit()
                 #_conn.commit()
             else:
-                print("update")
-                _c.execute(f"UPDATE mvlab_status_var SET json_text='{str(json.dumps(data))}'")
+                ts = time.time()
+                timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+                _c.execute(f"UPDATE mvlab_status_var SET json_text='{str(json.dumps(data))}', now_time='{timestamp}'")
             # return data
             _conn.close()
         except Exception as e:
