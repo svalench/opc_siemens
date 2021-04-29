@@ -57,6 +57,7 @@ def get_data_from_plc():
                 ts = time.time()
                 timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
                 _c.execute(f"UPDATE mvlab_status_var SET json_text='{str(json.dumps(data))}', now_time='{timestamp}'")
+                _conn.commit()
             # return data
             _conn.close()
         except Exception as e:
