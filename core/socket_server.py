@@ -61,7 +61,7 @@ def get_data_from_plc():
                 #_conn.commit()
             else:
                 print("update")
-                _c.execute(f'UPDATE mvlab_status_var SET json_text="{json.dumps(data).encode("utf-8")[2:]}"')
+                _c.execute(f'UPDATE mvlab_status_var SET json_text="{str(json.dumps(data))}"')
             # return data
             _conn.close()
         except Exception as e:
