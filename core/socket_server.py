@@ -56,7 +56,7 @@ def get_data_from_plc():
                 print('''INSERT INTO mvlab_status_var''' \
                     """ (jsontext,status) VALUES ('""" + str(json.dumps(data)) + """','1');""")
                 _c.execute('''INSERT INTO mvlab_status_var''' \
-                    """ (jsontext,status) VALUES ('""" + str(json.dumps(data).encode("utf-8")) + """','1');""")
+                    """ (`jsontext`,`status`) VALUES  ('""" + str(json.dumps(data).encode("utf-8")) + """','1');""")
                 _conn.commit()
                 #_conn.commit()
             else:
