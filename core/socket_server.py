@@ -64,7 +64,8 @@ def get_data_from_plc():
                 _c.execute(f'UPDATE mvlab_status_var SET json_text="{json.dumps(data).encode("utf-8")}"')
             # return data
             _conn.close()
-        except:
+        except Exception as e:
+            cprint.err(e)
             globals()['result_query'] = [{"error": 0}]
             # return json.dumps({"error": "no connection"}).encode('utf-8')
 
