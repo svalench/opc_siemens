@@ -46,6 +46,11 @@ def get_data_from_plc():
                                 (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
                                 json_text TEXT, status int)''')
             _conn.commit()
+
+            _c.execute('''CREATE TABLE IF NOT EXISTS mvlab_status_connections \
+                                            (key serial primary key,now_time TIMESTAMP  WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, \
+                                            json_text TEXT, status int)''')
+            _conn.commit()
             _c.execute('SELECT * from mvlab_status_var limit 1')
             records = _c.fetchall()
             if len(records)==0:
@@ -59,6 +64,23 @@ def get_data_from_plc():
                 _c.execute(f"UPDATE mvlab_status_var SET json_text='{str(json.dumps(data))}', now_time='{timestamp}'")
                 _conn.commit()
             # return data
+            ss = []
+            count = 0
+            for d in list_connections:
+                ss.append({'connection_name': d['name'], "ip": d['ip'], 'key': count})
+                count += 1
+            data = json.dumps(ss).encode('utf-8')
+            _c.execute('SELECT * from mvlab_status_var limit 1')
+            records = _c.fetchall()
+            if len(records) == 0:
+                _c.execute('''INSERT INTO mvlab_status_connections''' \
+                           """ (json_text) VALUES  ('""" + str(data) + """');""")
+                _conn.commit()
+            else:
+                ts = time.time()
+                timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+                _c.execute(f"UPDATE mvlab_status_var SET json_text='{data}', now_time='{timestamp}'")
+                _conn.commit()
             _conn.close()
         except Exception as e:
             cprint.err(e)
